@@ -1,0 +1,9 @@
+main: com.company.Main
+name: KitPvp
+version: 1.0
+api-version: 1.14
+commands:
+  head:
+    description: give head
+  kits:
+    description: open kits
