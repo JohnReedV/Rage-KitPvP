@@ -1,8 +1,8 @@
-### RAGE KIT PVP
+# RAGE KIT PVP
 
-# Rage Kit PvP is a full kit pvp game implimented with craftBukkit
+### Rage Kit PvP is a full kit pvp game implimented with craftBukkit
 
-## Features include but are not limited to...
+### Features include but are not limited to...
 
 * Well over 10 Kits
 * Scoreboard/Kill tracker
