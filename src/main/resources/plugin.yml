@@ -7,3 +7,5 @@ commands:
     description: give head
   kits:
     description: open kits
+  setspawn:
+    description: sets world spawn point
