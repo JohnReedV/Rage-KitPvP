@@ -1,0 +1,9 @@
+name: RageKitPvP
+version: '1.0-SNAPSHOT'
+main: ragekitpvp.ragekitpvp.RageKitPvP
+api-version: 1.19
+commands:
+  head:
+    description: give head
+  kits:
+    description: open kits

@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="RageKitPvP:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/RageKitPvP_jar</output-path>
+    <root id="archive" name="RageKitPvP.jar">
+      <element id="module-output" name="RageKitPvP" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/plugin.yml" />
+    </root>
+  </artifact>
+</component>

@@ -1,4 +1,4 @@
-package com.company;
+package ragekitpvp.ragekitpvp;
 
 import org.bukkit.Color;
 import org.bukkit.block.BlockState;
@@ -25,6 +25,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
@@ -33,12 +34,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionEffectTypeWrapper;
 import org.bukkit.scoreboard.*;
+import org.bukkit.event.server.ServerListPingEvent;
 
 import java.util.*;
 import java.util.List;
 
-public class Main extends JavaPlugin implements Listener {
+public class RageKitPvP extends JavaPlugin implements Listener {
     Map<String, Long> cooldowns = new HashMap<String, Long>();
 
     public Inventory inv;
@@ -96,6 +99,18 @@ public class Main extends JavaPlugin implements Listener {
             }
         }
 
+        if (label.equalsIgnoreCase("setspawn")) {
+            if (!(sender instanceof Player)) {
+                sender.sendMessage("players only BOSS");
+            }
+            if (sender.hasPermission("kits.setspawn")){
+                Player player = (Player) sender;
+                World world = player.getWorld();
+                Location loc = player.getLocation();
+                world.setSpawnLocation(loc.getBlockX(), loc.getBlockY() + 1, loc.getBlockZ());
+            }
+        }
+
         return true;
     }
     public void createInv() {
@@ -139,7 +154,7 @@ public class Main extends JavaPlugin implements Listener {
         meta1.setDisplayName(ChatColor.DARK_RED + "DOOM");
         List<String> lore = new ArrayList<String>();
         lore.add(ChatColor.GRAY + "Fly and wreak " + ChatColor.DARK_RED + ChatColor.BOLD + "DOOM" + ChatColor.RESET
-        + ChatColor.GRAY + " if you dare!");
+                + ChatColor.GRAY + " if you dare!");
         meta1.setLore(lore);
         meta1.addEnchant(Enchantment.LURE, 1, true);
         meta1.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -799,7 +814,7 @@ public class Main extends JavaPlugin implements Listener {
         if (player.getInventory().getBoots() != null) {
             if (player.getInventory().getBoots().getItemMeta().getDisplayName().contains("Boots O' Doom")) {
                 if (player.getInventory().getBoots().getItemMeta().hasLore()) {
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 200, 13));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 200, 13));
                 }
             }
         }
@@ -836,13 +851,39 @@ public class Main extends JavaPlugin implements Listener {
             }
         }
     }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent e) {
+        Player player = e.getPlayer();
+        e.setQuitMessage(ChatColor.GOLD + player.getName() + ChatColor.AQUA + " out lul");
+    }
+
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
         createBoard(e.getPlayer());
         player.getInventory().clear();
         player.getInventory().addItem(compass());
+
+        player.getActivePotionEffects().stream()
+                .map(PotionEffect::getType)
+                .forEach(player::removePotionEffect);
+
+        e.setJoinMessage(ChatColor.GOLD + player.getName() + ChatColor.AQUA + " in");
+        player.teleport(player.getWorld().getSpawnLocation());
+        player.setHealth(20);
+        player.setFoodLevel(20);
+        if (player.getPlayer().getGameMode() != GameMode.ADVENTURE){
+            player.setGameMode(GameMode.ADVENTURE);
+        }
     }
+
+    @EventHandler
+    public void motd(ServerListPingEvent event) {
+        event.setMotd(ChatColor.DARK_RED + "" + ChatColor.BOLD + "RAGE " + ChatColor.RESET + ChatColor.BLUE
+                + "Kit PvP");
+    }
+
     @EventHandler()
     public void onClick(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
@@ -922,7 +963,7 @@ public class Main extends JavaPlugin implements Listener {
             }
             else {
                 player.sendMessage(ChatColor.GOLD + "You are not " + ChatColor.UNDERLINE + "" + ChatColor.BOLD
-                + "" + ChatColor.GREEN + "VIP");
+                        + "" + ChatColor.GREEN + "VIP");
             }
         }
         if (e.getSlot() == 11) {
@@ -1105,16 +1146,16 @@ public class Main extends JavaPlugin implements Listener {
         if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.STICK))
             if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta()
                     .getDisplayName().contains("Right click the ground to spawn your horse!")) {
-                    Player player = (Player) event.getPlayer();
-                    if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                        Block b = player.getTargetBlock(null, 5);
-                        Horse h = (Horse) player.getWorld().spawnEntity(player.getLocation(), EntityType.HORSE);
-                        h.setTamed(true);
-                        h.setOwner(event.getPlayer());
-                        h.getInventory().setSaddle(new ItemStack(Material.SADDLE, 1));
-                        h.getInventory().setArmor(new ItemStack(Material.DIAMOND_HORSE_ARMOR));
-                        player.getInventory().removeItem(horseSpawn());
-                    }
+                Player player = (Player) event.getPlayer();
+                if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                    Block b = player.getTargetBlock(null, 5);
+                    Horse h = (Horse) player.getWorld().spawnEntity(player.getLocation(), EntityType.HORSE);
+                    h.setTamed(true);
+                    h.setOwner(event.getPlayer());
+                    h.getInventory().setSaddle(new ItemStack(Material.SADDLE, 1));
+                    h.getInventory().setArmor(new ItemStack(Material.DIAMOND_HORSE_ARMOR));
+                    player.getInventory().removeItem(horseSpawn());
+                }
             }
     }
     @EventHandler

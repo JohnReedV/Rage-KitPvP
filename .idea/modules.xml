@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/KitPvp.iml" filepath="$PROJECT_DIR$/KitPvp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RageKitPvP.iml" filepath="$PROJECT_DIR$/RageKitPvP.iml" />
     </modules>
   </component>
 </project>
