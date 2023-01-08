@@ -9,3 +9,5 @@ commands:
     description: open kits
   setspawn:
     description: sets world spawn point
+  flex:
+    description: flex your stats!
