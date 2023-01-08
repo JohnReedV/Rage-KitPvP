@@ -112,6 +112,29 @@ public class RageKitPvP extends JavaPlugin implements Listener {
             }
         }
 
+        if (label.equalsIgnoreCase("flex")) {
+            if (!(sender instanceof Player)) {
+                sender.sendMessage("players only BOSS");
+            } else {
+                Player player = (Player) sender;
+                Integer kills = player.getStatistic(Statistic.PLAYER_KILLS);
+                Integer deaths = player.getStatistic(Statistic.DEATHS);
+                Integer dmgDone = player.getStatistic(Statistic.DAMAGE_DEALT);
+                Integer dmgTaken = player.getStatistic(Statistic.DAMAGE_TAKEN);
+                Integer time = player.getStatistic(Statistic.TOTAL_WORLD_TIME);
+
+                getServer().dispatchCommand(getServer().getConsoleSender(), "say Here are "
+                        + player.getName() + "'s stats...");
+
+                getServer().dispatchCommand(getServer().getConsoleSender(),"say Died : " + deaths.toString());
+                getServer().dispatchCommand(getServer().getConsoleSender(),"say Killed : " + kills.toString());
+                getServer().dispatchCommand(getServer().getConsoleSender(),"say Damage done : " + dmgDone.toString());
+                getServer().dispatchCommand(getServer().getConsoleSender(),"say Damage Taken : " + dmgTaken.toString());
+                getServer().dispatchCommand(getServer().getConsoleSender(),"Time on server : " + time.toString());
+            }
+
+        }
+
         return true;
     }
     public void createInv() {
