@@ -37,6 +37,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.*;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.event.player.PlayerBedEnterEvent;
 
 import java.util.*;
 import java.util.List;
@@ -1139,6 +1140,10 @@ public class RageKitPvP extends JavaPlugin implements Listener {
             Player player = (Player) event.getEntity();
             player.setFoodLevel(20);
         }
+    }
+    @EventHandler
+    public void noBed(PlayerBedEnterEvent event){
+        event.setCancelled(true);
     }
     @EventHandler
     public void nopvp(EntityDamageEvent event) {
