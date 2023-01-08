@@ -34,9 +34,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.potion.PotionEffectTypeWrapper;
 import org.bukkit.scoreboard.*;
 import org.bukkit.event.server.ServerListPingEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 
 import java.util.*;
 import java.util.List;
@@ -1120,6 +1120,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     public void onFall(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
+            player.setFoodLevel(20);
             if (event.getCause() == EntityDamageEvent.DamageCause.FALL)
                 event.setCancelled(true);
         }
@@ -1127,6 +1128,14 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     @EventHandler
     public void noHunger(FoodLevelChangeEvent event) {
         if (event.getEntity() instanceof Player) {
+            Player player = (Player) event.getEntity();
+            player.setFoodLevel(20);
+        }
+    }
+
+    @EventHandler
+    public void noHungerDmg(EntityRegainHealthEvent event){
+        if (event.getEntity() instanceof  Player){
             Player player = (Player) event.getEntity();
             player.setFoodLevel(20);
         }
