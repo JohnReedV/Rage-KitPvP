@@ -1136,7 +1136,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
             Location loc = event.getEntity().getLocation().clone();
-            if (loc.getY() >= 38){
+            if (loc.getY() >= 119){
                 event.setCancelled(true);
             }
         }
