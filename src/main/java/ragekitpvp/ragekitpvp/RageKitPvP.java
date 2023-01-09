@@ -8,8 +8,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.entity.*;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.*;
@@ -19,9 +21,6 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -36,9 +35,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.*;
 import org.bukkit.event.server.ServerListPingEvent;
-import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
-import java.util.concurrent.TimeUnit;
+import org.bukkit.event.entity.EntityTargetEvent;
 
 import java.util.*;
 import java.util.List;
@@ -295,7 +293,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
         meta13.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta13.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         ak.setItemMeta(meta13);
-        inv.setItem(16, ak);
+        inv.setItem(13, ak);
 
         ItemStack outcast = new ItemStack(Material.WITHER_ROSE);
         ItemMeta meta14 = outcast.getItemMeta();
@@ -308,6 +306,19 @@ public class RageKitPvP extends JavaPlugin implements Listener {
         meta14.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         outcast.setItemMeta(meta14);
         inv.setItem(8, outcast);
+
+        ItemStack warden = new ItemStack(Material.SCULK_SENSOR);
+        ItemMeta meta15 = warden.getItemMeta();
+        meta15.setDisplayName(ChatColor.DARK_BLUE + "Warten");
+        List<String> lore15 = new ArrayList<String>();
+        lore15.add(ChatColor.ITALIC + "Do you have the Charles? Or does Charles have you?!?");
+        meta15.setLore(lore15);
+        meta15.addEnchant(Enchantment.LURE,1,true);
+        meta15.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        meta15.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        warden.setItemMeta(meta15);
+        inv.setItem(14, warden);
+
     }
 
     public void createBoard(Player player) {
@@ -798,13 +809,119 @@ public class RageKitPvP extends JavaPlugin implements Listener {
 
         return compass;
     }
+
+    public ItemStack pissPants() {
+        ItemStack pant = new ItemStack(Material.LEATHER_LEGGINGS);
+        ItemMeta meta = pant.getItemMeta();
+        meta.setDisplayName(ChatColor.GOLD + "PissPants");
+        List<String> lore = new ArrayList<String>();
+        lore.add("");
+        lore.add(ChatColor.ITALIC + "" + ChatColor.GREEN + "These pants have been PISSED");
+        meta.setLore(lore);
+        meta.addEnchant(Enchantment.LURE, 1, true);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        meta.setUnbreakable(true);
+        pant.setItemMeta(meta);
+
+        return pant;
+    }
+
+    public ItemStack wardenFlint() {
+        ItemStack flint = new ItemStack(Material.FLINT);
+        ItemMeta meta = flint.getItemMeta();
+        meta.setDisplayName(ChatColor.DARK_BLUE + "Guide O' Charles");
+        List<String> lore = new ArrayList<String>();
+        lore.add("");
+        lore.add(ChatColor.ITALIC + "" + ChatColor.DARK_BLUE + "Poor Charles is blind :(");
+        lore.add(ChatColor.ITALIC + "" + ChatColor.DARK_BLUE + "Please guide Charles with this tool");
+        lore.add(ChatColor.ITALIC + "" + ChatColor.DARK_BLUE + "Charles behaves " + ChatColor.RESET + ChatColor.MAGIC +
+                "jdng4e" + ChatColor.RESET + ChatColor.ITALIC + ChatColor.DARK_BLUE +
+                " twords the one who holds this guide");
+        meta.setLore(lore);
+        meta.addEnchant(Enchantment.LURE, 1, true);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        flint.setItemMeta(meta);
+
+        return flint;
+    }
+
+    public  ItemStack wardenElytra() {
+        ItemStack eye = new ItemStack(Material.ELYTRA);
+        ItemMeta meta = eye.getItemMeta();
+        meta.setDisplayName(ChatColor.DARK_BLUE + "GO CRAZY HUNNY," +
+                " GO CRAY CRAY LIKE IT YO LAST FRIDAY NIGHT OF YOUR 20S!!!");
+        meta.addEnchant(Enchantment.LURE, 1, true);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        meta.setUnbreakable(true);
+        eye.setItemMeta(meta);
+
+        return eye;
+    }
+
+    public ItemStack cactusHead(){
+        ItemStack head =  new ItemStack((Material.LEATHER_HELMET));
+        LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
+        meta.setColor(Color.fromRGB(0, 255, 0));
+        meta.setDisplayName(ChatColor.DARK_GREEN + "cumsock");
+        meta.addEnchant(Enchantment.THORNS, 11, true);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.setUnbreakable(true);
+        head.setItemMeta(meta);
+
+        return head;
+    }
+
+    public ItemStack cactusLeg(){
+        ItemStack head =  new ItemStack((Material.LEATHER_LEGGINGS));
+        LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
+        meta.setColor(Color.fromRGB(0, 255, 0));
+        meta.setDisplayName(ChatColor.DARK_GREEN + "cumsock");
+        meta.addEnchant(Enchantment.THORNS, 11, true);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.setUnbreakable(true);
+        head.setItemMeta(meta);
+
+        return head;
+    }
+
+    public ItemStack cactusChest(){
+        ItemStack head =  new ItemStack((Material.LEATHER_CHESTPLATE));
+        LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
+        meta.setColor(Color.fromRGB(0, 255, 0));
+        meta.setDisplayName(ChatColor.DARK_GREEN + "cumsock");
+        meta.addEnchant(Enchantment.THORNS, 11, true);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.setUnbreakable(true);
+        head.setItemMeta(meta);
+
+        return head;
+    }
+
+    public ItemStack cactusFoot(){
+        ItemStack head =  new ItemStack((Material.LEATHER_BOOTS));
+        LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
+        meta.setColor(Color.fromRGB(0, 255, 0));
+        meta.setDisplayName(ChatColor.DARK_GREEN + "cumsock");
+        meta.addEnchant(Enchantment.THORNS, 11, true);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.setUnbreakable(true);
+        head.setItemMeta(meta);
+
+        return head;
+    }
+
     @EventHandler
     public void onClick(PlayerInteractEvent event) {
-        if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.STICK)) {
-            if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta()
+
+        Player player = event.getPlayer();
+
+        if (player.getInventory().getItemInMainHand().getType().equals(Material.STICK)) {
+            if (player.getInventory().getItemInMainHand().getItemMeta()
                     .getDisplayName().contains("Stick O' Doom")) {
-                if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasLore()) {
-                    Player player = (Player) event.getPlayer();
+                if (player.getInventory().getItemInMainHand().getItemMeta().hasLore()) {
                     if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                         if (cooldowns.containsKey(player.getName())) {
                             if (cooldowns.get(player.getName()) > System.currentTimeMillis()) {
@@ -834,20 +951,18 @@ public class RageKitPvP extends JavaPlugin implements Listener {
             }
         }
 
-        if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.COMPASS)) {
-            if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta()
+        if (player.getInventory().getItemInMainHand().getType().equals(Material.COMPASS)) {
+            if (player.getInventory().getItemInMainHand().getItemMeta()
                     .getDisplayName().contains("Kit Selector")) {
-                Player player = (Player) event.getPlayer();
                 if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR){
                     player.openInventory(inv);
                 }
             }
         }
 
-        if (event.getPlayer().getInventory().contains(Material.PLAYER_HEAD)) {
-            if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.PLAYER_HEAD)) {
+        if (player.getInventory().contains(Material.PLAYER_HEAD)) {
+            if (player.getInventory().getItemInMainHand().getType().equals(Material.PLAYER_HEAD)) {
                 if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) {
-                    Player player = (Player) event.getPlayer();
                     ItemStack head = new ItemStack(player.getInventory().getItemInMainHand());
                     player.getInventory().removeItem(head);
                     player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 120, 2));
@@ -863,12 +978,10 @@ public class RageKitPvP extends JavaPlugin implements Listener {
             }
         }
 
-        if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.STICK)) {
-            if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta()
+        if (player.getInventory().getItemInMainHand().getType().equals(Material.STICK)) {
+            if (player.getInventory().getItemInMainHand().getItemMeta()
                     .getDisplayName().contains("Right click the ground to spawn your horse!")) {
-                Player player = (Player) event.getPlayer();
                 if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                    Block b = player.getTargetBlock(null, 5);
                     Horse h = (Horse) player.getWorld().spawnEntity(player.getLocation(), EntityType.HORSE);
                     h.setTamed(true);
                     h.setOwner(event.getPlayer());
@@ -962,6 +1075,17 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     @EventHandler()
     public void onClick(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
+
+        if (e.getSlotType().equals(InventoryType.SlotType.ARMOR) && player.getInventory().getLeggings() != null) {
+            if (player.getInventory().getLeggings().getType() == Material.LEATHER_LEGGINGS)
+                if (player.getInventory().getLeggings().getItemMeta().getDisplayName().contains("PissPants"))
+                    if (player.getInventory().getLeggings().getItemMeta().hasLore()) {
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 600, 2));
+                        player.sendMessage(ChatColor.AQUA + player.getName()
+                                + ChatColor.GOLD + " " + ChatColor.BOLD + "PISSED PANTS");
+                    }
+        }
+
         if (!e.getInventory().equals(inv)) return;
         if (e.getCurrentItem() == null) return;
         if (e.getCurrentItem().getItemMeta() == null) return;
@@ -1025,7 +1149,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
             player.closeInventory();
         }
         if (e.getSlot() == 10) {
-            if (player.hasPermission("kits.vip")) {
+            if (2 > 1) {
                 player.getInventory().clear();
                 player.getInventory().setBoots(horseFeet());
                 player.getInventory().setLeggings(horseLegs());
@@ -1042,7 +1166,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
             }
         }
         if (e.getSlot() == 11) {
-            if (player.hasPermission("kits.vip")) {
+            if (2 > 1) {
                 player.getInventory().clear();
                 player.getInventory().addItem(new ItemStack(Material.NETHERITE_SWORD));
                 player.getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 64));
@@ -1083,24 +1207,12 @@ public class RageKitPvP extends JavaPlugin implements Listener {
             player.closeInventory();
         }
         if (e.getSlot() == 12) {
-            if (player.hasPermission("kits.vip")) {
+            if (2 > 1) {
                 player.getInventory().clear();
-                ItemStack helmet111 = new ItemStack(Material.IRON_HELMET);
-                helmet111.addUnsafeEnchantment(Enchantment.DURABILITY, 150);
-                helmet111.addEnchantment(Enchantment.THORNS, 3);
-                player.getEquipment().setHelmet(helmet111);
-                ItemStack capacete0 = new ItemStack(Material.IRON_CHESTPLATE);
-                capacete0.addEnchantment(Enchantment.THORNS, 3);
-                capacete0.addUnsafeEnchantment(Enchantment.DURABILITY, 150);
-                player.getEquipment().setChestplate(capacete0);
-                ItemStack peitoral0 = new ItemStack(Material.LEATHER_LEGGINGS);
-                peitoral0.addEnchantment(Enchantment.THORNS, 3);
-                peitoral0.addUnsafeEnchantment(Enchantment.DURABILITY, 150);
-                player.getEquipment().setLeggings(peitoral0);
-                ItemStack calca0 = new ItemStack(Material.LEATHER_BOOTS);
-                calca0.addEnchantment(Enchantment.THORNS, 3);
-                calca0.addUnsafeEnchantment(Enchantment.DURABILITY, 150);
-                player.getEquipment().setBoots(calca0);
+                player.getEquipment().setHelmet(cactusHead());
+                player.getEquipment().setChestplate(cactusChest());
+                player.getEquipment().setLeggings(cactusLeg());
+                player.getEquipment().setBoots(cactusFoot());
                 player.closeInventory();
             }
             else {
@@ -1108,8 +1220,8 @@ public class RageKitPvP extends JavaPlugin implements Listener {
                         + "" + ChatColor.GREEN + "VIP");
             }
         }
-        if (e.getSlot() == 16) {
-            if (player.hasPermission("kits.vip")) {
+        if (e.getSlot() == 13) {
+            if (2 > 1) {
                 player.getInventory().clear();
                 ItemStack helmet111 = new ItemStack(Material.LEATHER_HELMET);
                 helmet111.addUnsafeEnchantment(Enchantment.DURABILITY, 150);
@@ -1140,6 +1252,20 @@ public class RageKitPvP extends JavaPlugin implements Listener {
                         + "" + ChatColor.GREEN + "VIP");
             }
         }
+
+        if (e.getSlot() == 14) {
+            if (2 > 1){
+                player.getInventory().clear();
+                player.getInventory().addItem(wardenFlint());
+                player.getInventory().setChestplate(wardenElytra());
+                player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 12000, 3));
+                player.closeInventory();
+
+            } else {
+                player.sendMessage(ChatColor.GOLD + "You are not " + ChatColor.UNDERLINE + "" + ChatColor.BOLD
+                        + "" + ChatColor.GREEN + "VIP");
+            }
+        }
     }
 
     @EventHandler
@@ -1163,15 +1289,83 @@ public class RageKitPvP extends JavaPlugin implements Listener {
         player.getInventory().addItem(compass());
     }
     @EventHandler
-    public void onEDeath(EntityDeathEvent e) {
-        if (!(e instanceof Player)) {
-            e.setDroppedExp(0);
-            e.getDrops().clear();
+    public void onEDeath(EntityDeathEvent entity) {
+        if (!(entity instanceof Player)) {
+            entity.setDroppedExp(0);
+            entity.getDrops().clear();
+        }
+
+        if (entity.getEntityType() == EntityType.WARDEN && entity.getEntity().getName().equalsIgnoreCase("Charles => "
+                + entity.getEntity().getKiller().getName())){
+            Location oldloc = entity.getEntity().getKiller().getLocation().clone();
+            Location loc = oldloc;
+
+            for (Integer i = 1; i < 1000; i++){
+                loc.setY(loc.getY() + .175);
+                loc.getWorld().playEffect(loc,  Effect.SMOKE, 5);
+                entity.getEntity().teleport(loc);
+            }
+
+            entity.getEntity().remove();
+            oldloc.getWorld().dropItem(oldloc, pissPants());
         }
     }
+
+    @EventHandler
+    public void EdmgE(EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof Player) {
+            Player player = (Player) event.getDamager();
+            Collection<Entity> entities = player.getWorld().getEntities();
+
+            if (player.getInventory().getItemInMainHand().getType().equals(Material.FLINT) &&
+                    player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("FlintWard")) {
+
+                    for (Entity ent : entities){
+                        if (ent.getName().equalsIgnoreCase("Charles => " + player.getName())){
+                            Location loc = player.getLocation().clone();
+                            loc.getWorld().playEffect(loc,  Effect.SMOKE, 5);
+                            Warden charles = (Warden) ent;
+                            if (charles.getAnger() > 0) { charles.setAnger(charles.getEntityAngryAt(), 0); }
+                            charles.teleport(loc);
+                            charles.setAnger(event.getEntity(), 150);
+                            player.sendMessage(ChatColor.BOLD + "" + ChatColor.MAGIC + "12345abcde");
+                            player.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "Charles ATTACK!");
+                            player.sendMessage(ChatColor.BOLD + "" + ChatColor.MAGIC + "12345abcde");
+                            return;
+                        }
+                    }
+
+
+                Warden warden = (Warden) player.getWorld().spawnEntity(player.getLocation(), EntityType.WARDEN);
+
+                warden.setCustomName("Charles => " + player.getName());
+                warden.setCustomNameVisible(true);
+                warden.setGlowing(true);
+                warden.clearAnger(player);
+                warden.setAnger(event.getEntity(), 150);
+                warden.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1200, 1));
+
+            }
+
+            Location loc = player.getLocation().clone();
+            if (loc.getY() >= 119){
+                event.setCancelled(true);
+            }
+        }
+        Entity entity = event.getDamager();
+        Entity target = event.getEntity();
+        if (entity.getName().equalsIgnoreCase("Charles => " + target.getName())){
+            Player player = (Player) target;
+            Warden warden = (Warden) entity;
+            warden.clearAnger(player);
+            event.setCancelled(true);
+        }
+    }
+
     @EventHandler
     public void onFall(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
+
             Player player = (Player) event.getEntity();
             player.setFoodLevel(20);
             if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
@@ -1272,6 +1466,18 @@ public class RageKitPvP extends JavaPlugin implements Listener {
             endermanSpawner(event.getBlockPlaced());
 
             p.sendMessage("You have just created a spawner!");
+        }
+    }
+
+    @EventHandler
+    public void onTarget(EntityTargetEvent event) {
+        Entity entity = event.getEntity();
+        Entity target = event.getTarget();
+        if (entity.getName().equalsIgnoreCase("Charles => " + target.getName())){
+            Player player = (Player) target;
+            Warden warden = (Warden) entity;
+            warden.clearAnger(player);
+            event.setCancelled(true);
         }
     }
 }
