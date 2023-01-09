@@ -1201,6 +1201,15 @@ public class RageKitPvP extends JavaPlugin implements Listener {
             p.setVelocity(p.getLocation().getDirection().multiply(2).setY(2));
         }
     }
+    @EventHandler
+    public void noBreakCrop(PlayerInteractEvent event) {
+        Block soilBlock = event.getClickedBlock();
+        if ((event.getAction() == Action.PHYSICAL)) {
+            if (soilBlock.getType() == Material.FARMLAND) {
+                event.setCancelled(true);
+            }
+        }
+    }
 
     @EventHandler
     public void horsepawn(PlayerInteractEvent event) {
