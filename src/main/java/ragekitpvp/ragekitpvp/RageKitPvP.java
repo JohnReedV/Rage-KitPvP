@@ -38,6 +38,7 @@ import org.bukkit.scoreboard.*;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
+import java.util.concurrent.TimeUnit;
 
 import java.util.*;
 import java.util.List;
@@ -862,6 +863,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
             }
         }
     }
+
     @EventHandler
     public void pyroStep(PlayerMoveEvent event) {
         Player player = (Player) event.getPlayer();
@@ -871,6 +873,14 @@ public class RageKitPvP extends JavaPlugin implements Listener {
                 Location loc = event.getPlayer().getLocation().clone();
                 if (loc.getBlock().getType() == Material.AIR) {
                     loc.getBlock().setType(Material.FIRE);
+                    getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+                        @Override
+                        public void run() {
+                            if (loc.getBlock().getType() == Material.FIRE){
+                                loc.getBlock().setType(Material.AIR);
+                            }
+                        }
+                    }, 75);
                 }
             }
         }
