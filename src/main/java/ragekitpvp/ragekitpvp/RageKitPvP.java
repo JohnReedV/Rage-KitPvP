@@ -1287,6 +1287,19 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     public void respawn(PlayerRespawnEvent event) {
         Player player = (Player) event.getPlayer();
         player.getInventory().addItem(compass());
+
+        Collection<Entity> entities = player.getWorld().getEntities();
+        for (Entity ent : entities){
+            if (ent.getName().equalsIgnoreCase("Charles => " + player.getName())){
+                Location loc = player.getLocation().clone();
+                loc.getWorld().playEffect(loc,  Effect.SMOKE, 10);
+                Warden charles = (Warden) ent;
+                charles.remove();
+                player.sendMessage(ChatColor.YELLOW + "you let charles die alone");
+                return;
+            }
+        }
+
     }
     @EventHandler
     public void onEDeath(EntityDeathEvent entity) {
