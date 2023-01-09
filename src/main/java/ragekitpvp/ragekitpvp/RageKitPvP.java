@@ -1316,16 +1316,13 @@ public class RageKitPvP extends JavaPlugin implements Listener {
         if (event.getDamager() instanceof Player) {
             Player player = (Player) event.getDamager();
             Collection<Entity> entities = player.getWorld().getEntities();
-
             if (player.getInventory().getItemInMainHand().getType().equals(Material.FLINT) &&
-                    player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("FlintWard")) {
-
+                    player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Guide O' Charles")) {
                     for (Entity ent : entities){
                         if (ent.getName().equalsIgnoreCase("Charles => " + player.getName())){
                             Location loc = player.getLocation().clone();
                             loc.getWorld().playEffect(loc,  Effect.SMOKE, 5);
                             Warden charles = (Warden) ent;
-                            if (charles.getAnger() > 0) { charles.setAnger(charles.getEntityAngryAt(), 0); }
                             charles.teleport(loc);
                             charles.setAnger(event.getEntity(), 150);
                             player.sendMessage(ChatColor.BOLD + "" + ChatColor.MAGIC + "12345abcde");
