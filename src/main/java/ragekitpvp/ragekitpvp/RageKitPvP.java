@@ -1184,6 +1184,15 @@ public class RageKitPvP extends JavaPlugin implements Listener {
         }
     }
     @EventHandler
+    public void jumpPad(PlayerMoveEvent event) {
+        Player p = (Player) event.getPlayer();
+        Location loc = event.getPlayer().getLocation().clone();
+        if (loc.getBlock().getType() == Material.LIGHT_WEIGHTED_PRESSURE_PLATE) {
+            p.setVelocity(p.getLocation().getDirection().multiply(2).setY(2));
+        }
+    }
+
+    @EventHandler
     public void horsepawn(PlayerInteractEvent event) {
         if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.STICK))
             if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta()
