@@ -1113,6 +1113,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
         meta.setDisplayName(ChatColor.GREEN + player.getDisplayName() + "s" + ChatColor.AQUA + " head");
         head.setItemMeta(meta);
         event.getDrops().add(head);
+        player.teleport(player.getWorld().getSpawnLocation());
     }
     @EventHandler
     public void eatHead(PlayerInteractEvent event) {
@@ -1167,6 +1168,10 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     @EventHandler
     public void noBed(PlayerBedEnterEvent event){
         event.setCancelled(true);
+
+        Player player = event.getPlayer();
+        Location loc = player.getLocation().clone();
+        player.setBedSpawnLocation(player.getWorld().getSpawnLocation());
     }
     @EventHandler
     public void nopvp(EntityDamageEvent event) {
