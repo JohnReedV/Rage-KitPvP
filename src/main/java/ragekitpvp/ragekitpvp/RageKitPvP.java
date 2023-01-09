@@ -800,7 +800,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     }
     @EventHandler
     public void onClick(PlayerInteractEvent event) {
-        if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.STICK))
+        if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.STICK)) {
             if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta()
                     .getDisplayName().contains("Stick O' Doom")) {
                 if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasLore()) {
@@ -832,6 +832,52 @@ public class RageKitPvP extends JavaPlugin implements Listener {
                     }
                 }
             }
+        }
+
+        if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.COMPASS)) {
+            if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta()
+                    .getDisplayName().contains("Kit Selector")) {
+                Player player = (Player) event.getPlayer();
+                if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR){
+                    player.openInventory(inv);
+                }
+            }
+        }
+
+        if (event.getPlayer().getInventory().contains(Material.PLAYER_HEAD)) {
+            if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.PLAYER_HEAD)) {
+                if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) {
+                    Player player = (Player) event.getPlayer();
+                    ItemStack head = new ItemStack(player.getInventory().getItemInMainHand());
+                    player.getInventory().removeItem(head);
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 120, 2));
+                    player.sendMessage(ChatColor.GOLD + "You have been nourished by your victim");
+                }
+            }
+        }
+
+        if ((event.getAction() == Action.PHYSICAL)) {
+            Block soilBlock = event.getClickedBlock();
+            if (soilBlock.getType() == Material.FARMLAND) {
+                event.setCancelled(true);
+            }
+        }
+
+        if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.STICK)) {
+            if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta()
+                    .getDisplayName().contains("Right click the ground to spawn your horse!")) {
+                Player player = (Player) event.getPlayer();
+                if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                    Block b = player.getTargetBlock(null, 5);
+                    Horse h = (Horse) player.getWorld().spawnEntity(player.getLocation(), EntityType.HORSE);
+                    h.setTamed(true);
+                    h.setOwner(event.getPlayer());
+                    h.getInventory().setSaddle(new ItemStack(Material.SADDLE, 1));
+                    h.getInventory().setArmor(new ItemStack(Material.DIAMOND_HORSE_ARMOR));
+                    player.getInventory().removeItem(horseSpawn());
+                }
+            }
+        }
     }
     @EventHandler
     public void onJump(PlayerMoveEvent event) {
@@ -843,30 +889,20 @@ public class RageKitPvP extends JavaPlugin implements Listener {
                 }
             }
         }
-    }
-    @EventHandler
-    public void knightSpeed(PlayerMoveEvent event) {
-        Player player = (Player) event.getPlayer();
+
         if (player.getInventory().getBoots() != null) {
             if (player.getInventory().getBoots().getItemMeta().getDisplayName().contains("Feet of the Knight")) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000, 1));
             }
         }
-    }
-    @EventHandler
-    public void invisstick(PlayerMoveEvent event) {
-        Player player = (Player) event.getPlayer();
+
         if (player.getInventory().getItemInMainHand().getType() == Material.STICK) {
             if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName()
                     .contains("Ninja death STICK")) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 220, 1));
             }
         }
-    }
 
-    @EventHandler
-    public void pyroStep(PlayerMoveEvent event) {
-        Player player = (Player) event.getPlayer();
         if (player.getInventory().getBoots() != null) {
             if (player.getInventory().getBoots().getItemMeta().getDisplayName().contains("Boots of FLAMES")) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 1000, 2));
@@ -883,6 +919,11 @@ public class RageKitPvP extends JavaPlugin implements Listener {
                     }, 75);
                 }
             }
+        }
+
+        Location loc = event.getPlayer().getLocation().clone();
+        if (loc.getBlock().getType() == Material.LIGHT_WEIGHTED_PRESSURE_PLATE) {
+            player.setVelocity(player.getLocation().getDirection().multiply(2).setY(2));
         }
     }
 
@@ -1100,17 +1141,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
             }
         }
     }
-    @EventHandler()
-    public void compassClick(PlayerInteractEvent event) {
-        if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.COMPASS))
-            if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta()
-                    .getDisplayName().contains("Kit Selector")) {
-                Player player = (Player) event.getPlayer();
-                if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR){
-                    player.openInventory(inv);
-                }
-            }
-    }
+
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
         event.setDroppedExp(0);
@@ -1125,20 +1156,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
         event.getDrops().add(head);
         player.teleport(player.getWorld().getSpawnLocation());
     }
-    @EventHandler
-    public void eatHead(PlayerInteractEvent event) {
-        if (event.getPlayer().getInventory().contains(Material.PLAYER_HEAD)) {
-            if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.PLAYER_HEAD)) {
-                if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) {
-                    Player player = (Player) event.getPlayer();
-                    ItemStack head = new ItemStack(player.getInventory().getItemInMainHand());
-                    player.getInventory().removeItem(head);
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 120, 2));
-                    player.sendMessage(ChatColor.GOLD + "You have been nourished by your victim");
-                }
-            }
-        }
-    }
+
     @EventHandler
     public void respawn(PlayerRespawnEvent event) {
         Player player = (Player) event.getPlayer();
@@ -1156,8 +1174,14 @@ public class RageKitPvP extends JavaPlugin implements Listener {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
             player.setFoodLevel(20);
-            if (event.getCause() == EntityDamageEvent.DamageCause.FALL)
+            if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
                 event.setCancelled(true);
+            }
+
+            Location loc = event.getEntity().getLocation().clone();
+            if (loc.getY() >= 119){
+                event.setCancelled(true);
+            }
         }
     }
     @EventHandler
@@ -1183,51 +1207,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
         Location loc = player.getLocation().clone();
         player.setBedSpawnLocation(player.getWorld().getSpawnLocation());
     }
-    @EventHandler
-    public void nopvp(EntityDamageEvent event) {
-        if (event.getEntity() instanceof Player) {
-            Player player = (Player) event.getEntity();
-            Location loc = event.getEntity().getLocation().clone();
-            if (loc.getY() >= 119){
-                event.setCancelled(true);
-            }
-        }
-    }
-    @EventHandler
-    public void jumpPad(PlayerMoveEvent event) {
-        Player p = (Player) event.getPlayer();
-        Location loc = event.getPlayer().getLocation().clone();
-        if (loc.getBlock().getType() == Material.LIGHT_WEIGHTED_PRESSURE_PLATE) {
-            p.setVelocity(p.getLocation().getDirection().multiply(2).setY(2));
-        }
-    }
-    @EventHandler
-    public void noBreakCrop(PlayerInteractEvent event) {
-        Block soilBlock = event.getClickedBlock();
-        if ((event.getAction() == Action.PHYSICAL)) {
-            if (soilBlock.getType() == Material.FARMLAND) {
-                event.setCancelled(true);
-            }
-        }
-    }
 
-    @EventHandler
-    public void horsepawn(PlayerInteractEvent event) {
-        if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.STICK))
-            if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta()
-                    .getDisplayName().contains("Right click the ground to spawn your horse!")) {
-                Player player = (Player) event.getPlayer();
-                if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                    Block b = player.getTargetBlock(null, 5);
-                    Horse h = (Horse) player.getWorld().spawnEntity(player.getLocation(), EntityType.HORSE);
-                    h.setTamed(true);
-                    h.setOwner(event.getPlayer());
-                    h.getInventory().setSaddle(new ItemStack(Material.SADDLE, 1));
-                    h.getInventory().setArmor(new ItemStack(Material.DIAMOND_HORSE_ARMOR));
-                    player.getInventory().removeItem(horseSpawn());
-                }
-            }
-    }
     @EventHandler
     public void onBlockIgnite(BlockIgniteEvent event){
         if (event.getCause() == BlockIgniteEvent.IgniteCause.SPREAD){
