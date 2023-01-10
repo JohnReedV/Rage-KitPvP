@@ -483,6 +483,7 @@ public class Items {
         meta.addEnchant(Enchantment.LURE, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.setUnbreakable(true);
         compass.setItemMeta(meta);
 
@@ -530,7 +531,7 @@ public class Items {
         ItemStack eye = new ItemStack(Material.ELYTRA);
         ItemMeta meta = eye.getItemMeta();
         meta.setDisplayName(ChatColor.DARK_BLUE + "GO CRAZY HUNNY," +
-                " GO CRAY CRAY LIKE IT YO LAST FRIDAY NIGHT OF YOUR 20S!!!");
+                " GO CRAY CRAY LIKE IT YO LASt EASTER SUNDAY!!!");
         meta.addEnchant(Enchantment.LURE, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -545,7 +546,7 @@ public class Items {
         LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
         meta.setColor(Color.fromRGB(0, 255, 0));
         meta.setDisplayName(ChatColor.DARK_GREEN + "cumsock");
-        meta.addEnchant(Enchantment.THORNS, 11, true);
+        meta.addEnchant(Enchantment.THORNS, 29, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setUnbreakable(true);
         head.setItemMeta(meta);
@@ -558,7 +559,7 @@ public class Items {
         LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
         meta.setColor(Color.fromRGB(0, 255, 0));
         meta.setDisplayName(ChatColor.DARK_GREEN + "cumsock");
-        meta.addEnchant(Enchantment.THORNS, 11, true);
+        meta.addEnchant(Enchantment.THORNS, 29, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setUnbreakable(true);
         head.setItemMeta(meta);
@@ -571,7 +572,7 @@ public class Items {
         LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
         meta.setColor(Color.fromRGB(0, 255, 0));
         meta.setDisplayName(ChatColor.DARK_GREEN + "cumsock");
-        meta.addEnchant(Enchantment.THORNS, 11, true);
+        meta.addEnchant(Enchantment.THORNS, 29, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setUnbreakable(true);
         head.setItemMeta(meta);
@@ -584,7 +585,7 @@ public class Items {
         LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
         meta.setColor(Color.fromRGB(0, 255, 0));
         meta.setDisplayName(ChatColor.DARK_GREEN + "cumsock");
-        meta.addEnchant(Enchantment.THORNS, 11, true);
+        meta.addEnchant(Enchantment.THORNS, 29, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setUnbreakable(true);
         head.setItemMeta(meta);

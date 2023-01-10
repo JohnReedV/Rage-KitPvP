@@ -185,9 +185,11 @@ public class kitInv {
 
         ItemStack warden = new ItemStack(Material.SCULK_SENSOR);
         ItemMeta meta15 = warden.getItemMeta();
-        meta15.setDisplayName(ChatColor.DARK_BLUE + "Warten");
+        meta15.setDisplayName(ChatColor.DARK_BLUE + "Charles");
         List<String> lore15 = new ArrayList<String>();
-        lore15.add(ChatColor.ITALIC + "Do you have the Charles? Or does Charles have you?!?");
+        lore15.add("");
+        lore15.add(ChatColor.ITALIC + "Do you have the Charles?");
+        lore15.add(ChatColor.ITALIC + "Or does Charles have you?!?");
         meta15.setLore(lore15);
         meta15.addEnchant(Enchantment.LURE,1,true);
         meta15.addItemFlags(ItemFlag.HIDE_ENCHANTS);
