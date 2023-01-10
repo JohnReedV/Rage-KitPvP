@@ -1,18 +1,11 @@
 package ragekitpvp.ragekitpvp;
 
-import org.bukkit.Color;
-import org.bukkit.block.BlockState;
-import org.bukkit.block.CreatureSpawner;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerRespawnEvent;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -26,892 +19,36 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scoreboard.*;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
-
 import java.util.*;
-import java.util.List;
 
 public class RageKitPvP extends JavaPlugin implements Listener {
     Map<String, Long> cooldowns = new HashMap<String, Long>();
-
-    public Inventory inv;
+    kitInv inventory = new kitInv();
+    RageScoreboard scoreboard = new RageScoreboard();
+    Items items = new Items();
 
     @Override
     public void onEnable(){
         this.getServer().getPluginManager().registerEvents(this, this);
-        createInv();
+        inventory.createInv();
+        this.getCommand("head").setExecutor(new commands());
+        this.getCommand("kits").setExecutor(new commands());
+        this.getCommand("setspawn").setExecutor(new commands());
+        //this.getCommand("flex").setExecutor(new commands());
         System.out.println("GUI in");
     }
     @Override
     public void onDisable(){
         System.out.println("GUI out");
     }
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (label.equalsIgnoreCase("head")) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage("players only BOSS");
-            }
-            if (sender.hasPermission("kits.head")) {
-                Player player = (Player) sender;
-                if (args.length == 0) {
-                    ItemStack head = new ItemStack(Material.PLAYER_HEAD);
-                    SkullMeta meta = (SkullMeta) head.getItemMeta();
-                    meta.setOwner(player.getDisplayName());
-                    meta.setDisplayName(ChatColor.GREEN + player.getDisplayName() + "s" + ChatColor.AQUA + " head");
-                    head.setItemMeta(meta);
-                    player.getInventory().addItem(head);
-                    return true;
-                }
-                if (args.length > 0) {
-                    for (Player online : Bukkit.getOnlinePlayers()) {
-                        if (args[0].equalsIgnoreCase(online.getDisplayName())) {
-                            ItemStack head = new ItemStack(Material.PLAYER_HEAD);
-                            SkullMeta meta = (SkullMeta) head.getItemMeta();
-                            meta.setOwner(online.getDisplayName());
-                            meta.setDisplayName(ChatColor.GREEN + online.getDisplayName() + "s" + ChatColor.AQUA + " head");
-                            head.setItemMeta(meta);
-                            player.getInventory().addItem(head);
-                            return true;
-                        }
-                    }
-                } else {
-                    player.sendMessage(ChatColor.GOLD + "Player not online");
-                }
-            }
-        }
-        if (label.equalsIgnoreCase("kits")) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage("players only BOSS");
-            }
-            if (sender.hasPermission("kits.open")) {
-                Player player = (Player) sender;
-                player.openInventory(inv);
-            }
-        }
 
-        if (label.equalsIgnoreCase("setspawn")) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage("players only BOSS");
-            }
-            if (sender.hasPermission("kits.setspawn")){
-                Player player = (Player) sender;
-                World world = player.getWorld();
-                Location loc = player.getLocation();
-                world.setSpawnLocation(loc.getBlockX(), loc.getBlockY() + 1, loc.getBlockZ());
-            }
-        }
-
-        if (label.equalsIgnoreCase("flex")) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage("players only BOSS");
-            } else {
-                Player player = (Player) sender;
-                Integer kills = player.getStatistic(Statistic.PLAYER_KILLS);
-                Integer deaths = player.getStatistic(Statistic.DEATHS);
-                Integer dmgDone = player.getStatistic(Statistic.DAMAGE_DEALT);
-                Integer dmgTaken = player.getStatistic(Statistic.DAMAGE_TAKEN);
-                Integer time = player.getStatistic(Statistic.TOTAL_WORLD_TIME);
-
-                getServer().dispatchCommand(getServer().getConsoleSender(), "say Here are "
-                        + player.getName() + "'s stats...");
-
-                getServer().dispatchCommand(getServer().getConsoleSender(),"say Died : " + deaths.toString());
-                getServer().dispatchCommand(getServer().getConsoleSender(),"say Killed : " + kills.toString());
-                getServer().dispatchCommand(getServer().getConsoleSender(),"say Damage done : " + dmgDone.toString());
-                getServer().dispatchCommand(getServer().getConsoleSender(),"say Damage Taken : " + dmgTaken.toString());
-                getServer().dispatchCommand(getServer().getConsoleSender(),"Time on server : " + time.toString());
-            }
-
-        }
-
-        return true;
-    }
-    public void createInv() {
-        inv = Bukkit.createInventory(null, 18, ChatColor.BOLD + "" + ChatColor.GOLD + "Kit Selector");
-        ItemStack book1 = new ItemStack(Material.BOOK);
-        ItemMeta meta7 = book1.getItemMeta();
-        meta7.setDisplayName(ChatColor.GOLD + "Default Kits");
-        List<String> lore7 = new ArrayList<String>();
-        lore7.add("");
-        lore7.add(ChatColor.RED + "---->");
-        meta7.setLore(lore7);
-        meta7.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        book1.setItemMeta(meta7);
-        inv.setItem(0,book1);
-
-        ItemStack book2 = new ItemStack(Material.BOOK);
-        ItemMeta meta8 = book1.getItemMeta();
-        meta8.setDisplayName(ChatColor.GOLD + "VIP Kits");
-        List<String> lore8 = new ArrayList<String>();
-        lore8.add("");
-        lore8.add(ChatColor.RED + "---->");
-        meta8.setLore(lore8);
-        meta8.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        book2.setItemMeta(meta8);
-        inv.setItem(9,book2);
-
-        ItemStack chem = new ItemStack(Material.BREWING_STAND);
-        ItemMeta meta6 = chem.getItemMeta();
-        meta6.setDisplayName(ChatColor.DARK_GREEN + "Chemist");
-        List<String> lore6 = new ArrayList<String>();
-        lore6.add(ChatColor.ITALIC + "" + ChatColor.LIGHT_PURPLE + "hehehehe you a special kinda dude");
-        meta6.setLore(lore6);
-        meta6.addEnchant(Enchantment.LURE, 1, true);
-        meta6.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        meta6.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        chem.setItemMeta(meta6);
-        inv.setItem(1, chem);
-
-        ItemStack doom = new ItemStack(Material.NETHERITE_SWORD);
-        ItemMeta meta1 = doom.getItemMeta();
-        meta1.setDisplayName(ChatColor.DARK_RED + "DOOM");
-        List<String> lore = new ArrayList<String>();
-        lore.add(ChatColor.GRAY + "Fly and wreak " + ChatColor.DARK_RED + ChatColor.BOLD + "DOOM" + ChatColor.RESET
-                + ChatColor.GRAY + " if you dare!");
-        meta1.setLore(lore);
-        meta1.addEnchant(Enchantment.LURE, 1, true);
-        meta1.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta1.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        doom.setItemMeta(meta1);
-        inv.setItem(2, doom);
-
-        ItemStack knight = new ItemStack(Material.IRON_HELMET);
-        ItemMeta meta2 = knight.getItemMeta();
-        meta2.setDisplayName(ChatColor.BLUE + "Knight");
-        List<String> lore2 = new ArrayList<String>();
-        lore2.add(ChatColor.ITALIC + "" + ChatColor.BLUE + "For Honor, for Glory!");
-        meta2.setLore(lore2);
-        meta2.addEnchant(Enchantment.LURE, 1, true);
-        meta2.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta2.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        knight.setItemMeta(meta2);
-        inv.setItem(3, knight);
-
-        ItemStack archer = new ItemStack(Material.BOW);
-        ItemMeta meta3 = archer.getItemMeta();
-        meta3.setDisplayName(ChatColor.DARK_GREEN + "Archer");
-        List<String> lore3 = new ArrayList<String>();
-        lore3.add(ChatColor.ITALIC + "" + ChatColor.DARK_GREEN + "bow time");
-        meta3.setLore(lore3);
-        meta3.addEnchant(Enchantment.LURE, 1,true);
-        meta3.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta3.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        archer.setItemMeta(meta3);
-        inv.setItem(4, archer);
-
-        ItemStack pyro = new ItemStack(Material.BLAZE_ROD);
-        ItemMeta meta4 = pyro.getItemMeta();
-        meta4.setDisplayName(ChatColor.DARK_RED + "Pyro");
-        List<String> lore4 = new ArrayList<String>();
-        lore4.add(ChatColor.ITALIC + "" + ChatColor.RED + "Set your enemies" + ChatColor.BOLD + " ABLAZE");
-        meta4.setLore(lore4);
-        meta4.addEnchant(Enchantment.LURE,1,true);
-        meta4.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta4.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        pyro.setItemMeta(meta4);
-        inv.setItem(5, pyro);
-
-        ItemStack nin = new ItemStack(Material.GLASS_BOTTLE);
-        ItemMeta meta5 = nin.getItemMeta();
-        meta5.setDisplayName(ChatColor.GRAY + "" + ChatColor.BOLD + "Ninja");
-        List<String> lore5 = new ArrayList<String>();
-        lore5.add(ChatColor.ITALIC + "" + ChatColor.AQUA + "sneak upon them");
-        meta5.setLore(lore5);
-        meta5.addEnchant(Enchantment.LURE,1,true);
-        meta5.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta5.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        nin.setItemMeta(meta5);
-        inv.setItem(6, nin);
-
-        ItemStack horse = new ItemStack(Material.SADDLE);
-        ItemMeta meta9 = horse.getItemMeta();
-        meta9.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "Jockey");
-        List<String> lore9 = new ArrayList<String>();
-        lore9.add(ChatColor.ITALIC + "" + ChatColor.AQUA + "horsey go NEIGH");
-        meta9.setLore(lore9);
-        meta9.addEnchant(Enchantment.LURE,1,true);
-        meta9.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta9.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        horse.setItemMeta(meta9);
-        inv.setItem(10, horse);
-
-        ItemStack tank = new ItemStack(Material.NETHERITE_INGOT);
-        ItemMeta meta10 = tank.getItemMeta();
-        meta10.setDisplayName(ChatColor.GRAY + "" + ChatColor.BOLD + "TANK");
-        List<String> lore10 = new ArrayList<String>();
-        lore10.add(ChatColor.ITALIC + "" + ChatColor.GRAY + "ur pretty tough");
-        meta10.setLore(lore10);
-        meta10.addEnchant(Enchantment.LURE,1,true);
-        meta10.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta10.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        tank.setItemMeta(meta10);
-        inv.setItem(7, tank);
-
-        ItemStack ender = new ItemStack(Material.ENDER_PEARL);
-        ItemMeta meta11 = ender.getItemMeta();
-        meta11.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Ender");
-        List<String> lore11 = new ArrayList<String>();
-        lore11.add(ChatColor.ITALIC + "" + ChatColor.AQUA + "enderman = BOSS");
-        meta11.setLore(lore11);
-        meta11.addEnchant(Enchantment.LURE,1,true);
-        meta11.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta11.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        ender.setItemMeta(meta11);
-        inv.setItem(11, ender);
-
-        ItemStack cactus = new ItemStack(Material.CACTUS);
-        ItemMeta meta12 = cactus.getItemMeta();
-        meta12.setDisplayName(ChatColor.RED + "Cactus");
-        List<String> lore12 = new ArrayList<String>();
-        lore12.add(ChatColor.ITALIC + "" + ChatColor.GRAY + "poke them!");
-        meta12.setLore(lore12);
-        meta12.addEnchant(Enchantment.LURE,1,true);
-        meta12.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta12.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        cactus.setItemMeta(meta12);
-        inv.setItem(12, cactus);
-
-        ItemStack ak = new ItemStack(Material.FLINT_AND_STEEL);
-        ItemMeta meta13 = ak.getItemMeta();
-        meta13.setDisplayName(ChatColor.DARK_RED + "TERRORIST");
-        List<String> lore13 = new ArrayList<String>();
-        lore13.add(ChatColor.ITALIC + "" + ChatColor.GRAY + "The Khalefeid has declared an eternal Jihad!");
-        lore13.add(ChatColor.ITALIC + "" + ChatColor.GRAY + "The hordes of the west are no match for the");
-        lore13.add(ChatColor.ITALIC + "" + ChatColor.GRAY + "Unstoppable wave of Islam, lets go my brothers!");
-        meta13.setLore(lore13);
-        meta13.addEnchant(Enchantment.LURE,1,true);
-        meta13.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta13.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        ak.setItemMeta(meta13);
-        inv.setItem(13, ak);
-
-        ItemStack outcast = new ItemStack(Material.WITHER_ROSE);
-        ItemMeta meta14 = outcast.getItemMeta();
-        meta14.setDisplayName(ChatColor.DARK_GRAY + "Outcast");
-        List<String> lore14 = new ArrayList<String>();
-        lore14.add(ChatColor.ITALIC + "" + ChatColor.RED + "outcast?? haha loser");
-        meta14.setLore(lore14);
-        meta14.addEnchant(Enchantment.LURE,1,true);
-        meta14.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta14.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        outcast.setItemMeta(meta14);
-        inv.setItem(8, outcast);
-
-        ItemStack warden = new ItemStack(Material.SCULK_SENSOR);
-        ItemMeta meta15 = warden.getItemMeta();
-        meta15.setDisplayName(ChatColor.DARK_BLUE + "Warten");
-        List<String> lore15 = new ArrayList<String>();
-        lore15.add(ChatColor.ITALIC + "Do you have the Charles? Or does Charles have you?!?");
-        meta15.setLore(lore15);
-        meta15.addEnchant(Enchantment.LURE,1,true);
-        meta15.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta15.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        warden.setItemMeta(meta15);
-        inv.setItem(14, warden);
-
-    }
-
-    public void createBoard(Player player) {
-        ScoreboardManager manager = Bukkit.getScoreboardManager();
-        Scoreboard board = manager.getNewScoreboard();
-        Objective obj = board.registerNewObjective("Rage", "dummy",
-                ChatColor.BOLD + "" + ChatColor.RED + "RAGE PVP");
-        obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-        Score kills = obj.getScore(ChatColor.AQUA + "Kills: " + ChatColor.GREEN +
-                player.getStatistic(Statistic.PLAYER_KILLS));
-        kills.setScore(0);
-        Score deaths = obj.getScore(ChatColor.AQUA + "Deaths: " + ChatColor.GREEN +
-                player.getStatistic(Statistic.DEATHS));
-        deaths.setScore(0);
-        Score dmg = obj.getScore(ChatColor.AQUA + "Damage Dealt: " + ChatColor.GREEN +
-                player.getStatistic(Statistic.DAMAGE_DEALT));
-        dmg.setScore(0);
-        Score dmgt = obj.getScore(ChatColor.AQUA + "Damage Taken: " + ChatColor.GREEN +
-                player.getStatistic(Statistic.DAMAGE_TAKEN));
-        dmgt.setScore(0);
-        player.setScoreboard(board);
-    }
-    public ItemStack getDoom() {
-        ItemStack doom = new ItemStack(Material.NETHERITE_SWORD);
-        ItemMeta meta = doom.getItemMeta();
-        meta.setDisplayName(ChatColor.BLACK + "Sword O' Doom");
-        List<String> lore = new ArrayList<String>();
-        lore.add("");
-        lore.add(ChatColor.ITALIC + "" + ChatColor.DARK_RED + "+10 dmg dealt against pregnant women");
-        lore.add("");
-        meta.setLore(lore);
-        meta.addEnchant(Enchantment.LURE, 1, true);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.setUnbreakable(true);
-        doom.setItemMeta(meta);
-
-        return doom;
-    }
-    public ItemStack doomStick() {
-        ItemStack stick = new ItemStack(Material.STICK);
-        ItemMeta meta = stick.getItemMeta();
-        meta.setDisplayName(ChatColor.BLACK + "Stick O' Doom");
-        List<String> lore = new ArrayList<String>();
-        lore.add("");
-        lore.add(ChatColor.ITALIC + "" + ChatColor.DARK_RED + "play with magic stick >:)");
-        lore.add("");
-        lore.add(ChatColor.DARK_PURPLE + "recharging skelly spawns take 25 seconds");
-        meta.setLore(lore);
-        meta.addEnchant(Enchantment.LURE, 1, true);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.setUnbreakable(true);
-        stick.setItemMeta(meta);
-
-        return stick;
-    }
-    public ItemStack doomBoots() {
-        ItemStack gboots = new ItemStack(Material.CHAINMAIL_BOOTS);
-        ItemMeta meta = gboots.getItemMeta();
-        meta.setDisplayName(ChatColor.BLACK + "Boots O' Doom");
-        List<String> lore = new ArrayList<String>();
-        lore.add("");
-        lore.add(ChatColor.ITALIC + "" + ChatColor.DARK_RED + "Boots for DOOM purposes");
-        meta.setLore(lore);
-        meta.addEnchant(Enchantment.LURE, 1, true);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.setUnbreakable(true);
-        gboots.setItemMeta(meta);
-
-        return gboots;
-    }
-    public ItemStack knightBoots() {
-        ItemStack boots = new ItemStack(Material.IRON_BOOTS);
-        ItemMeta meta = boots.getItemMeta();
-        meta.setDisplayName(ChatColor.BLUE + "Feet of the Knight");
-        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
-        meta.setUnbreakable(true);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        boots.setItemMeta(meta);
-
-        return boots;
-    }
-    public ItemStack knightLegs() {
-        ItemStack boots = new ItemStack(Material.IRON_LEGGINGS);
-        ItemMeta meta = boots.getItemMeta();
-        meta.setDisplayName(ChatColor.BLUE + "Legs of the Knight");
-        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
-        meta.setUnbreakable(true);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        boots.setItemMeta(meta);
-
-        return boots;
-    }
-    public ItemStack knightChest() {
-        ItemStack boots = new ItemStack(Material.IRON_CHESTPLATE);
-        ItemMeta meta = boots.getItemMeta();
-        meta.setDisplayName(ChatColor.BLUE + "Chest of the Knight");
-        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
-        meta.setUnbreakable(true);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        boots.setItemMeta(meta);
-
-        return boots;
-    }
-    public ItemStack knightHead() {
-        ItemStack boots = new ItemStack(Material.IRON_HELMET);
-        ItemMeta meta = boots.getItemMeta();
-        meta.setDisplayName(ChatColor.BLUE + "Head of the Knight");
-        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
-        meta.setUnbreakable(true);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        boots.setItemMeta(meta);
-
-        return boots;
-    }
-    public ItemStack knightSword(){
-        ItemStack sword = new ItemStack(Material.DIAMOND_SWORD);
-        ItemMeta meta = sword.getItemMeta();
-        meta.setDisplayName(ChatColor.BLUE + "Sword of the Knight");
-        meta.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
-        meta.addEnchant(Enchantment.KNOCKBACK, 2, true);
-        meta.setUnbreakable(true);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        sword.setItemMeta(meta);
-
-        return sword;
-    }
-    public ItemStack knightSheild() {
-        ItemStack sheild = new ItemStack(Material.SHIELD);
-        ItemMeta meta = sheild.getItemMeta();
-        meta.setDisplayName("sugma BALLZ");
-        meta.setUnbreakable(true);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        sheild.setItemMeta(meta);
-        return sheild;
-    }
-    public ItemStack archerBow() {
-        ItemStack bow = new ItemStack(Material.BOW);
-        ItemMeta meta = bow.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_GREEN + "Bow of Robin");
-        meta.addEnchant(Enchantment.ARROW_DAMAGE, 8, true);
-        meta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
-        meta.setUnbreakable(true);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        bow.setItemMeta(meta);
-
-        return bow;
-    }
-    public ItemStack archerArrow(){
-        ItemStack arrow = new ItemStack(Material.ARROW);
-        return arrow;
-    }
-    public ItemStack archerHead() {
-        ItemStack boots = new ItemStack(Material.LEATHER_HELMET);
-        ItemMeta meta = boots.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_GREEN + "frog helm");
-        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 3, true);
-        meta.setUnbreakable(true);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        boots.setItemMeta(meta);
-
-        return boots;
-    }
-    public ItemStack archerFoot() {
-        ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
-        ItemMeta meta = boots.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_GREEN + "frog feet");
-        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 3, true);
-        meta.setUnbreakable(true);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        boots.setItemMeta(meta);
-
-        return boots;
-    }
-    public ItemStack pyroSword(){
-        ItemStack sword = new ItemStack(Material.STONE_SWORD);
-        ItemMeta meta = sword.getItemMeta();
-        meta.setDisplayName(ChatColor.RED + "Sword of FLAMES");
-        meta.addEnchant(Enchantment.FIRE_ASPECT, 3, true);
-        meta.setUnbreakable(true);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        sword.setItemMeta(meta);
-
-        return sword;
-    }
-    public ItemStack pyroBoots() {
-        ItemStack boots = new ItemStack(Material.GOLDEN_BOOTS);
-        ItemMeta meta = boots.getItemMeta();
-        meta.setDisplayName(ChatColor.RED + "Boots of FLAMES");
-        meta.addEnchant(Enchantment.PROTECTION_FIRE, 10, true);
-        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
-        meta.setUnbreakable(true);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        boots.setItemMeta(meta);
-
-        return boots;
-    }
-    public ItemStack pyroLegs() {
-        ItemStack boots = new ItemStack(Material.GOLDEN_LEGGINGS);
-        ItemMeta meta = boots.getItemMeta();
-        meta.setDisplayName(ChatColor.RED + "Legs of FLAMES");
-        meta.addEnchant(Enchantment.PROTECTION_FIRE, 10, true);
-        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
-        meta.setUnbreakable(true);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        boots.setItemMeta(meta);
-
-        return boots;
-    }
-    public ItemStack pyroChest() {
-        ItemStack boots = new ItemStack(Material.GOLDEN_CHESTPLATE);
-        ItemMeta meta = boots.getItemMeta();
-        meta.setDisplayName(ChatColor.RED + "Chest of FLAMES");
-        meta.addEnchant(Enchantment.PROTECTION_FIRE, 10, true);
-        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
-        meta.setUnbreakable(true);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        boots.setItemMeta(meta);
-
-        return boots;
-    }
-    public ItemStack pyroHelm() {
-        ItemStack boots = new ItemStack(Material.GOLDEN_HELMET);
-        ItemMeta meta = boots.getItemMeta();
-        meta.setDisplayName(ChatColor.RED + "Helm of FLAMES");
-        meta.addEnchant(Enchantment.PROTECTION_FIRE, 10, true);
-        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
-        meta.setUnbreakable(true);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        boots.setItemMeta(meta);
-
-        return boots;
-    }
-    public ItemStack invStick() {
-        ItemStack stick = new ItemStack(Material.STICK);
-        ItemMeta meta = stick.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_GRAY + "Ninja death STICK");
-        List<String> lore = new ArrayList<String>();
-        lore.add("");
-        lore.add(ChatColor.ITALIC + "" + ChatColor.AQUA + "hold in hand and move to be granted INVIZILINE");
-        lore.add("");
-        lore.add(ChatColor.ITALIC + "" + ChatColor.WHITE + "sharpness 21 >:)");
-        meta.setLore(lore);
-        meta.addEnchant(Enchantment.DAMAGE_ALL, 21, true);
-        meta.setUnbreakable(true);
-        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        stick.setItemMeta(meta);
-
-        return stick;
-    }
-    public ItemStack pot1() {
-        ItemStack pot1 = new ItemStack(Material.POTION, 10);
-
-        PotionMeta potionmeta = (PotionMeta) pot1.getItemMeta();
-        potionmeta.setMainEffect(PotionEffectType.SPEED);
-        PotionEffect speed = new PotionEffect(PotionEffectType.SPEED, 75, 4);
-        PotionEffect reg = new PotionEffect(PotionEffectType.REGENERATION, 100, 2);
-        potionmeta.addCustomEffect(speed, true);
-        potionmeta.addCustomEffect(reg, true);
-        potionmeta.setDisplayName("§9Potion of Speed and Regen");
-        pot1.setItemMeta(potionmeta);
-
-        return pot1;
-    }
-    public ItemStack pot4() {
-        ItemStack pot1 = new ItemStack(Material.POTION, 32);
-
-        PotionMeta potionmeta = (PotionMeta) pot1.getItemMeta();
-        potionmeta.setMainEffect(PotionEffectType.SLOW);
-        PotionEffect speed = new PotionEffect(PotionEffectType.SLOW, 150, 1);
-        PotionEffect reg = new PotionEffect(PotionEffectType.WEAKNESS, 200, 1);
-        potionmeta.addCustomEffect(speed, true);
-        potionmeta.addCustomEffect(reg, true);
-        potionmeta.setDisplayName("§6Potion Of Slowness and Weakness");
-        potionmeta.setColor(Color.GRAY);
-        pot1.setItemMeta(potionmeta);
-        pot1.setType(Material.SPLASH_POTION);
-
-        return pot1;
-    }
-    public ItemStack pot5() {
-        ItemStack pot1 = new ItemStack(Material.POTION, 8);
-
-        PotionMeta potionmeta = (PotionMeta) pot1.getItemMeta();
-        potionmeta.setMainEffect(PotionEffectType.HARM);
-        PotionEffect speed = new PotionEffect(PotionEffectType.HARM, 1000, 1);
-        PotionEffect reg = new PotionEffect(PotionEffectType.WITHER, 90, 1);
-        potionmeta.addCustomEffect(speed, true);
-        potionmeta.addCustomEffect(reg, true);
-        potionmeta.setDisplayName("§6Potion Of DEATH");
-        potionmeta.setColor(Color.BLACK);
-        pot1.setItemMeta(potionmeta);
-        pot1.setType(Material.SPLASH_POTION);
-
-        return pot1;
-    }
-    public ItemStack pot2() {
-        ItemStack pot1 = new ItemStack(Material.POTION, 64);
-
-        PotionMeta potionmeta = (PotionMeta) pot1.getItemMeta();
-        potionmeta.setMainEffect(PotionEffectType.HEAL);
-        PotionEffect speed = new PotionEffect(PotionEffectType.HEAL, 1000, 1);
-        PotionEffect reg = new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 1);
-        potionmeta.addCustomEffect(speed, true);
-        potionmeta.addCustomEffect(reg, true);
-        potionmeta.setDisplayName("§6Potion Of Healing");
-        potionmeta.setColor(Color.PURPLE);
-        pot1.setItemMeta(potionmeta);
-
-        return pot1;
-    }
-    public ItemStack pot3() {
-        ItemStack pot1 = new ItemStack(Material.POTION, 1);
-
-        PotionMeta potionmeta = (PotionMeta) pot1.getItemMeta();
-        potionmeta.setMainEffect(PotionEffectType.SLOW_FALLING);
-        PotionEffect speed = new PotionEffect(PotionEffectType.SLOW_FALLING, 300, 1);
-        PotionEffect reg = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 2000, 1);
-        PotionEffect dog = new PotionEffect(PotionEffectType.WATER_BREATHING, 2000, 1);
-        potionmeta.addCustomEffect(speed, true);
-        potionmeta.addCustomEffect(reg, true);
-        potionmeta.addCustomEffect(dog, true);
-        potionmeta.setDisplayName("§6Potion Of WEIRD");
-        potionmeta.setColor(Color.YELLOW);
-        pot1.setItemMeta(potionmeta);
-        pot1.setType(Material.SPLASH_POTION);
-
-        return pot1;
-    }
-    public ItemStack pot6() {
-        ItemStack pot1 = new ItemStack(Material.POTION, 32);
-
-        PotionMeta potionmeta = (PotionMeta) pot1.getItemMeta();
-        potionmeta.setMainEffect(PotionEffectType.POISON);
-        PotionEffect speed = new PotionEffect(PotionEffectType.POISON, 1000, 1);
-        PotionEffect reg = new PotionEffect(PotionEffectType.BAD_OMEN, 100, 1);
-        potionmeta.addCustomEffect(speed, true);
-        potionmeta.addCustomEffect(reg, true);
-        potionmeta.setDisplayName("§6Potion of POISON");
-        potionmeta.setColor(Color.PURPLE);
-        pot1.setItemMeta(potionmeta);
-        pot1.setType(Material.SPLASH_POTION);
-
-        return pot1;
-    }
-    public ItemStack chemW() {
-        ItemStack cax = new ItemStack(Material.GOLDEN_AXE);
-        ItemMeta meta = cax.getItemMeta();
-        meta.setDisplayName(ChatColor.GOLD + "Axe O' da ring");
-        meta.addEnchant(Enchantment.KNOCKBACK, 1, true);
-        meta.setUnbreakable(true);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        cax.setItemMeta(meta);
-
-        return cax;
-    }
-    public ItemStack chemHead() {
-        ItemStack head = new ItemStack(Material.CHAINMAIL_HELMET);
-        ItemMeta meta = head.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_GREEN + "Chemist HEAD");
-        List<String> lore = new ArrayList<String>();
-        lore.add("");
-        lore.add(ChatColor.ITALIC + "" + ChatColor.GREEN + "I want some chemist head");
-        meta.setLore(lore);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        head.setItemMeta(meta);
-
-        return head;
-    }
-    public ItemStack chemChest() {
-        ItemStack head = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
-        ItemMeta meta = head.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_GREEN + "Chemist Chest");
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        head.setItemMeta(meta);
-
-        return head;
-    }
-    public ItemStack chemLegs() {
-        ItemStack head = new ItemStack(Material.CHAINMAIL_LEGGINGS);
-        ItemMeta meta = head.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_GREEN + "Chemist Legs");
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        head.setItemMeta(meta);
-
-        return head;
-    }
-    public ItemStack chemFeed() {
-        ItemStack head = new ItemStack(Material.CHAINMAIL_BOOTS);
-        ItemMeta meta = head.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_GREEN + "Chemist Feet");
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        head.setItemMeta(meta);
-
-        return head;
-    }
-    public ItemStack horseHead() {
-        ItemStack head = new ItemStack(Material.LEATHER_HELMET);
-        ItemMeta meta = head.getItemMeta();
-        meta.setDisplayName(ChatColor.GREEN + "Jockey Helmet");
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        head.setItemMeta(meta);
-
-        return head;
-    }
-    public ItemStack horseChest() {
-        ItemStack head = new ItemStack(Material.IRON_CHESTPLATE);
-        ItemMeta meta = head.getItemMeta();
-        meta.setDisplayName(ChatColor.GREEN + "Jockey Chest");
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        head.setItemMeta(meta);
-
-        return head;
-    }
-    public ItemStack horseLegs() {
-        ItemStack head = new ItemStack(Material.IRON_LEGGINGS);
-        ItemMeta meta = head.getItemMeta();
-        meta.setDisplayName(ChatColor.GREEN + "Jockey Leggings");
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        head.setItemMeta(meta);
-
-        return head;
-    }
-    public ItemStack horseFeet() {
-        ItemStack head = new ItemStack(Material.DIAMOND_BOOTS);
-        ItemMeta meta = head.getItemMeta();
-        meta.setDisplayName(ChatColor.GREEN + "Jockey Boots");
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        head.setItemMeta(meta);
-
-        return head;
-    }
-    public ItemStack horseW() {
-        ItemStack head = new ItemStack(Material.NETHERITE_SWORD);
-        ItemMeta meta = head.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_RED + "Neigh for me >:)");
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        head.setItemMeta(meta);
-
-        return head;
-    }
-    public ItemStack horseSpawn() {
-        ItemStack head = new ItemStack(Material.STICK);
-        ItemMeta meta = head.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_RED + "Right click the ground to spawn your horse!");
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        head.setItemMeta(meta);
-
-        return head;
-    }
-    public void endermanSpawner(Block block) {
-        BlockState blockState = block.getState();
-        CreatureSpawner spawner = ((CreatureSpawner)blockState);
-        spawner.setSpawnedType(EntityType.ENDERMAN);
-        blockState.update();
-    }
-    public ItemStack compass() {
-        ItemStack compass = new ItemStack(Material.COMPASS);
-        ItemMeta meta = compass.getItemMeta();
-        meta.setDisplayName(ChatColor.AQUA + "Kit Selector");
-        meta.addEnchant(Enchantment.LURE, 1, true);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta.setUnbreakable(true);
-        compass.setItemMeta(meta);
-
-        return compass;
-    }
-
-    public ItemStack pissPants() {
-        ItemStack pant = new ItemStack(Material.LEATHER_LEGGINGS);
-        ItemMeta meta = pant.getItemMeta();
-        meta.setDisplayName(ChatColor.GOLD + "PissPants");
-        List<String> lore = new ArrayList<String>();
-        lore.add("");
-        lore.add(ChatColor.ITALIC + "" + ChatColor.GREEN + "These pants have been PISSED");
-        meta.setLore(lore);
-        meta.addEnchant(Enchantment.LURE, 1, true);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta.setUnbreakable(true);
-        pant.setItemMeta(meta);
-
-        return pant;
-    }
-
-    public ItemStack wardenFlint() {
-        ItemStack flint = new ItemStack(Material.FLINT);
-        ItemMeta meta = flint.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_BLUE + "Guide O' Charles");
-        List<String> lore = new ArrayList<String>();
-        lore.add("");
-        lore.add(ChatColor.ITALIC + "" + ChatColor.DARK_BLUE + "Poor Charles is blind :(");
-        lore.add(ChatColor.ITALIC + "" + ChatColor.DARK_BLUE + "Please guide Charles with this tool");
-        lore.add(ChatColor.ITALIC + "" + ChatColor.DARK_BLUE + "Charles behaves " + ChatColor.RESET + ChatColor.MAGIC +
-                "jdng4e" + ChatColor.RESET + ChatColor.ITALIC + ChatColor.DARK_BLUE +
-                " twords the one who holds this guide");
-        meta.setLore(lore);
-        meta.addEnchant(Enchantment.LURE, 1, true);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        flint.setItemMeta(meta);
-
-        return flint;
-    }
-
-    public  ItemStack wardenElytra() {
-        ItemStack eye = new ItemStack(Material.ELYTRA);
-        ItemMeta meta = eye.getItemMeta();
-        meta.setDisplayName(ChatColor.DARK_BLUE + "GO CRAZY HUNNY," +
-                " GO CRAY CRAY LIKE IT YO LAST FRIDAY NIGHT OF YOUR 20S!!!");
-        meta.addEnchant(Enchantment.LURE, 1, true);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta.setUnbreakable(true);
-        eye.setItemMeta(meta);
-
-        return eye;
-    }
-
-    public ItemStack cactusHead(){
-        ItemStack head =  new ItemStack((Material.LEATHER_HELMET));
-        LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
-        meta.setColor(Color.fromRGB(0, 255, 0));
-        meta.setDisplayName(ChatColor.DARK_GREEN + "cumsock");
-        meta.addEnchant(Enchantment.THORNS, 11, true);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        meta.setUnbreakable(true);
-        head.setItemMeta(meta);
-
-        return head;
-    }
-
-    public ItemStack cactusLeg(){
-        ItemStack head =  new ItemStack((Material.LEATHER_LEGGINGS));
-        LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
-        meta.setColor(Color.fromRGB(0, 255, 0));
-        meta.setDisplayName(ChatColor.DARK_GREEN + "cumsock");
-        meta.addEnchant(Enchantment.THORNS, 11, true);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        meta.setUnbreakable(true);
-        head.setItemMeta(meta);
-
-        return head;
-    }
-
-    public ItemStack cactusChest(){
-        ItemStack head =  new ItemStack((Material.LEATHER_CHESTPLATE));
-        LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
-        meta.setColor(Color.fromRGB(0, 255, 0));
-        meta.setDisplayName(ChatColor.DARK_GREEN + "cumsock");
-        meta.addEnchant(Enchantment.THORNS, 11, true);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        meta.setUnbreakable(true);
-        head.setItemMeta(meta);
-
-        return head;
-    }
-
-    public ItemStack cactusFoot(){
-        ItemStack head =  new ItemStack((Material.LEATHER_BOOTS));
-        LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
-        meta.setColor(Color.fromRGB(0, 255, 0));
-        meta.setDisplayName(ChatColor.DARK_GREEN + "cumsock");
-        meta.addEnchant(Enchantment.THORNS, 11, true);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        meta.setUnbreakable(true);
-        head.setItemMeta(meta);
-
-        return head;
-    }
 
     @EventHandler
     public void onClick(PlayerInteractEvent event) {
@@ -955,7 +92,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
             if (player.getInventory().getItemInMainHand().getItemMeta()
                     .getDisplayName().contains("Kit Selector")) {
                 if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR){
-                    player.openInventory(inv);
+                    player.openInventory(inventory.inv);
                 }
             }
         }
@@ -987,7 +124,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
                     h.setOwner(event.getPlayer());
                     h.getInventory().setSaddle(new ItemStack(Material.SADDLE, 1));
                     h.getInventory().setArmor(new ItemStack(Material.DIAMOND_HORSE_ARMOR));
-                    player.getInventory().removeItem(horseSpawn());
+                    player.getInventory().removeItem(items.horseSpawn());
                 }
             }
         }
@@ -1049,9 +186,9 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
-        createBoard(e.getPlayer());
+        scoreboard.createBoard(e.getPlayer());
         player.getInventory().clear();
-        player.getInventory().addItem(compass());
+        player.getInventory().addItem(items.compass());
 
         player.getActivePotionEffects().stream()
                 .map(PotionEffect::getType)
@@ -1086,7 +223,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
                     }
         }
 
-        if (!e.getInventory().equals(inv)) return;
+        if (!e.getInventory().equals(inventory.inv)) return;
         if (e.getCurrentItem() == null) return;
         if (e.getCurrentItem().getItemMeta() == null) return;
         if (e.getCurrentItem().getItemMeta().getDisplayName() == null) return;
@@ -1096,67 +233,67 @@ public class RageKitPvP extends JavaPlugin implements Listener {
         }
         if (e.getSlot() == 1) {
             player.getInventory().clear();
-            player.getInventory().addItem(chemW());
-            player.getInventory().addItem(pot1());
-            player.getInventory().addItem(pot2());
-            player.getInventory().addItem(pot6());
-            player.getInventory().addItem(pot3());
-            player.getInventory().addItem(pot4());
-            player.getInventory().addItem(pot5());
-            player.getInventory().setHelmet(chemHead());
-            player.getInventory().setChestplate(chemChest());
-            player.getInventory().setLeggings(chemLegs());
-            player.getInventory().setBoots(chemFeed());
+            player.getInventory().addItem(items.chemW());
+            player.getInventory().addItem(items.pot1());
+            player.getInventory().addItem(items.pot2());
+            player.getInventory().addItem(items.pot6());
+            player.getInventory().addItem(items.pot3());
+            player.getInventory().addItem(items.pot4());
+            player.getInventory().addItem(items.pot5());
+            player.getInventory().setHelmet(items.chemHead());
+            player.getInventory().setChestplate(items.chemChest());
+            player.getInventory().setLeggings(items.chemLegs());
+            player.getInventory().setBoots(items.chemFeed());
             player.closeInventory();
         }
         if (e.getSlot() == 2) {
             player.getInventory().clear();
-            player.getInventory().addItem(getDoom());
-            player.getInventory().addItem(doomStick());
-            player.getInventory().setBoots(doomBoots());
+            player.getInventory().addItem(items.getDoom());
+            player.getInventory().addItem(items.doomStick());
+            player.getInventory().setBoots(items.doomBoots());
             player.closeInventory();
         }
         if (e.getSlot() == 3) {
             player.getInventory().clear();
-            player.getInventory().setBoots(knightBoots());
-            player.getInventory().setLeggings(knightLegs());
-            player.getInventory().setChestplate(knightChest());
-            player.getInventory().setHelmet(knightHead());
-            player.getInventory().setItemInMainHand(knightSword());
-            player.getInventory().setItemInOffHand(knightSheild());
+            player.getInventory().setBoots(items.knightBoots());
+            player.getInventory().setLeggings(items.knightLegs());
+            player.getInventory().setChestplate(items.knightChest());
+            player.getInventory().setHelmet(items.knightHead());
+            player.getInventory().setItemInMainHand(items.knightSword());
+            player.getInventory().setItemInOffHand(items.knightSheild());
             player.closeInventory();
         }
         if (e.getSlot() == 4) {
             player.getInventory().clear();
-            player.getInventory().addItem(archerBow());
-            player.getInventory().addItem(archerArrow());
-            player.getInventory().setBoots(archerFoot());
-            player.getInventory().setHelmet(archerHead());
+            player.getInventory().addItem(items.archerBow());
+            player.getInventory().addItem(items.archerArrow());
+            player.getInventory().setBoots(items.archerFoot());
+            player.getInventory().setHelmet(items.archerHead());
             player.closeInventory();
         }
         if (e.getSlot() == 5) {
             player.getInventory().clear();
-            player.getInventory().addItem(pyroSword());
-            player.getInventory().setBoots(pyroBoots());
-            player.getInventory().setLeggings(pyroLegs());
-            player.getInventory().setChestplate(pyroChest());
-            player.getInventory().setHelmet(pyroHelm());
+            player.getInventory().addItem(items.pyroSword());
+            player.getInventory().setBoots(items.pyroBoots());
+            player.getInventory().setLeggings(items.pyroLegs());
+            player.getInventory().setChestplate(items.pyroChest());
+            player.getInventory().setHelmet(items.pyroHelm());
             player.closeInventory();
         }
         if (e.getSlot() == 6) {
             player.getInventory().clear();
-            player.getInventory().addItem(invStick());
+            player.getInventory().addItem(items.invStick());
             player.closeInventory();
         }
         if (e.getSlot() == 10) {
             if (2 > 1) {
                 player.getInventory().clear();
-                player.getInventory().setBoots(horseFeet());
-                player.getInventory().setLeggings(horseLegs());
-                player.getInventory().setChestplate(horseChest());
-                player.getInventory().setHelmet(horseHead());
-                player.getInventory().addItem(horseW());
-                player.getInventory().addItem(horseSpawn());
+                player.getInventory().setBoots(items.horseFeet());
+                player.getInventory().setLeggings(items.horseLegs());
+                player.getInventory().setChestplate(items.horseChest());
+                player.getInventory().setHelmet(items.horseHead());
+                player.getInventory().addItem(items.horseW());
+                player.getInventory().addItem(items.horseSpawn());
                 player.closeInventory();
 
             }
@@ -1209,10 +346,10 @@ public class RageKitPvP extends JavaPlugin implements Listener {
         if (e.getSlot() == 12) {
             if (2 > 1) {
                 player.getInventory().clear();
-                player.getEquipment().setHelmet(cactusHead());
-                player.getEquipment().setChestplate(cactusChest());
-                player.getEquipment().setLeggings(cactusLeg());
-                player.getEquipment().setBoots(cactusFoot());
+                player.getEquipment().setHelmet(items.cactusHead());
+                player.getEquipment().setChestplate(items.cactusChest());
+                player.getEquipment().setLeggings(items.cactusLeg());
+                player.getEquipment().setBoots(items.cactusFoot());
                 player.closeInventory();
             }
             else {
@@ -1256,8 +393,8 @@ public class RageKitPvP extends JavaPlugin implements Listener {
         if (e.getSlot() == 14) {
             if (2 > 1){
                 player.getInventory().clear();
-                player.getInventory().addItem(wardenFlint());
-                player.getInventory().setChestplate(wardenElytra());
+                player.getInventory().addItem(items.wardenFlint());
+                player.getInventory().setChestplate(items.wardenElytra());
                 player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 12000, 3));
                 player.closeInventory();
 
@@ -1286,7 +423,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     @EventHandler
     public void respawn(PlayerRespawnEvent event) {
         Player player = (Player) event.getPlayer();
-        player.getInventory().addItem(compass());
+        player.getInventory().addItem(items.compass());
 
         Collection<Entity> entities = player.getWorld().getEntities();
         for (Entity ent : entities){
@@ -1320,7 +457,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
             }
 
             entity.getEntity().remove();
-            oldloc.getWorld().dropItem(oldloc, pissPants());
+            oldloc.getWorld().dropItem(oldloc, items.pissPants());
         }
     }
 
@@ -1466,16 +603,6 @@ public class RageKitPvP extends JavaPlugin implements Listener {
         loc.setX(loc.getX() - 2);
         if (loc.getBlock().getType() == Material.FIRE) {
             loc.getBlock().setType(Material.AIR);
-        }
-    }
-    @EventHandler
-    public void onBlockPlaceEvent(BlockPlaceEvent event) {
-        Player p = event.getPlayer();
-
-        if (event.getBlock().getType().equals(Material.SPAWNER)) {
-            endermanSpawner(event.getBlockPlaced());
-
-            p.sendMessage("You have just created a spawner!");
         }
     }
 
