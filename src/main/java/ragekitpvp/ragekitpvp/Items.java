@@ -592,4 +592,54 @@ public class Items {
 
         return head;
     }
+
+    public ItemStack aquaTrident() {
+        ItemStack trid = new ItemStack(Material.TRIDENT);
+        ItemMeta meta = trid.getItemMeta();
+        meta.setDisplayName(ChatColor.BOLD + "" + ChatColor.AQUA + "are eye pee");
+        meta.addEnchant(Enchantment.RIPTIDE, 4, true);
+        meta.addEnchant(Enchantment.CHANNELING, 1, true);
+        meta.addEnchant(Enchantment.DAMAGE_ALL, 8, true);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        meta.setUnbreakable(true);
+        List<String> lore = new ArrayList<String>();
+        lore.add(ChatColor.ITALIC + "" + ChatColor.AQUA + "");
+        lore.add(ChatColor.ITALIC + "" + ChatColor.AQUA + "Left click for lightning");
+        lore.add(ChatColor.ITALIC + "" + ChatColor.AQUA + "only in water");
+        lore.add(ChatColor.ITALIC + "" + ChatColor.AQUA + "5 second cool down");
+        meta.setLore(lore);
+        trid.setItemMeta(meta);
+
+        return trid;
+    }
+
+    public ItemStack aquaFoot(){
+        ItemStack head =  new ItemStack((Material.LEATHER_BOOTS));
+        LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
+        meta.setColor(Color.fromRGB(0, 0, 255));
+        meta.setDisplayName(ChatColor.AQUA + "Boot O' Pissbiden");
+        meta.addEnchant(Enchantment.DEPTH_STRIDER, 10, true);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        meta.setUnbreakable(true);
+        head.setItemMeta(meta);
+
+        return head;
+    }
+
+    public ItemStack aquaHead(){
+        ItemStack head =  new ItemStack((Material.LEATHER_HELMET));
+        LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
+        meta.setColor(Color.fromRGB(0, 0, 255));
+        meta.setDisplayName(ChatColor.AQUA + "Head O' Pissbiden");
+        meta.addEnchant(Enchantment.OXYGEN, 10, true);
+        meta.addEnchant(Enchantment.WATER_WORKER, 10, true);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        meta.setUnbreakable(true);
+        head.setItemMeta(meta);
+
+        return head;
+    }
 }

@@ -1,7 +1,6 @@
 package ragekitpvp.ragekitpvp;
 
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
@@ -31,7 +30,8 @@ import org.bukkit.event.entity.EntityTargetEvent;
 import java.util.*;
 
 public class RageKitPvP extends JavaPlugin implements Listener {
-    Map<String, Long> cooldowns = new HashMap<String, Long>();
+    Map<String, Long> doomCooldowns = new HashMap<String, Long>();
+    Map<String, Long> aquaCooldowns = new HashMap<String, Long>();
     kitInv inventory = new kitInv();
     RageScoreboard scoreboard = new RageScoreboard();
     Items items = new Items();
@@ -132,18 +132,19 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     public void onClick(PlayerInteractEvent event) {
 
         Player player = event.getPlayer();
+        ItemStack mainItem = player.getInventory().getItemInMainHand();
 
-        if (player.getInventory().getItemInMainHand().getType().equals(Material.STICK)) {
+        if (mainItem.getType().equals(Material.STICK)) {
             if (player.getInventory().getItemInMainHand().getItemMeta()
                     .getDisplayName().contains("Stick O' Doom")) {
                 if (player.getInventory().getItemInMainHand().getItemMeta().hasLore()) {
                     if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                        if (cooldowns.containsKey(player.getName())) {
-                            if (cooldowns.get(player.getName()) > System.currentTimeMillis()) {
+                        if (doomCooldowns.containsKey(player.getName())) {
+                            if (doomCooldowns.get(player.getName()) > System.currentTimeMillis()) {
                                 return;
                             }
                         }
-                        cooldowns.put(player.getName(), System.currentTimeMillis() + 25 * 1000);
+                        doomCooldowns.put(player.getName(), System.currentTimeMillis() + 25 * 1000);
 
                         Block b = player.getTargetBlock(null, 5);
                         Location loc = b.getLocation();
@@ -166,7 +167,24 @@ public class RageKitPvP extends JavaPlugin implements Listener {
             }
         }
 
-        if (player.getInventory().getItemInMainHand().getType().equals(Material.COMPASS)) {
+        if (mainItem.getType().equals(Material.TRIDENT) &&
+                mainItem.getItemMeta().getDisplayName().contains("are eye pee") &&
+                event.getAction() == Action.LEFT_CLICK_AIR && player.isInWater()) {
+
+                    if (aquaCooldowns.containsKey(player.getName())
+                            && aquaCooldowns.get(player.getName()) > System.currentTimeMillis()) {
+                        player.sendMessage(ChatColor.YELLOW + "On cool down");
+                        return;
+                    }
+
+                    aquaCooldowns.put(player.getName(), System.currentTimeMillis() + 5 * 1000);
+                    Block eyeBlock = player.getTargetBlock(null, 100);
+                    Location eyeLoc = eyeBlock.getLocation();
+                    player.getWorld().strikeLightning(eyeLoc);
+
+        }
+
+        if (mainItem.getType().equals(Material.COMPASS)) {
             if (player.getInventory().getItemInMainHand().getItemMeta()
                     .getDisplayName().contains("Kit Selector")) {
                 if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR){
@@ -193,7 +211,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
             }
         }
 
-        if (player.getInventory().getItemInMainHand().getType().equals(Material.STICK)) {
+        if (mainItem.getType().equals(Material.STICK)) {
             if (player.getInventory().getItemInMainHand().getItemMeta()
                     .getDisplayName().contains("Right click the ground to spawn your horse!")) {
                 if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
@@ -260,7 +278,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        event.setQuitMessage(ChatColor.GOLD + player.getName() + ChatColor.AQUA + " out lul");
+        event.setQuitMessage(ChatColor.GOLD + player.getName() + ChatColor.AQUA + " out");
 
         Collection<Entity> entities = player.getWorld().getEntities();
         for (Entity ent : entities){
@@ -292,7 +310,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
         player.teleport(player.getWorld().getSpawnLocation());
         player.setHealth(20);
         player.setFoodLevel(20);
-        if (player.getPlayer().getGameMode() != GameMode.ADVENTURE){
+        if (player.getGameMode() != GameMode.ADVENTURE && player.getName() != "Spiigot"){
             player.setGameMode(GameMode.ADVENTURE);
         }
     }
@@ -497,6 +515,20 @@ public class RageKitPvP extends JavaPlugin implements Listener {
                         + "" + ChatColor.GREEN + "VIP");
             }
         }
+
+        if (e.getSlot() == 15) {
+            if (2 > 1){
+                player.getInventory().clear();
+                player.getInventory().addItem(items.aquaTrident());
+                player.getInventory().setHelmet(items.aquaHead());
+                player.getInventory().setBoots(items.aquaFoot());
+                player.closeInventory();
+
+            } else {
+                player.sendMessage(ChatColor.GOLD + "You are not " + ChatColor.UNDERLINE + "" + ChatColor.BOLD
+                        + "" + ChatColor.GREEN + "VIP");
+            }
+        }
     }
 
     @EventHandler
@@ -600,8 +632,8 @@ public class RageKitPvP extends JavaPlugin implements Listener {
         }
         Entity entity = event.getDamager();
         Entity target = event.getEntity();
+        Player player = (Player) target;
         if (entity.getName().equalsIgnoreCase("Charles => " + target.getName())){
-            Player player = (Player) target;
             Warden warden = (Warden) entity;
             warden.clearAnger(player);
             event.setCancelled(true);
@@ -622,6 +654,12 @@ public class RageKitPvP extends JavaPlugin implements Listener {
             if (loc.getY() >= 119){
                 event.setCancelled(true);
             }
+        }
+        Player player = (Player) event.getEntity();
+        if (event.getCause() == EntityDamageEvent.DamageCause.LIGHTNING &&
+                player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("are eye pee") &&
+                player.getInventory().getItemInMainHand().getType() == Material.TRIDENT){
+            event.setCancelled(true);
         }
     }
     @EventHandler

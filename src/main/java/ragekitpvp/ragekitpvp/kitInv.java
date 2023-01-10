@@ -197,6 +197,21 @@ public class kitInv {
         warden.setItemMeta(meta15);
         inv.setItem(14, warden);
 
+        ItemStack trident = new ItemStack(Material.TRIDENT);
+        ItemMeta meta16 = trident.getItemMeta();
+        meta16.setDisplayName(ChatColor.AQUA + "Aqua Man");
+        List<String> lore16 = new ArrayList<String>();
+        lore16.add("");
+        lore16.add(ChatColor.ITALIC + "swim");
+        lore16.add(ChatColor.ITALIC + "strike");
+        lore16.add(ChatColor.ITALIC + "sleep");
+        lore16.add(ChatColor.ITALIC + "repeat >:)");
+        meta16.setLore(lore16);
+        meta16.addEnchant(Enchantment.LURE,1,true);
+        meta16.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        meta16.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        trident.setItemMeta(meta16);
+        inv.setItem(15, trident);
     }
     
 }
