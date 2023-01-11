@@ -577,13 +577,12 @@ public class RageKitPvP extends JavaPlugin implements Listener {
         event.getDrops().clear();
         Player player = event.getEntity().getPlayer();
         player.getInventory().clear();
-        ItemStack head = new ItemStack(Material.PLAYER_HEAD);
-        SkullMeta meta = (SkullMeta)head.getItemMeta();
-        meta.setOwner(player.getDisplayName());
-        meta.setDisplayName(ChatColor.GREEN + player.getDisplayName() + "s" + ChatColor.AQUA + " head");
-        head.setItemMeta(meta);
-        event.getDrops().add(head);
         player.teleport(player.getWorld().getSpawnLocation());
+
+        if (player.getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK && player.getKiller() != null) {
+            Player killer = player.getKiller();
+            killer.getInventory().addItem(items.playerHead(player));
+        }
     }
 
     @EventHandler
@@ -797,6 +796,8 @@ public class RageKitPvP extends JavaPlugin implements Listener {
             warden.clearAnger(player);
             event.setCancelled(true);
         }
+
+        if (entity.getName().contains(target.getName()) && entity.getType() == EntityType.DROWNED) { event.setCancelled(true);}
     }
     @EventHandler
     public void dropItem(PlayerDropItemEvent event) {

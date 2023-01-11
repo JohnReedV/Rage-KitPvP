@@ -12,6 +12,7 @@ import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -659,5 +660,15 @@ public class Items {
         stick.setItemMeta(meta);
 
         return stick;
+    }
+
+    public ItemStack playerHead(Player player) {
+        ItemStack head = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta meta = (SkullMeta)head.getItemMeta();
+        meta.setOwner(player.getDisplayName());
+        meta.setDisplayName(ChatColor.GREEN + player.getDisplayName() + "s" + ChatColor.AQUA + " head");
+        head.setItemMeta(meta);
+
+        return head;
     }
 }
