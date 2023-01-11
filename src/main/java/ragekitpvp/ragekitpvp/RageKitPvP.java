@@ -707,25 +707,14 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     }
     @EventHandler
     public void noHunger(FoodLevelChangeEvent event) {
-        if (event.getEntity() instanceof Player) {
-            Player player = (Player) event.getEntity();
-            player.setFoodLevel(20);
-        }
+        event.setCancelled(true);
     }
 
-    @EventHandler
-    public void noHungerDmg(EntityRegainHealthEvent event){
-        if (event.getEntity() instanceof  Player){
-            Player player = (Player) event.getEntity();
-            player.setFoodLevel(20);
-        }
-    }
     @EventHandler
     public void noBed(PlayerBedEnterEvent event){
         event.setCancelled(true);
 
         Player player = event.getPlayer();
-        Location loc = player.getLocation().clone();
         player.setBedSpawnLocation(player.getWorld().getSpawnLocation());
     }
 
