@@ -547,7 +547,7 @@ public class Items {
         LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
         meta.setColor(Color.fromRGB(0, 255, 0));
         meta.setDisplayName(ChatColor.DARK_GREEN + "cumsock");
-        meta.addEnchant(Enchantment.THORNS, 29, true);
+        meta.addEnchant(Enchantment.THORNS, 51, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setUnbreakable(true);
         head.setItemMeta(meta);
@@ -560,7 +560,7 @@ public class Items {
         LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
         meta.setColor(Color.fromRGB(0, 255, 0));
         meta.setDisplayName(ChatColor.DARK_GREEN + "cumsock");
-        meta.addEnchant(Enchantment.THORNS, 29, true);
+        meta.addEnchant(Enchantment.THORNS, 51, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setUnbreakable(true);
         head.setItemMeta(meta);
@@ -573,7 +573,7 @@ public class Items {
         LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
         meta.setColor(Color.fromRGB(0, 255, 0));
         meta.setDisplayName(ChatColor.DARK_GREEN + "cumsock");
-        meta.addEnchant(Enchantment.THORNS, 29, true);
+        meta.addEnchant(Enchantment.THORNS, 51, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setUnbreakable(true);
         head.setItemMeta(meta);
@@ -586,7 +586,7 @@ public class Items {
         LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
         meta.setColor(Color.fromRGB(0, 255, 0));
         meta.setDisplayName(ChatColor.DARK_GREEN + "cumsock");
-        meta.addEnchant(Enchantment.THORNS, 29, true);
+        meta.addEnchant(Enchantment.THORNS, 51, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setUnbreakable(true);
         head.setItemMeta(meta);
@@ -600,7 +600,7 @@ public class Items {
         meta.setDisplayName(ChatColor.BOLD + "" + ChatColor.AQUA + "are eye pee");
         meta.addEnchant(Enchantment.RIPTIDE, 4, true);
         meta.addEnchant(Enchantment.CHANNELING, 1, true);
-        meta.addEnchant(Enchantment.DAMAGE_ALL, 4, true);
+        meta.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.setUnbreakable(true);
