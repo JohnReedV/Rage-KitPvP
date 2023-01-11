@@ -791,7 +791,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     public void onTarget(EntityTargetEvent event) {
         Entity entity = event.getEntity();
         Entity target = event.getTarget();
-        if (entity.getName().equalsIgnoreCase("Charles => " + target.getName())){
+        if (entity.getName().contains("Charles => " + target.getName())){
             Player player = (Player) target;
             Warden warden = (Warden) entity;
             warden.clearAnger(player);
@@ -800,6 +800,6 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     }
     @EventHandler
     public void dropItem(PlayerDropItemEvent event) {
-        event.setCancelled(true);
+        if (!event.getPlayer().hasPermission("kits.drop")) { event.setCancelled(true); }
     }
 }
