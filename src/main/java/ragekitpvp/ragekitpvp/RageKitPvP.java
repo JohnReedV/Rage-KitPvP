@@ -125,6 +125,24 @@ public class RageKitPvP extends JavaPlugin implements Listener {
 
         }
 
+        if (label.equalsIgnoreCase("ping") && sender instanceof Player){
+            Player player = (Player) sender;
+            player.sendMessage(("Your ping is " + player.getPing()));
+        }
+
+        if (label.equalsIgnoreCase("ip") && sender instanceof Player && sender.hasPermission("kits.ip")) {
+            if (args[0] != null) {
+                sender.sendMessage("Provide the players name");
+            }
+            try {
+                Player player = Bukkit.getServer().getPlayer(args[0]);
+                sender.sendMessage(player.getName() + "'s ping is : " + player.getAddress());
+            }
+            catch(Exception e) {
+                sender.sendMessage("not a player. I got : "  + args[0]);
+            }
+        }
+
         return true;
     }
 
@@ -317,8 +335,8 @@ public class RageKitPvP extends JavaPlugin implements Listener {
 
     @EventHandler
     public void motd(ServerListPingEvent event) {
-        event.setMotd(ChatColor.DARK_RED + "" + ChatColor.BOLD + "RAGE " + ChatColor.RESET + ChatColor.BLUE
-                + "Kit PvP");
+        event.setMotd(ChatColor.GOLD + "" + ChatColor.BOLD + "The Battle Grounds of "
+                + ChatColor.RESET + "" + ChatColor.BOLD + "" + ChatColor.BLUE + "Eldaria");
     }
 
     @EventHandler()

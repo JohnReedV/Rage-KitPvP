@@ -31,6 +31,7 @@ public class kitInv {
         List<String> lore8 = new ArrayList<String>();
         lore8.add("");
         lore8.add(ChatColor.RED + "---->");
+        lore8.add(ChatColor.GRAY + "VIP kits free until VIP is enabled");
         meta8.setLore(lore8);
         meta8.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         book2.setItemMeta(meta8);

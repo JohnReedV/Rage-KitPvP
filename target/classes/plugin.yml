@@ -11,3 +11,7 @@ commands:
     description: sets world spawn point
   flex:
     description: flex your stats!
+  ping:
+    description: get your ping!
+  ip:
+    description: gets a players ip
