@@ -213,6 +213,15 @@ public class kitInv {
         meta16.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         trident.setItemMeta(meta16);
         inv.setItem(15, trident);
+
+        ItemStack spyglass = new ItemStack(Material.SPYGLASS);
+        ItemMeta meta17 = spyglass.getItemMeta();
+        meta17.setDisplayName(ChatColor.GRAY + "Sniper");
+        meta17.addEnchant(Enchantment.LURE,1,true);
+        meta17.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        meta17.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        spyglass.setItemMeta(meta17);
+        inv.setItem(16, spyglass);
     }
     
 }

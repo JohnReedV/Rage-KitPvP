@@ -671,4 +671,56 @@ public class Items {
 
         return head;
     }
+
+    public ItemStack sniperHead(){
+        ItemStack head =  new ItemStack((Material.LEATHER_HELMET));
+        LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
+        meta.setColor(Color.fromRGB(255, 255, 255));
+        meta.setDisplayName(ChatColor.DARK_GREEN + "Sniper Head");
+        meta.addEnchant(Enchantment.PROTECTION_PROJECTILE, 2, true);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.setUnbreakable(true);
+        head.setItemMeta(meta);
+
+        return head;
+    }
+
+    public ItemStack sniperChest(){
+        ItemStack head =  new ItemStack((Material.LEATHER_CHESTPLATE));
+        LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
+        meta.setColor(Color.fromRGB(255, 255, 255));
+        meta.setDisplayName(ChatColor.DARK_GREEN + "Sniper Chest");
+        meta.addEnchant(Enchantment.PROTECTION_PROJECTILE, 2, true);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.setUnbreakable(true);
+        head.setItemMeta(meta);
+
+        return head;
+    }
+
+    public ItemStack sniperLegs(){
+        ItemStack head =  new ItemStack((Material.LEATHER_LEGGINGS));
+        LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
+        meta.setColor(Color.fromRGB(255, 255, 255));
+        meta.setDisplayName(ChatColor.DARK_GREEN + "Sniper Legs");
+        meta.addEnchant(Enchantment.PROTECTION_PROJECTILE, 2, true);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.setUnbreakable(true);
+        head.setItemMeta(meta);
+
+        return head;
+    }
+
+    public ItemStack sniperFoots(){
+        ItemStack head =  new ItemStack((Material.LEATHER_BOOTS));
+        LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
+        meta.setColor(Color.fromRGB(255, 255, 255));
+        meta.setDisplayName(ChatColor.DARK_GREEN + "Sniper Foots");
+        meta.addEnchant(Enchantment.PROTECTION_PROJECTILE, 2, true);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.setUnbreakable(true);
+        head.setItemMeta(meta);
+
+        return head;
+    }
 }

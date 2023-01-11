@@ -569,6 +569,25 @@ public class RageKitPvP extends JavaPlugin implements Listener {
                         + "" + ChatColor.GREEN + "VIP");
             }
         }
+
+        if (e.getSlot() == 16) {
+            if (2 > 1){
+                player.getInventory().clear();
+                player.getInventory().setHelmet(items.sniperHead());
+                player.getInventory().setBoots(items.sniperFoots());
+                player.getInventory().setLeggings(items.sniperLegs());
+                player.getInventory().setChestplate(items.sniperChest());
+                getServer().dispatchCommand(getServer().getConsoleSender(),
+                        "shot give " + player.getName() + " hunting");
+                getServer().dispatchCommand(getServer().getConsoleSender(),
+                        "shot give " + player.getName() + " airstrike");
+                player.closeInventory();
+
+            } else {
+                player.sendMessage(ChatColor.GOLD + "You are not " + ChatColor.UNDERLINE + "" + ChatColor.BOLD
+                        + "" + ChatColor.GREEN + "VIP");
+            }
+        }
     }
 
     @EventHandler
