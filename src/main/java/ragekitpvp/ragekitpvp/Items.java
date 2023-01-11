@@ -599,7 +599,7 @@ public class Items {
         meta.setDisplayName(ChatColor.BOLD + "" + ChatColor.AQUA + "are eye pee");
         meta.addEnchant(Enchantment.RIPTIDE, 4, true);
         meta.addEnchant(Enchantment.CHANNELING, 1, true);
-        meta.addEnchant(Enchantment.DAMAGE_ALL, 8, true);
+        meta.addEnchant(Enchantment.DAMAGE_ALL, 4, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.setUnbreakable(true);
@@ -641,5 +641,23 @@ public class Items {
         head.setItemMeta(meta);
 
         return head;
+    }
+
+    public ItemStack aquaHeart() {
+        ItemStack stick = new ItemStack(Material.HEART_OF_THE_SEA);
+        ItemMeta meta = stick.getItemMeta();
+        meta.setDisplayName(ChatColor.AQUA + "Axe or Ottle ?");
+        List<String> lore = new ArrayList<String>();
+        lore.add("");
+        lore.add(ChatColor.DARK_PURPLE + "right click release the manders");
+        meta.setLore(lore);
+        meta.addEnchant(Enchantment.LURE, 1, true);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        meta.setUnbreakable(true);
+        stick.setItemMeta(meta);
+
+        return stick;
     }
 }

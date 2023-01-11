@@ -15,3 +15,5 @@ commands:
     description: get your ping!
   ip:
     description: gets a players ip
+  die:
+    description: you die

@@ -6,7 +6,7 @@ import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -16,16 +16,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.event.server.ServerListPingEvent;
-import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import java.util.*;
 
@@ -128,6 +123,12 @@ public class RageKitPvP extends JavaPlugin implements Listener {
         if (label.equalsIgnoreCase("ping") && sender instanceof Player){
             Player player = (Player) sender;
             player.sendMessage(("Your ping is " + player.getPing()));
+        }
+
+        if (label.equalsIgnoreCase("die") && sender instanceof  Player) {
+            Player player = (Player) sender;
+            player.setHealth(0.0);
+            player.sendMessage("ya done now");
         }
 
         if (label.equalsIgnoreCase("ip") && sender instanceof Player && sender.hasPermission("kits.ip")) {
@@ -244,6 +245,22 @@ public class RageKitPvP extends JavaPlugin implements Listener {
                 }
             }
         }
+
+        if (mainItem.getType().equals(Material.HEART_OF_THE_SEA) && event.getAction() == Action.RIGHT_CLICK_BLOCK &&
+                mainItem.getItemMeta().getDisplayName().contains("Axe or Ottle ?")) {
+
+            Block b = player.getTargetBlock(null, 5);
+            Location loc = b.getLocation();
+            int axeAmount = 0;
+            while (8 != axeAmount) {
+                Drowned drown = (Drowned) loc.getWorld().spawnEntity(loc, EntityType.DROWNED);
+                drown.setCustomName(player.getName());
+                drown.setCustomNameVisible(true);
+                drown.setGlowing(true);
+                axeAmount += 1;
+            }
+            player.getInventory().removeItem(items.aquaHeart());
+        }
     }
     @EventHandler
     public void onJump(PlayerMoveEvent event) {
@@ -309,6 +326,10 @@ public class RageKitPvP extends JavaPlugin implements Listener {
                 Horse horse = (Horse) ent;
                 horse.remove();
                 return;
+            }
+            if (ent.getName().contains(player.getName()) && ent.getType() == EntityType.DROWNED) {
+                Drowned drown = (Drowned) ent;
+                drown.remove();
             }
         }
     }
@@ -538,6 +559,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
             if (2 > 1){
                 player.getInventory().clear();
                 player.getInventory().addItem(items.aquaTrident());
+                player.getInventory().addItem(items.aquaHeart());
                 player.getInventory().setHelmet(items.aquaHead());
                 player.getInventory().setBoots(items.aquaFoot());
                 player.closeInventory();
@@ -584,6 +606,10 @@ public class RageKitPvP extends JavaPlugin implements Listener {
                 horse.remove();
                 player.sendMessage(ChatColor.YELLOW + "horse gone king");
                 return;
+            }
+            if (ent.getName().contains(player.getName()) && ent.getType() == EntityType.DROWNED) {
+                Drowned drown = (Drowned) ent;
+                drown.remove();
             }
         }
 
@@ -771,5 +797,9 @@ public class RageKitPvP extends JavaPlugin implements Listener {
             warden.clearAnger(player);
             event.setCancelled(true);
         }
+    }
+    @EventHandler
+    public void dropItem(PlayerDropItemEvent event) {
+        event.setCancelled(true);
     }
 }
