@@ -11,6 +11,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
 import org.bukkit.event.server.ServerListPingEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -21,11 +22,10 @@ import java.util.Map;
 
 
 public class EventHandlerInternal {
-    kitInv inventory = new kitInv();
     Items items = new Items();
     Kits kits = new Kits();
 
-    public void handleInteract(PlayerInteractEvent event) {
+    public void handleInteract(PlayerInteractEvent event, Inventory inv) {
         Player player = event.getPlayer();
         ItemStack mainItem = player.getInventory().getItemInMainHand();
         Map<String, Long> doomCooldowns = new HashMap<String, Long>();
@@ -85,7 +85,7 @@ public class EventHandlerInternal {
             if (player.getInventory().getItemInMainHand().getItemMeta()
                     .getDisplayName().contains("Kit Selector")) {
                 if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR){
-                    player.openInventory(inventory.inv);
+                    player.openInventory(inv);
                 }
             }
         }
@@ -220,7 +220,7 @@ public class EventHandlerInternal {
         event.setMotd(ChatColor.DARK_RED + "" + ChatColor.BOLD + "RAGE " + ChatColor.RESET + ChatColor.BLUE + "Kit PvP");
     }
 
-    public void handleInvClick(InventoryClickEvent e) {
+    public void handleInvClick(InventoryClickEvent e, Inventory inv) {
         Player player = (Player) e.getWhoClicked();
 
         if (e.getSlotType().equals(InventoryType.SlotType.ARMOR) && player.getInventory().getLeggings() != null) {
@@ -233,7 +233,7 @@ public class EventHandlerInternal {
                     }
         }
 
-        if (!e.getInventory().equals(inventory.inv)) return;
+        if (!e.getInventory().equals(inv)) return;
         if (e.getCurrentItem() == null) return;
         if (e.getCurrentItem().getItemMeta() == null) return;
         if (e.getCurrentItem().getItemMeta().getDisplayName() == null) return;

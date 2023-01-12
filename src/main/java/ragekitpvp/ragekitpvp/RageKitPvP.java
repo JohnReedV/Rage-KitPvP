@@ -19,9 +19,9 @@ import org.bukkit.event.entity.EntityTargetEvent;
 
 
 public class RageKitPvP extends JavaPlugin implements Listener {
-    kitInv inventory = new kitInv();
     CommandHandler commands = new CommandHandler();
     EventHandlerInternal events = new EventHandlerInternal();
+    kitInv inventory = new kitInv();
 
     @Override
     public void onEnable(){
@@ -36,7 +36,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (label.equalsIgnoreCase("head")) { commands.handleHead(sender, args); }
-        if (label.equalsIgnoreCase("kits")) { commands.handleKits(sender); }
+        if (label.equalsIgnoreCase("kits")) { commands.handleKits(sender, inventory.inv); }
         if (label.equalsIgnoreCase("setspawn")) { commands.handleSetspawn(sender); }
         if (label.equalsIgnoreCase("flex")) { commands.handleFlex(sender); }
         if (label.equalsIgnoreCase("ping")){ commands.handlePing(sender); }
@@ -46,7 +46,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onClick(PlayerInteractEvent event) { events.handleInteract(event); }
+    public void onClick(PlayerInteractEvent event) { events.handleInteract(event, inventory.inv); }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) { events.handlePlayerQuit(event); }
@@ -58,7 +58,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     public void motd(ServerListPingEvent event) { events.handleMOTD(event); }
 
     @EventHandler
-    public void onClick(InventoryClickEvent e) { events.handleInvClick(e); }
+    public void onClick(InventoryClickEvent e) { events.handleInvClick(e, inventory.inv); }
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) { events.handlePlayerDeath(event); }

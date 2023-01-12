@@ -3,6 +3,7 @@ package ragekitpvp.ragekitpvp;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -44,14 +45,13 @@ public class CommandHandler {
         return true;
     }
 
-    public boolean handleKits(CommandSender sender) {
+    public boolean handleKits(CommandSender sender, Inventory inv) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("players only BOSS");
         }
         if (sender.hasPermission("kits.open")) {
-            kitInv inventory = new kitInv();
             Player player = (Player) sender;
-            player.openInventory(inventory.inv);
+            player.openInventory(inv);
         }
         return true;
     }
