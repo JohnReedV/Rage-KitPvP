@@ -191,7 +191,7 @@ public class Items {
         ItemStack sword = new ItemStack(Material.STONE_SWORD);
         ItemMeta meta = sword.getItemMeta();
         meta.setDisplayName(ChatColor.RED + "Sword of FLAMES");
-        meta.addEnchant(Enchantment.FIRE_ASPECT, 3, true);
+        meta.addEnchant(Enchantment.FIRE_ASPECT, 10, true);
         meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);

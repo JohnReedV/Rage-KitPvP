@@ -425,6 +425,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
         if (e.getSlot() == 5) {
             player.getInventory().clear();
             player.getInventory().addItem(items.pyroSword());
+            player.getInventory().addItem(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE));
             player.getInventory().setBoots(items.pyroBoots());
             player.getInventory().setLeggings(items.pyroLegs());
             player.getInventory().setChestplate(items.pyroChest());
