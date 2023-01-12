@@ -17,6 +17,9 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class RageKitPvP extends JavaPlugin implements Listener {
     CommandHandler commands = new CommandHandler();

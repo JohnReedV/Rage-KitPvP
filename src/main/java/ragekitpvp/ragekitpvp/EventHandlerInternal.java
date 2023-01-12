@@ -24,12 +24,12 @@ import java.util.Map;
 public class EventHandlerInternal {
     Items items = new Items();
     Kits kits = new Kits();
+    Map<String, Long> doomCooldowns = new HashMap<String, Long>();
+    Map<String, Long> aquaCooldowns = new HashMap<String, Long>();
 
     public void handleInteract(PlayerInteractEvent event, Inventory inv) {
         Player player = event.getPlayer();
         ItemStack mainItem = player.getInventory().getItemInMainHand();
-        Map<String, Long> doomCooldowns = new HashMap<String, Long>();
-        Map<String, Long> aquaCooldowns = new HashMap<String, Long>();
 
         if (mainItem.getType().equals(Material.STICK)) {
             if (player.getInventory().getItemInMainHand().getItemMeta()
