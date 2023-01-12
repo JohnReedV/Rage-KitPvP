@@ -226,4 +226,28 @@ public class Kits {
                     + "" + ChatColor.GREEN + "VIP");
         }
     }
+
+    public String getRandomKit(Player player) {
+        String[] Possibilites = {"Chemist", "Doom", "Knight", "Archer", "Pyro", "Ninja", "Tank", "Outcast",
+                 "Jockey", "Enderman", "Cactus", "Terrorist", "Warton", "Aquaman", "Sniper"};
+        String selection = Possibilites[(int) Math.round(((Math.random() * (Possibilites.length)) + 0))];
+
+        if (selection.equalsIgnoreCase("chemist")) { this.getChemist(player); }
+        if (selection.equalsIgnoreCase("doom")) { this.getDoom(player); }
+        if (selection.equalsIgnoreCase("knight")) { this.getKnight(player); }
+        if (selection.equalsIgnoreCase("archer")) { this.getArcher(player); }
+        if (selection.equalsIgnoreCase("pyro")) { this.getPyro(player); }
+        if (selection.equalsIgnoreCase("ninja")) { this.getNinja(player); }
+        if (selection.equalsIgnoreCase("tank")) { this.getTank(player); }
+        if (selection.equalsIgnoreCase("outcast")) { this.getOutcast(player); }
+        if (selection.equalsIgnoreCase("jockey")) { this.getJockey(player); }
+        if (selection.equalsIgnoreCase("enderman")) { this.getEnderman(player); }
+        if (selection.equalsIgnoreCase("cactus")) { this.getCactus(player); }
+        if (selection.equalsIgnoreCase("terrorist")) { this.getTerrorist(player); }
+        if (selection.equalsIgnoreCase("warton")) { this.getWarton(player); }
+        if (selection.equalsIgnoreCase("aquaman")) { this.getAquaman(player); }
+        if (selection.equalsIgnoreCase("sniper")) { this.getSniper(player); }
+
+        return selection;
+    }
 }

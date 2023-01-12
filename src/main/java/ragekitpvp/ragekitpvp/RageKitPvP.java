@@ -265,7 +265,12 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     }
     @EventHandler
     public void onJump(PlayerMoveEvent event) {
-        Player player = (Player) event.getPlayer();
+        Player player = event.getPlayer();
+
+        if (player.getInventory().contains(items.compass()) && player.getLocation().clone().getY() < 119) {
+            player.sendMessage(ChatColor.GOLD + "you get " + kits.getRandomKit(player));
+        }
+
         if (player.getInventory().getBoots() != null) {
             if (player.getInventory().getBoots().getItemMeta().getDisplayName().contains("Boots O' Doom")) {
                 if (player.getInventory().getBoots().getItemMeta().hasLore()) {
