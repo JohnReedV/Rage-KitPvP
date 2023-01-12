@@ -5,12 +5,12 @@ import org.bukkit.entity.*;
 import org.bukkit.scoreboard.*;
 
 public class RageScoreboard {
-    
+
     public void createBoard(Player player) {
         ScoreboardManager manager = Bukkit.getScoreboardManager();
         Scoreboard board = manager.getNewScoreboard();
         Objective obj = board.registerNewObjective("Rage", "dummy",
-                ChatColor.BOLD + "" + ChatColor.DARK_RED + "Eldaria");
+                ChatColor.BOLD + "" + ChatColor.RED + "RAGE PVP");
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
         Score kills = obj.getScore(ChatColor.AQUA + "Kills: " + ChatColor.GREEN +
                 player.getStatistic(Statistic.PLAYER_KILLS));

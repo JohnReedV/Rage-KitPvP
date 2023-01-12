@@ -362,8 +362,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
 
     @EventHandler
     public void motd(ServerListPingEvent event) {
-        event.setMotd(ChatColor.GOLD + "" + ChatColor.BOLD + "The Battle Grounds of "
-                + ChatColor.RESET + "" + ChatColor.BOLD + "" + ChatColor.BLUE + "Eldaria");
+        event.setMotd(ChatColor.DARK_RED + "" + ChatColor.BOLD + "RAGE " + ChatColor.RESET + ChatColor.BLUE + "Kit PvP");
     }
 
     @EventHandler()
