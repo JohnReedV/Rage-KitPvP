@@ -17,5 +17,3 @@ commands:
     description: gets a players ip
   die:
     description: you die
-  nick:
-    description: set a nickname
