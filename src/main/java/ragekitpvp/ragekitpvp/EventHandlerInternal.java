@@ -50,7 +50,7 @@ public class EventHandlerInternal {
                         while (3 != duck) {
                             loc.setX(loc.getX() + 1);
                             Entity sdrown = loc.getWorld().spawnEntity(loc, EntityType.WITHER_SKELETON);
-                            sdrown.setCustomName("Skelly O' Doom!");
+                            sdrown.setCustomName("Skelly O' Doom! => " + player.getName());
                             sdrown.setCustomNameVisible(true);
                             sdrown.setGlowing(true);
                             duck += 1;
@@ -196,13 +196,18 @@ public class EventHandlerInternal {
                 Drowned drown = (Drowned) ent;
                 drown.remove();
             }
+            if (ent.getName().equalsIgnoreCase("Skelly O' Doom! => " + player.getName())){
+                WitherSkeleton skelly = (WitherSkeleton) ent;
+                skelly.remove();
+            }
         }
     }
 
     public void handlePlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         RageScoreboard scoreboard = new RageScoreboard();
-
+        if (!player.hasPlayedBefore()) { event.setJoinMessage(ChatColor.GOLD + player.getName()
+                + ChatColor.AQUA + " in for the FIRST TIME");}
         scoreboard.createBoard(event.getPlayer());
         player.getInventory().clear();
         player.getInventory().addItem(items.compass());
@@ -294,6 +299,10 @@ public class EventHandlerInternal {
             if (ent.getName().contains(player.getName()) && ent.getType() == EntityType.DROWNED) {
                 Drowned drown = (Drowned) ent;
                 drown.remove();
+            }
+            if (ent.getName().equalsIgnoreCase("Skelly O' Doom! => " + player.getName())){
+                WitherSkeleton skelly = (WitherSkeleton) ent;
+                skelly.remove();
             }
         }
     }
@@ -454,6 +463,7 @@ public class EventHandlerInternal {
     public void handleEntityTarget(EntityTargetEvent event) {
         Entity entity = event.getEntity();
         Entity target = event.getTarget();
+
         if (entity.getName().contains("Charles => " + target.getName())){
             Player player = (Player) target;
             Warden warden = (Warden) entity;
@@ -462,5 +472,7 @@ public class EventHandlerInternal {
         }
 
         if (entity.getName().contains(target.getName()) && entity.getType() == EntityType.DROWNED) { event.setCancelled(true);}
+
+        if (entity.getName().contains("Skelly O' Doom! => " + target.getName())){ event.setCancelled(true); }
     }
 }
