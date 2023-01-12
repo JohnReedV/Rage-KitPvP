@@ -10,7 +10,6 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -31,6 +30,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     RageScoreboard scoreboard = new RageScoreboard();
     Items items = new Items();
     Kits kits = new Kits();
+    CommandHandler commands = new CommandHandler();
 
     @Override
     public void onEnable(){
@@ -44,107 +44,13 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (label.equalsIgnoreCase("head")) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage("players only BOSS");
-            }
-            if (sender.hasPermission("kits.head")) {
-                Player player = (Player) sender;
-                if (args.length == 0) {
-                    ItemStack head = new ItemStack(Material.PLAYER_HEAD);
-                    SkullMeta meta = (SkullMeta) head.getItemMeta();
-                    meta.setOwner(player.getDisplayName());
-                    meta.setDisplayName(ChatColor.GREEN + player.getDisplayName() + "s" + ChatColor.AQUA + " head");
-                    head.setItemMeta(meta);
-                    player.getInventory().addItem(head);
-                    return true;
-                }
-                if (args.length > 0) {
-                    for (Player online : Bukkit.getOnlinePlayers()) {
-                        if (args[0].equalsIgnoreCase(online.getDisplayName())) {
-                            ItemStack head = new ItemStack(Material.PLAYER_HEAD);
-                            SkullMeta meta = (SkullMeta) head.getItemMeta();
-                            meta.setOwner(online.getDisplayName());
-                            meta.setDisplayName(ChatColor.GREEN + online.getDisplayName() + "s" + ChatColor.AQUA + " head");
-                            head.setItemMeta(meta);
-                            player.getInventory().addItem(head);
-                            return true;
-                        }
-                    }
-                } else {
-                    player.sendMessage(ChatColor.GOLD + "Player not online");
-                }
-            }
-        }
-        if (label.equalsIgnoreCase("kits")) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage("players only BOSS");
-            }
-            if (sender.hasPermission("kits.open")) {
-                Player player = (Player) sender;
-                player.openInventory(inventory.inv);
-            }
-        }
-
-        if (label.equalsIgnoreCase("setspawn")) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage("players only BOSS");
-            }
-            if (sender.hasPermission("kits.setspawn")){
-                Player player = (Player) sender;
-                World world = player.getWorld();
-                Location loc = player.getLocation();
-                world.setSpawnLocation(loc.getBlockX(), loc.getBlockY() + 1, loc.getBlockZ());
-            }
-        }
-
-        if (label.equalsIgnoreCase("flex")) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage("players only BOSS");
-            } else {
-                Player player = (Player) sender;
-                Integer kills = player.getStatistic(Statistic.PLAYER_KILLS);
-                Integer deaths = player.getStatistic(Statistic.DEATHS);
-                Integer dmgDone = player.getStatistic(Statistic.DAMAGE_DEALT);
-                Integer dmgTaken = player.getStatistic(Statistic.DAMAGE_TAKEN);
-                Integer time = player.getStatistic(Statistic.TOTAL_WORLD_TIME);
-
-                getServer().dispatchCommand(getServer().getConsoleSender(), "say Here are "
-                        + player.getName() + "'s stats...");
-
-                getServer().dispatchCommand(getServer().getConsoleSender(),"say Died : " + deaths.toString());
-                getServer().dispatchCommand(getServer().getConsoleSender(),"say Killed : " + kills.toString());
-                getServer().dispatchCommand(getServer().getConsoleSender(),"say Damage done : " + dmgDone.toString());
-                getServer().dispatchCommand(getServer().getConsoleSender(),"say Damage Taken : " + dmgTaken.toString());
-                getServer().dispatchCommand(getServer().getConsoleSender(),"Time on server : " + time.toString());
-            }
-
-        }
-
-        if (label.equalsIgnoreCase("ping") && sender instanceof Player){
-            Player player = (Player) sender;
-            player.sendMessage(("Your ping is " + player.getPing()));
-        }
-
-        if (label.equalsIgnoreCase("die") && sender instanceof  Player) {
-            Player player = (Player) sender;
-            player.setHealth(0.0);
-            player.sendMessage("ya done now");
-        }
-
-        if (label.equalsIgnoreCase("ip") && sender instanceof Player && sender.hasPermission("kits.ip")) {
-            if (args[0] != null) {
-                sender.sendMessage("Provide the players name");
-            }
-            try {
-                Player player = Bukkit.getServer().getPlayer(args[0]);
-                sender.sendMessage(player.getName() + "'s ping is : " + player.getAddress());
-            }
-            catch(Exception e) {
-                sender.sendMessage("not a player. I got : "  + args[0]);
-            }
-        }
-
+        if (label.equalsIgnoreCase("head")) { commands.handleHead(sender, args); }
+        if (label.equalsIgnoreCase("kits")) { commands.handleKits(sender); }
+        if (label.equalsIgnoreCase("setspawn")) { commands.handleSetspawn(sender); }
+        if (label.equalsIgnoreCase("flex")) { commands.handleFlex(sender); }
+        if (label.equalsIgnoreCase("ping")){ commands.handlePing(sender); }
+        if (label.equalsIgnoreCase("die")) { commands.handleDie(sender); }
+        if (label.equalsIgnoreCase("ip")) { commands.handleIp(sender, args); }
         return true;
     }
 
