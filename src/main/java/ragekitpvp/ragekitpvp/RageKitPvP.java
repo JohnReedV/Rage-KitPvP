@@ -17,9 +17,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class RageKitPvP extends JavaPlugin implements Listener {
     CommandHandler commands = new CommandHandler();
@@ -87,6 +84,9 @@ public class RageKitPvP extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onTarget(EntityTargetEvent event) {events.handleEntityTarget(event); }
+
+    @EventHandler
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent event){ events.handlePlayerInteractEntityEvent(event);}
     @EventHandler
     public void noHunger(FoodLevelChangeEvent event) { event.setCancelled(true); }
     @EventHandler

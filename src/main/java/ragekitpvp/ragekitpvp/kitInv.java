@@ -222,6 +222,20 @@ public class kitInv {
         meta17.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         spyglass.setItemMeta(meta17);
         inv.setItem(16, spyglass);
+
+        ItemStack tot = new ItemStack(Material.TOTEM_OF_UNDYING);
+        ItemMeta meta18 = tot.getItemMeta();
+        List<String> lore18 = new ArrayList<String>();
+        lore18.add("");
+        lore18.add(ChatColor.ITALIC + "Ravage them");
+        lore18.add(ChatColor.ITALIC + "and they mom >:)");
+        meta18.setLore(lore18);
+        meta18.setDisplayName(ChatColor.DARK_GRAY + "Ravager");
+        meta18.addEnchant(Enchantment.LURE,1,true);
+        meta18.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        meta18.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        tot.setItemMeta(meta18);
+        inv.setItem(17, tot);
     }
     
 }

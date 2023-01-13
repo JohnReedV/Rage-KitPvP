@@ -31,6 +31,36 @@ public class EventHandlerInternal {
         Player player = event.getPlayer();
         ItemStack mainItem = player.getInventory().getItemInMainHand();
 
+        if (mainItem.getType().equals(Material.TOTEM_OF_UNDYING) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK) &&
+                mainItem.getItemMeta().getDisplayName().contains("Ravager Spawn")){
+
+            double y = player.getLocation().getY() + 2.6;
+            Location loc = player.getLocation();
+            loc.setY(y);
+            Ravager ravager = (Ravager) player.getWorld().spawnEntity(loc, EntityType.RAVAGER);
+
+            ravager.setCustomName(player.getName());
+            ravager.setCustomNameVisible(true);
+            player.getInventory().remove(items.spawnRavager());
+        }
+
+        if (player.getInventory().getItemInMainHand().getType().equals(Material.CROSSBOW) &&
+                player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Ravager Crossbow")){
+            if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+
+
+                Collection<Entity> entities = player.getWorld().getEntities();
+                for (Entity ent : entities){
+                    if (ent.getName().equalsIgnoreCase(player.getName()) && ent.getType() == EntityType.RAVAGER &&
+                    !ent.getPassengers().isEmpty()){
+                        Ravager ravager = (Ravager) ent;
+                        ravager.setVelocity(player.getLocation().getDirection().multiply(3));
+                        return;
+                    }
+                }
+            }
+        }
+
         if (mainItem.getType().equals(Material.STICK)) {
             if (player.getInventory().getItemInMainHand().getItemMeta()
                     .getDisplayName().contains("Stick O' Doom")) {
@@ -196,6 +226,10 @@ public class EventHandlerInternal {
                 Drowned drown = (Drowned) ent;
                 drown.remove();
             }
+            if (ent.getName().contains(player.getName()) && ent.getType() == EntityType.RAVAGER) {
+                Ravager ravager = (Ravager) ent;
+                ravager.remove();
+            }
             if (ent.getName().equalsIgnoreCase("Skelly O' Doom! => " + player.getName())){
                 WitherSkeleton skelly = (WitherSkeleton) ent;
                 skelly.remove();
@@ -261,6 +295,7 @@ public class EventHandlerInternal {
         if (e.getSlot() == 14) { kits.getWarton(player); }
         if (e.getSlot() == 15) { kits.getAquaman(player); }
         if (e.getSlot() == 16) { kits.getSniper(player); }
+        if (e.getSlot() == 17) { kits.getRavager(player); }
     }
 
     public void handlePlayerDeath(PlayerDeathEvent event) {
@@ -299,6 +334,10 @@ public class EventHandlerInternal {
             if (ent.getName().contains(player.getName()) && ent.getType() == EntityType.DROWNED) {
                 Drowned drown = (Drowned) ent;
                 drown.remove();
+            }
+            if (ent.getName().contains(player.getName()) && ent.getType() == EntityType.RAVAGER) {
+                Ravager ravager = (Ravager) ent;
+                ravager.remove();
             }
             if (ent.getName().equalsIgnoreCase("Skelly O' Doom! => " + player.getName())){
                 WitherSkeleton skelly = (WitherSkeleton) ent;
@@ -365,13 +404,34 @@ public class EventHandlerInternal {
                 event.setCancelled(true);
             }
         }
-        Entity entity = event.getDamager();
+
         Entity target = event.getEntity();
-        Player player = (Player) target;
+        Entity entity = event.getDamager();
         if (entity.getName().equalsIgnoreCase("Charles => " + target.getName())){
+            Player player = (Player) target;
+
             Warden warden = (Warden) entity;
             warden.clearAnger(player);
             event.setCancelled(true);
+        }
+
+        if (event.getDamager() instanceof Arrow) {
+            Arrow arrow = (Arrow) event.getDamager();
+            Player player = (Player) arrow.getShooter();
+            if (player.getInventory().getItemInMainHand().getType().equals(Material.CROSSBOW) &&
+                    player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Ravager Crossbow")){
+                Collection<Entity> entities = player.getWorld().getEntities();
+                for (Entity ent : entities){
+                    if (ent.getName().equalsIgnoreCase(player.getName()) && ent.getType() == EntityType.RAVAGER){
+                        Ravager ravager = (Ravager) ent;
+                        LivingEntity toTarget = (LivingEntity) event.getEntity();
+                        ravager.setTarget(toTarget);
+                        ravager.attack(toTarget);
+                        ravager.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 120, 3));
+                        ravager.setPersistent(true);
+                    }
+                }
+            }
         }
     }
 
@@ -471,8 +531,17 @@ public class EventHandlerInternal {
             event.setCancelled(true);
         }
 
-        if (entity.getName().contains(target.getName()) && entity.getType() == EntityType.DROWNED) { event.setCancelled(true);}
-
+        if (entity.getName().contains(target.getName()) && entity.getType() == EntityType.DROWNED) { event.setCancelled(true); }
+        if (entity.getName().contains(target.getName()) && entity.getType() == EntityType.RAVAGER) { event.setCancelled(true); }
         if (entity.getName().contains("Skelly O' Doom! => " + target.getName())){ event.setCancelled(true); }
+    }
+
+    public void handlePlayerInteractEntityEvent(PlayerInteractEntityEvent event) {
+        if (event.getRightClicked().getType() == EntityType.RAVAGER &&
+                event.getRightClicked().getName().contains(event.getPlayer().getName())) {
+            Ravager ravager = (Ravager) event.getRightClicked();
+            ravager.addPassenger(event.getPlayer());
+            ravager.setAware(true);
+        }
     }
 }

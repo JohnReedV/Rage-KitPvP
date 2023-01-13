@@ -723,4 +723,40 @@ public class Items {
 
         return head;
     }
+
+    public ItemStack spawnRavager() {
+        ItemStack egg =  new ItemStack((Material.TOTEM_OF_UNDYING));
+        ItemMeta meta = egg.getItemMeta();
+        meta.setDisplayName(ChatColor.DARK_GRAY + "Ravager Spawn");
+        meta.addEnchant(Enchantment.PROTECTION_PROJECTILE, 0, true);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        meta.setUnbreakable(true);
+        egg.setItemMeta(meta);
+
+        return egg;
+    }
+
+    public ItemStack ravagerCrossbow() {
+        ItemStack cross =  new ItemStack((Material.CROSSBOW));
+        ItemMeta meta = cross.getItemMeta();
+        List<String> lore = new ArrayList<String>();
+        lore.add("");
+        lore.add(ChatColor.DARK_GRAY + "left clicking while riding");
+        lore.add(ChatColor.DARK_GRAY + "will guide your Ravager");
+        meta.setLore(lore);
+        meta.setDisplayName(ChatColor.DARK_GRAY + "Ravager Crossbow");
+        meta.addEnchant(Enchantment.QUICK_CHARGE, 3, true);
+        meta.addEnchant(Enchantment.PIERCING, 4, true);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.setUnbreakable(true);
+        cross.setItemMeta(meta);
+
+        return cross;
+    }
+
+    public ItemStack ravagerArrow() {
+        ItemStack arrow =  new ItemStack((Material.ARROW));
+        return arrow;
+    }
 }

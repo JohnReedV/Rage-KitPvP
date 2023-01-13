@@ -227,9 +227,23 @@ public class Kits {
         }
     }
 
+    public void getRavager(Player player) {
+        if (2 > 1) {
+            player.getInventory().clear();
+            player.getInventory().addItem(items.ravagerCrossbow());
+            player.getInventory().addItem(items.spawnRavager());
+            for (int i = 0; i < 128; i++){ player.getInventory().addItem(items.ravagerArrow()); }
+            player.closeInventory();
+
+        } else {
+            player.sendMessage(ChatColor.GOLD + "You are not " + ChatColor.UNDERLINE + "" + ChatColor.BOLD
+                    + "" + ChatColor.GREEN + "VIP");
+        }
+    }
+
     public String getRandomKit(Player player) {
         String[] Possibilites = {"Chemist", "Doom", "Knight", "Archer", "Pyro", "Ninja", "Tank", "Outcast",
-                 "Jockey", "Enderman", "Cactus", "Terrorist", "Warton", "Aquaman", "Sniper"};
+                 "Jockey", "Enderman", "Cactus", "Terrorist", "Warton", "Aquaman", "Sniper", "Ravager"};
         String selection = Possibilites[(int) Math.round(((Math.random() * (Possibilites.length)) + 0))];
 
         if (selection.equalsIgnoreCase("chemist")) { this.getChemist(player); }
@@ -247,6 +261,7 @@ public class Kits {
         if (selection.equalsIgnoreCase("warton")) { this.getWarton(player); }
         if (selection.equalsIgnoreCase("aquaman")) { this.getAquaman(player); }
         if (selection.equalsIgnoreCase("sniper")) { this.getSniper(player); }
+        if (selection.equalsIgnoreCase("Ravager")) { this.getRavager(player); }
 
         return selection;
     }
