@@ -256,7 +256,8 @@ public class EventHandlerInternal {
     }
 
     public void handleMOTD(ServerListPingEvent event) {
-        event.setMotd(ChatColor.DARK_RED + "" + ChatColor.BOLD + "RAGE " + ChatColor.RESET + ChatColor.BLUE + "Kit PvP");
+        event.setMotd(ChatColor.DARK_RED + "" + ChatColor.BOLD + "RAGE " + ChatColor.BLUE + "Kit PvP " + ChatColor.GRAY +
+                "    soon updating our ip to " + ChatColor.BOLD + ChatColor.GOLD + "ragepvp.co");
     }
 
     public void handleInvClick(InventoryClickEvent e, Inventory inv) {
@@ -437,9 +438,6 @@ public class EventHandlerInternal {
 
             Player player = (Player) event.getEntity();
             player.setFoodLevel(20);
-            if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
-                event.setCancelled(true);
-            }
 
             Location loc = event.getEntity().getLocation().clone();
             if (loc.getY() >= 119){
@@ -450,6 +448,10 @@ public class EventHandlerInternal {
         if (event.getCause() == EntityDamageEvent.DamageCause.LIGHTNING &&
                 player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("are eye pee") &&
                 player.getInventory().getItemInMainHand().getType() == Material.TRIDENT){
+            event.setCancelled(true);
+        }
+
+        if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
             event.setCancelled(true);
         }
     }
