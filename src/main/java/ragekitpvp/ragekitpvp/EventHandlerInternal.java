@@ -304,11 +304,7 @@ public class EventHandlerInternal {
         Player player = event.getEntity().getPlayer();
         player.getInventory().clear();
         player.teleport(player.getWorld().getSpawnLocation());
-
-        if (player.getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK && player.getKiller() != null) {
-            Player killer = player.getKiller();
-            killer.getInventory().addItem(items.playerHead(player));
-        }
+        event.getDrops().add(items.playerHead(player));
     }
 
     public void handleRespawn(PlayerRespawnEvent event) {

@@ -102,9 +102,11 @@ public class CommandHandler {
     public boolean handleDie(CommandSender sender) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
+            Location loc = player.getLocation().clone();
+            if (loc.getY() >= 119) { player.sendMessage("Can't use that up here"); return true;}
             player.setHealth(0.0);
             player.sendMessage("ya done now");
-        } else sender.sendMessage("players only king");
+        } else sender.sendMessage("players only BOSS");
         return true;
     }
 
