@@ -300,12 +300,14 @@ public class EventHandlerInternal {
     }
 
     public void handlePlayerDeath(PlayerDeathEvent event) {
+        Player player = event.getEntity().getPlayer();
         event.setDroppedExp(0);
         event.getDrops().clear();
-        Player player = event.getEntity().getPlayer();
         player.getInventory().clear();
-        player.teleport(player.getWorld().getSpawnLocation());
         event.getDrops().add(items.playerHead(player));
+        Location loc = player.getLocation().clone();
+        loc.getWorld().dropItem(loc, items.playerHead(player));
+        player.teleport(player.getWorld().getSpawnLocation());
     }
 
     public void handleRespawn(PlayerRespawnEvent event) {
