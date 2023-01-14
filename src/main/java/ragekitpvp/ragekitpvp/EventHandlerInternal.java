@@ -202,10 +202,14 @@ public class EventHandlerInternal {
             }
         }
 
-
-        Location loc = event.getPlayer().getLocation().clone();
-        if (loc.getBlock().getType() == Material.LIGHT_WEIGHTED_PRESSURE_PLATE) {
-            player.setVelocity(player.getLocation().getDirection().multiply(2).setY(2));
+        if (player.getInventory().getChestplate().getItemMeta().getDisplayName().contains("cumsock")){
+            Location loc = player.getLocation().clone();
+            for (Entity ent : player.getWorld().getEntities()) {
+                if (!(ent instanceof Player) || ent.getName().equalsIgnoreCase(player.getName())) { continue; }
+                if (loc.distance(ent.getLocation()) < 1.5) {
+                    ((Player) ent).damage(1.5);
+                }
+            }
         }
     }
 
