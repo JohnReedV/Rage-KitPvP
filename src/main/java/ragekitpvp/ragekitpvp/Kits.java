@@ -279,6 +279,7 @@ public class Kits {
         if (selection.equalsIgnoreCase("butcher")) { this.getButcher(player); }
 
         if (selection.equalsIgnoreCase("pisspants")) {
+            player.getInventory().clear();
             player.getInventory().setLeggings(items.pissPants());
             player.sendMessage(ChatColor.AQUA + player.getName() + ChatColor.GOLD + " " + ChatColor.BOLD + "PISSED PANTS");
         }
