@@ -10,6 +10,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import static org.bukkit.Bukkit.getServer;
 
 public class CommandHandler {
+    Kits kits = new Kits();
 
     public boolean handleHead(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
@@ -123,6 +124,13 @@ public class CommandHandler {
                 sender.sendMessage("not a player. I got : "  + args[0]);
             }
         } else sender.sendMessage("can't use that king");
+        return true;
+    }
+
+    public boolean handleRandomKit(CommandSender sender) {
+        if (sender instanceof Player && sender.hasPermission("kits.random")) {
+            kits.getRandomKit(((Player) sender).getPlayer());
+        }
         return true;
     }
 }

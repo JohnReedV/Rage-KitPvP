@@ -17,3 +17,5 @@ commands:
     description: gets a players ip
   die:
     description: you die
+  randomkit:
+    description: get a random kit

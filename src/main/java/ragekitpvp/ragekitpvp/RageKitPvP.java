@@ -43,6 +43,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
         if (label.equalsIgnoreCase("ping")){ commands.handlePing(sender); }
         if (label.equalsIgnoreCase("die")) { commands.handleDie(sender); }
         if (label.equalsIgnoreCase("ip")) { commands.handleIp(sender, args); }
+        if (label.equalsIgnoreCase("randomkit")) { commands.handleRandomKit(sender); }
         return true;
     }
 

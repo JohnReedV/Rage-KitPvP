@@ -20,8 +20,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.bukkit.Bukkit.getServer;
-
 
 public class EventHandlerInternal {
     Items items = new Items();
