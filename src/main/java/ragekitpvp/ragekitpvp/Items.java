@@ -597,7 +597,7 @@ public class Items {
     public ItemStack aquaTrident() {
         ItemStack trid = new ItemStack(Material.TRIDENT);
         ItemMeta meta = trid.getItemMeta();
-        meta.setDisplayName(ChatColor.BOLD + "" + ChatColor.AQUA + "are eye pee");
+        meta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + "are eye pee");
         meta.addEnchant(Enchantment.RIPTIDE, 4, true);
         meta.addEnchant(Enchantment.CHANNELING, 1, true);
         meta.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
@@ -780,5 +780,33 @@ public class Items {
         fire.setItemMeta(meta);
 
         return fire;
+    }
+
+    public ItemStack pigHead() { return new ItemStack(Material.PIGLIN_HEAD); }
+
+    public ItemStack pigChest(){ return new ItemStack(Material.CHAINMAIL_CHESTPLATE); }
+
+    public ItemStack pigLegs(){ return new ItemStack(Material.CHAINMAIL_LEGGINGS); }
+    public ItemStack pigFeet(){
+        ItemStack pigfeet = new ItemStack(Material.CHAINMAIL_BOOTS);
+        ItemMeta meta = pigfeet.getItemMeta();
+        meta.setDisplayName(ChatColor.YELLOW + "LEGENDARY pig foots");
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.addEnchant(Enchantment.FROST_WALKER, 3, true);
+        meta.setUnbreakable(true);
+        pigfeet.setItemMeta(meta);
+
+        return pigfeet;
+    }
+
+    public ItemStack pigAxe() {
+        ItemStack pigAxe = new ItemStack(Material.NETHERITE_AXE);
+        ItemMeta meta = pigAxe.getItemMeta();
+        meta.setDisplayName(ChatColor.YELLOW + "The Butcher's PigAxe");
+        meta.setUnbreakable(true);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        pigAxe.setItemMeta(meta);
+
+        return pigAxe;
     }
 }

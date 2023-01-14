@@ -132,6 +132,16 @@ public class Kits {
         player.closeInventory();
     }
 
+    public void getButcher(Player player) {
+        player.getInventory().clear();
+        player.getInventory().addItem(items.pigAxe());
+        player.getEquipment().setHelmet(items.pigHead());
+        player.getEquipment().setChestplate(items.pigChest());
+        player.getEquipment().setLeggings(items.pigLegs());
+        player.getEquipment().setBoots(items.pigFeet());
+        player.closeInventory();
+    }
+
     public void getTerrorist(Player player) {
         if (2 > 1) {
             player.getInventory().clear();
@@ -245,7 +255,7 @@ public class Kits {
 
     public String getRandomKit(Player player) {
         String[] Possibilites = {"Chemist", "Doom", "Knight", "Archer", "Pyro", "Ninja", "Tank", "Outcast",
-                 "Jockey", "Enderman", "Cactus", "Terrorist", "Warton", "Aquaman", "Sniper", "Ravager", "Bird"};
+                 "Jockey", "Enderman", "Cactus", "Terrorist", "Warton", "Aquaman", "Sniper", "Ravager", "Bird", "Butcher"};
         String selection = Possibilites[(int) Math.round(((Math.random() * (Possibilites.length)) + 0))];
 
         if (selection.equalsIgnoreCase("chemist")) { this.getChemist(player); }
@@ -265,6 +275,7 @@ public class Kits {
         if (selection.equalsIgnoreCase("sniper")) { this.getSniper(player); }
         if (selection.equalsIgnoreCase("ravager")) { this.getRavager(player); }
         if (selection.equalsIgnoreCase("bird")) { this.getBird(player); }
+        if (selection.equalsIgnoreCase("butcher")) { this.getButcher(player); }
 
         return selection;
     }

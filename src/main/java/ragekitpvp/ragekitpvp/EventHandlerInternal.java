@@ -33,17 +33,18 @@ public class EventHandlerInternal {
         Player player = event.getPlayer();
         ItemStack mainItem = player.getInventory().getItemInMainHand();
 
-        if (mainItem.getType().equals(Material.TOTEM_OF_UNDYING) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK) &&
-                mainItem.getItemMeta().getDisplayName().contains("Ravager Spawn")){
+        if (mainItem.getType().equals(Material.TOTEM_OF_UNDYING) &&
+                mainItem.getItemMeta().getDisplayName().contains("Ravager Spawn")) {
+            if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+                double y = player.getLocation().getY() + 2.6;
+                Location loc = player.getLocation();
+                loc.setY(y);
+                Ravager ravager = (Ravager) player.getWorld().spawnEntity(loc, EntityType.RAVAGER);
 
-            double y = player.getLocation().getY() + 2.6;
-            Location loc = player.getLocation();
-            loc.setY(y);
-            Ravager ravager = (Ravager) player.getWorld().spawnEntity(loc, EntityType.RAVAGER);
-
-            ravager.setCustomName(player.getName());
-            ravager.setCustomNameVisible(true);
-            player.getInventory().remove(items.spawnRavager());
+                ravager.setCustomName(player.getName());
+                ravager.setCustomNameVisible(true);
+                player.getInventory().remove(items.spawnRavager());
+            }
         }
 
         if (player.getInventory().getItemInMainHand().getType().equals(Material.CROSSBOW) &&
@@ -294,6 +295,7 @@ public class EventHandlerInternal {
         if (e.getSlot() == 10) { kits.getJockey(player); }
         if (e.getSlot() == 11) { kits.getEnderman(player); }
         if (e.getSlot() == 12) { kits.getCactus(player); }
+        if (e.getSlot() == 13) { kits.getButcher(player); }
         if (e.getSlot() == 19) { kits.getTerrorist(player); }
         if (e.getSlot() == 20) { kits.getWarton(player); }
         if (e.getSlot() == 21) { kits.getAquaman(player); }
@@ -382,9 +384,9 @@ public class EventHandlerInternal {
                         Warden charles = (Warden) ent;
                         charles.teleport(loc);
                         charles.setAnger(event.getEntity(), 150);
-                        player.sendMessage(ChatColor.BOLD + "" + ChatColor.MAGIC + "12345abcde");
-                        player.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + "Charles ATTACK!");
-                        player.sendMessage(ChatColor.BOLD + "" + ChatColor.MAGIC + "12345abcde");
+                        player.sendMessage(ChatColor.MAGIC + "12345abcde");
+                        player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Charles ATTACK!");
+                        player.sendMessage(ChatColor.MAGIC + "12345abcde");
                         return;
                     }
                 }

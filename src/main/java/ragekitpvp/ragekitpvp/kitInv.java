@@ -13,7 +13,7 @@ public class kitInv {
     public Inventory inv;
 
     public void createInv() {
-        inv = Bukkit.createInventory(null, 27, ChatColor.BOLD + "" + ChatColor.GOLD + "Kit Selector");
+        inv = Bukkit.createInventory(null, 27, ChatColor.GOLD + "" + ChatColor.BOLD + "Kit Selector");
         ItemStack book1 = new ItemStack(Material.BOOK);
         ItemMeta meta7 = book1.getItemMeta();
         meta7.setDisplayName(ChatColor.GOLD + "Default Kits");
@@ -159,6 +159,18 @@ public class kitInv {
         meta12.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         cactus.setItemMeta(meta12);
         inv.setItem(12, cactus);
+
+        ItemStack pigMeat = new ItemStack(Material.PORKCHOP);
+        ItemMeta butcherMeta = pigMeat.getItemMeta();
+        butcherMeta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Butcher");
+        butcherMeta.addEnchant(Enchantment.LURE,1,true);
+        butcherMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        butcherMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        List<String> butcherLore = new ArrayList<String>();
+        butcherLore.add(ChatColor.ITALIC + "" + ChatColor.YELLOW + "Chop em up");
+        butcherMeta.setLore(butcherLore);
+        pigMeat.setItemMeta(butcherMeta);
+        inv.setItem(13, pigMeat);
 
         ItemStack book2 = new ItemStack(Material.BOOK);
         ItemMeta meta8 = book2.getItemMeta();

@@ -10,7 +10,7 @@ public class RageScoreboard {
         ScoreboardManager manager = Bukkit.getScoreboardManager();
         Scoreboard board = manager.getNewScoreboard();
         Objective obj = board.registerNewObjective("Rage", "dummy",
-                ChatColor.BOLD + "" + ChatColor.RED + "RAGE PVP");
+                ChatColor.RED + "" + ChatColor.BOLD + "RAGE PVP");
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
         Score kills = obj.getScore(ChatColor.AQUA + "Kills: " + ChatColor.GREEN +
                 player.getStatistic(Statistic.PLAYER_KILLS));
