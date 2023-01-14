@@ -16,6 +16,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.event.entity.EntityPotionEffectEvent;
 
 
 public class RageKitPvP extends JavaPlugin implements Listener {
@@ -86,7 +87,10 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     public void onTarget(EntityTargetEvent event) {events.handleEntityTarget(event); }
 
     @EventHandler
-    public void onPlayerInteractEntity(PlayerInteractEntityEvent event){ events.handlePlayerInteractEntityEvent(event);}
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent event){ events.handlePlayerInteractEntityEvent(event); }
+
+    @EventHandler
+    public void onSpell(EntityPotionEffectEvent event) { events.handleSpellCast(event); }
     @EventHandler
     public void noHunger(FoodLevelChangeEvent event) { event.setCancelled(true); }
     @EventHandler

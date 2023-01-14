@@ -20,6 +20,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.bukkit.Bukkit.getServer;
+
 
 public class EventHandlerInternal {
     Items items = new Items();
@@ -543,6 +545,13 @@ public class EventHandlerInternal {
             Ravager ravager = (Ravager) event.getRightClicked();
             ravager.addPassenger(event.getPlayer());
             ravager.setAware(true);
+        }
+    }
+
+    public void handleSpellCast(EntityPotionEffectEvent event) {
+        if (event.getCause().equals(EntityPotionEffectEvent.Cause.WARDEN) &&
+                event.getModifiedType().equals(PotionEffectType.DARKNESS)) {
+            event.setCancelled(true);
         }
     }
 }

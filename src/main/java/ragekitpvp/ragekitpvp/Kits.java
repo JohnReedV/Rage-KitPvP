@@ -100,51 +100,36 @@ public class Kits {
     }
 
     public void getJockey(Player player) {
-        if (2 > 1) {
-            player.getInventory().clear();
-            player.getInventory().setBoots(items.horseFeet());
-            player.getInventory().setLeggings(items.horseLegs());
-            player.getInventory().setChestplate(items.horseChest());
-            player.getInventory().setHelmet(items.horseHead());
-            player.getInventory().addItem(items.horseW());
-            player.getInventory().addItem(items.horseSpawn());
-            player.closeInventory();
-        } else {
-            player.sendMessage(ChatColor.GOLD + "You are not " + ChatColor.UNDERLINE + "" + ChatColor.BOLD
-                    + "" + ChatColor.GREEN + "VIP");
-        }
+        player.getInventory().clear();
+        player.getInventory().setBoots(items.horseFeet());
+        player.getInventory().setLeggings(items.horseLegs());
+        player.getInventory().setChestplate(items.horseChest());
+        player.getInventory().setHelmet(items.horseHead());
+        player.getInventory().addItem(items.horseW());
+        player.getInventory().addItem(items.horseSpawn());
+        player.closeInventory();
     }
 
     public void getEnderman(Player player) {
-        if (2 > 1) {
-            player.getInventory().clear();
-            player.getInventory().addItem(new ItemStack(Material.NETHERITE_SWORD));
-            player.getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 64));
-            player.getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 64));
-            player.getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 64));
-            player.getInventory().setHelmet(new ItemStack(Material.DRAGON_HEAD));
-            player.getInventory().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
-            player.getInventory().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
-            player.getInventory().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
-            player.closeInventory();
-        } else {
-            player.sendMessage(ChatColor.GOLD + "You are not " + ChatColor.UNDERLINE + "" + ChatColor.BOLD
-                    + "" + ChatColor.GREEN + "VIP");
-        }
+        player.getInventory().clear();
+        player.getInventory().addItem(new ItemStack(Material.NETHERITE_SWORD));
+        player.getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 64));
+        player.getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 64));
+        player.getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 64));
+        player.getInventory().setHelmet(new ItemStack(Material.DRAGON_HEAD));
+        player.getInventory().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
+        player.getInventory().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+        player.getInventory().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+        player.closeInventory();
     }
 
     public void getCactus(Player player) {
-        if (2 > 1) {
-            player.getInventory().clear();
-            player.getEquipment().setHelmet(items.cactusHead());
-            player.getEquipment().setChestplate(items.cactusChest());
-            player.getEquipment().setLeggings(items.cactusLeg());
-            player.getEquipment().setBoots(items.cactusFoot());
-            player.closeInventory();
-        } else {
-            player.sendMessage(ChatColor.GOLD + "You are not " + ChatColor.UNDERLINE + "" + ChatColor.BOLD
-                    + "" + ChatColor.GREEN + "VIP");
-        }
+        player.getInventory().clear();
+        player.getEquipment().setHelmet(items.cactusHead());
+        player.getEquipment().setChestplate(items.cactusChest());
+        player.getEquipment().setLeggings(items.cactusLeg());
+        player.getEquipment().setBoots(items.cactusFoot());
+        player.closeInventory();
     }
 
     public void getTerrorist(Player player) {
