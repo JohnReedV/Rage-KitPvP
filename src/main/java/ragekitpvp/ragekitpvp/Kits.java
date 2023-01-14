@@ -255,7 +255,8 @@ public class Kits {
 
     public String getRandomKit(Player player) {
         String[] Possibilites = {"Chemist", "Doom", "Knight", "Archer", "Pyro", "Ninja", "Tank", "Outcast",
-                 "Jockey", "Enderman", "Cactus", "Terrorist", "Warton", "Aquaman", "Sniper", "Ravager", "Bird", "Butcher"};
+                 "Jockey", "Enderman", "Cactus", "Terrorist", "Warton", "Aquaman", "Sniper", "Ravager", "Bird",
+                "Butcher", "PissPants"};
         String selection = Possibilites[(int) Math.round(((Math.random() * (Possibilites.length)) + 0))];
 
         if (selection.equalsIgnoreCase("chemist")) { this.getChemist(player); }
@@ -276,6 +277,11 @@ public class Kits {
         if (selection.equalsIgnoreCase("ravager")) { this.getRavager(player); }
         if (selection.equalsIgnoreCase("bird")) { this.getBird(player); }
         if (selection.equalsIgnoreCase("butcher")) { this.getButcher(player); }
+
+        if (selection.equalsIgnoreCase("pisspants")) {
+            player.getInventory().setLeggings(items.pissPants());
+            player.sendMessage(ChatColor.AQUA + player.getName() + ChatColor.GOLD + " " + ChatColor.BOLD + "PISSED PANTS");
+        }
 
         return selection;
     }
