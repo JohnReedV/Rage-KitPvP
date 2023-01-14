@@ -313,7 +313,6 @@ public class EventHandlerInternal {
         event.setDroppedExp(0);
         event.getDrops().clear();
         player.getInventory().clear();
-        event.getDrops().add(items.playerHead(player));
         Location loc = player.getLocation().clone();
         loc.getWorld().dropItem(loc, items.playerHead(player));
         player.teleport(player.getWorld().getSpawnLocation());
