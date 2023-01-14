@@ -292,11 +292,12 @@ public class EventHandlerInternal {
         if (e.getSlot() == 10) { kits.getJockey(player); }
         if (e.getSlot() == 11) { kits.getEnderman(player); }
         if (e.getSlot() == 12) { kits.getCactus(player); }
-        if (e.getSlot() == 13) { kits.getTerrorist(player); }
-        if (e.getSlot() == 14) { kits.getWarton(player); }
-        if (e.getSlot() == 15) { kits.getAquaman(player); }
-        if (e.getSlot() == 16) { kits.getSniper(player); }
-        if (e.getSlot() == 17) { kits.getRavager(player); }
+        if (e.getSlot() == 19) { kits.getTerrorist(player); }
+        if (e.getSlot() == 20) { kits.getWarton(player); }
+        if (e.getSlot() == 21) { kits.getAquaman(player); }
+        if (e.getSlot() == 22) { kits.getSniper(player); }
+        if (e.getSlot() == 23) { kits.getRavager(player); }
+        if (e.getSlot() == 24) { kits.getBird(player); }
     }
 
     public void handlePlayerDeath(PlayerDeathEvent event) {

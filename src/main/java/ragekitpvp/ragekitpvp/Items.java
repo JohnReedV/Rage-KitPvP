@@ -150,7 +150,7 @@ public class Items {
         ItemStack bow = new ItemStack(Material.BOW);
         ItemMeta meta = bow.getItemMeta();
         meta.setDisplayName(ChatColor.DARK_GREEN + "Bow of Robin");
-        meta.addEnchant(Enchantment.ARROW_DAMAGE, 8, true);
+        meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
         meta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
         meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
@@ -167,7 +167,7 @@ public class Items {
         ItemStack boots = new ItemStack(Material.LEATHER_HELMET);
         ItemMeta meta = boots.getItemMeta();
         meta.setDisplayName(ChatColor.DARK_GREEN + "frog helm");
-        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 3, true);
+        meta.addEnchant(Enchantment.PROTECTION_PROJECTILE, 3, true);
         meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -179,7 +179,7 @@ public class Items {
         ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
         ItemMeta meta = boots.getItemMeta();
         meta.setDisplayName(ChatColor.DARK_GREEN + "frog feet");
-        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 3, true);
+        meta.addEnchant(Enchantment.PROTECTION_PROJECTILE, 3, true);
         meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -758,5 +758,27 @@ public class Items {
     public ItemStack ravagerArrow() {
         ItemStack arrow =  new ItemStack((Material.ARROW));
         return arrow;
+    }
+
+    public ItemStack birdWings() {
+        ItemStack eye = new ItemStack(Material.ELYTRA);
+        ItemMeta meta = eye.getItemMeta();
+        meta.setDisplayName(ChatColor.DARK_AQUA + "woooooooo");
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.setUnbreakable(true);
+        eye.setItemMeta(meta);
+
+        return eye;
+    }
+
+    public ItemStack birdFireworks() {
+        ItemStack fire = new ItemStack(Material.FIREWORK_ROCKET);
+        ItemMeta meta = fire.getItemMeta();
+        meta.setDisplayName(ChatColor.DARK_AQUA + "bird POWER");
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.setUnbreakable(true);
+        fire.setItemMeta(meta);
+
+        return fire;
     }
 }

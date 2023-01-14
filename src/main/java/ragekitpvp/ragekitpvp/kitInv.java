@@ -13,7 +13,7 @@ public class kitInv {
     public Inventory inv;
 
     public void createInv() {
-        inv = Bukkit.createInventory(null, 18, ChatColor.BOLD + "" + ChatColor.GOLD + "Kit Selector");
+        inv = Bukkit.createInventory(null, 27, ChatColor.BOLD + "" + ChatColor.GOLD + "Kit Selector");
         ItemStack book1 = new ItemStack(Material.BOOK);
         ItemMeta meta7 = book1.getItemMeta();
         meta7.setDisplayName(ChatColor.GOLD + "Default Kits");
@@ -24,18 +24,6 @@ public class kitInv {
         meta7.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         book1.setItemMeta(meta7);
         inv.setItem(0,book1);
-
-        ItemStack book2 = new ItemStack(Material.BOOK);
-        ItemMeta meta8 = book1.getItemMeta();
-        meta8.setDisplayName(ChatColor.GOLD + "VIP Kits");
-        List<String> lore8 = new ArrayList<String>();
-        lore8.add("");
-        lore8.add(ChatColor.RED + "---->");
-        lore8.add(ChatColor.GRAY + "VIP kits free until VIP is enabled");
-        meta8.setLore(lore8);
-        meta8.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        book2.setItemMeta(meta8);
-        inv.setItem(9,book2);
 
         ItemStack chem = new ItemStack(Material.BREWING_STAND);
         ItemMeta meta6 = chem.getItemMeta();
@@ -110,18 +98,6 @@ public class kitInv {
         nin.setItemMeta(meta5);
         inv.setItem(6, nin);
 
-        ItemStack horse = new ItemStack(Material.SADDLE);
-        ItemMeta meta9 = horse.getItemMeta();
-        meta9.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "Jockey");
-        List<String> lore9 = new ArrayList<String>();
-        lore9.add(ChatColor.ITALIC + "" + ChatColor.AQUA + "horsey go NEIGH");
-        meta9.setLore(lore9);
-        meta9.addEnchant(Enchantment.LURE,1,true);
-        meta9.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta9.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        horse.setItemMeta(meta9);
-        inv.setItem(10, horse);
-
         ItemStack tank = new ItemStack(Material.NETHERITE_INGOT);
         ItemMeta meta10 = tank.getItemMeta();
         meta10.setDisplayName(ChatColor.GRAY + "" + ChatColor.BOLD + "TANK");
@@ -133,6 +109,32 @@ public class kitInv {
         meta10.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         tank.setItemMeta(meta10);
         inv.setItem(7, tank);
+
+        ItemStack outcast = new ItemStack(Material.WITHER_ROSE);
+        ItemMeta meta14 = outcast.getItemMeta();
+        meta14.setDisplayName(ChatColor.DARK_GRAY + "Outcast");
+        List<String> lore14 = new ArrayList<String>();
+        lore14.add(ChatColor.ITALIC + "" + ChatColor.RED + "outcast?? haha loser");
+        meta14.setLore(lore14);
+        meta14.addEnchant(Enchantment.LURE,1,true);
+        meta14.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        meta14.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        outcast.setItemMeta(meta14);
+        inv.setItem(8, outcast);
+
+        inv.setItem(9,book1);
+
+        ItemStack horse = new ItemStack(Material.SADDLE);
+        ItemMeta meta9 = horse.getItemMeta();
+        meta9.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "Jockey");
+        List<String> lore9 = new ArrayList<String>();
+        lore9.add(ChatColor.ITALIC + "" + ChatColor.AQUA + "horsey go NEIGH");
+        meta9.setLore(lore9);
+        meta9.addEnchant(Enchantment.LURE,1,true);
+        meta9.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        meta9.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        horse.setItemMeta(meta9);
+        inv.setItem(10, horse);
 
         ItemStack ender = new ItemStack(Material.ENDER_PEARL);
         ItemMeta meta11 = ender.getItemMeta();
@@ -158,6 +160,20 @@ public class kitInv {
         cactus.setItemMeta(meta12);
         inv.setItem(12, cactus);
 
+        ItemStack book2 = new ItemStack(Material.BOOK);
+        ItemMeta meta8 = book2.getItemMeta();
+        meta8.setDisplayName(ChatColor.GOLD + "VIP Kits");
+        List<String> lore8 = new ArrayList<String>();
+        lore8.add("");
+        lore8.add(ChatColor.RED + "---->");
+        lore8.add(ChatColor.GRAY + "VIP kits free until VIP is enabled");
+        meta8.setLore(lore8);
+        meta8.addEnchant(Enchantment.LURE, 1, true);
+        meta8.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        meta8.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        book2.setItemMeta(meta8);
+        inv.setItem(18,book2);
+
         ItemStack ak = new ItemStack(Material.FLINT_AND_STEEL);
         ItemMeta meta13 = ak.getItemMeta();
         meta13.setDisplayName(ChatColor.DARK_RED + "TERRORIST");
@@ -170,19 +186,7 @@ public class kitInv {
         meta13.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta13.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         ak.setItemMeta(meta13);
-        inv.setItem(13, ak);
-
-        ItemStack outcast = new ItemStack(Material.WITHER_ROSE);
-        ItemMeta meta14 = outcast.getItemMeta();
-        meta14.setDisplayName(ChatColor.DARK_GRAY + "Outcast");
-        List<String> lore14 = new ArrayList<String>();
-        lore14.add(ChatColor.ITALIC + "" + ChatColor.RED + "outcast?? haha loser");
-        meta14.setLore(lore14);
-        meta14.addEnchant(Enchantment.LURE,1,true);
-        meta14.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta14.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        outcast.setItemMeta(meta14);
-        inv.setItem(8, outcast);
+        inv.setItem(19, ak);
 
         ItemStack warden = new ItemStack(Material.SCULK_SENSOR);
         ItemMeta meta15 = warden.getItemMeta();
@@ -196,7 +200,7 @@ public class kitInv {
         meta15.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta15.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         warden.setItemMeta(meta15);
-        inv.setItem(14, warden);
+        inv.setItem(20, warden);
 
         ItemStack trident = new ItemStack(Material.TRIDENT);
         ItemMeta meta16 = trident.getItemMeta();
@@ -212,7 +216,7 @@ public class kitInv {
         meta16.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta16.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         trident.setItemMeta(meta16);
-        inv.setItem(15, trident);
+        inv.setItem(21, trident);
 
         ItemStack spyglass = new ItemStack(Material.SPYGLASS);
         ItemMeta meta17 = spyglass.getItemMeta();
@@ -221,7 +225,7 @@ public class kitInv {
         meta17.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta17.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         spyglass.setItemMeta(meta17);
-        inv.setItem(16, spyglass);
+        inv.setItem(22, spyglass);
 
         ItemStack tot = new ItemStack(Material.TOTEM_OF_UNDYING);
         ItemMeta meta18 = tot.getItemMeta();
@@ -235,7 +239,20 @@ public class kitInv {
         meta18.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta18.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         tot.setItemMeta(meta18);
-        inv.setItem(17, tot);
+        inv.setItem(23, tot);
+
+        ItemStack bird = new ItemStack(Material.ELYTRA);
+        ItemMeta birdMeta = bird.getItemMeta();
+        List<String> birdLore = new ArrayList<String>();
+        birdLore.add("");
+        birdLore.add(ChatColor.ITALIC + "You a bird king!");
+        birdLore.add(ChatColor.ITALIC + "rain death from above (like a g)");
+        birdMeta.setLore(birdLore);
+        birdMeta.setDisplayName(ChatColor.DARK_AQUA + "Bird");
+        birdMeta.addEnchant(Enchantment.LURE,1,true);
+        birdMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        birdMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        bird.setItemMeta(birdMeta);
+        inv.setItem(24, bird);
     }
-    
 }
