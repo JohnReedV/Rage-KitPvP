@@ -24,6 +24,7 @@ import java.util.Map;
 public class EventHandlerInternal {
     Items items = new Items();
     Kits kits = new Kits();
+    RageScoreboard scoreboard = new RageScoreboard();
     Map<String, Long> doomCooldowns = new HashMap<String, Long>();
     Map<String, Long> aquaCooldowns = new HashMap<String, Long>();
 
@@ -244,7 +245,7 @@ public class EventHandlerInternal {
 
     public void handlePlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        RageScoreboard scoreboard = new RageScoreboard();
+
         if (!player.hasPlayedBefore()) { event.setJoinMessage(ChatColor.GOLD + player.getName()
                 + ChatColor.AQUA + " in for the FIRST TIME");}
         scoreboard.createBoard(event.getPlayer());
@@ -283,7 +284,7 @@ public class EventHandlerInternal {
         if (e.getCurrentItem().getItemMeta() == null) return;
         if (e.getCurrentItem().getItemMeta().getDisplayName() == null) return;
         e.setCancelled(true);
-        if (e.getSlot() == 0 || e.getSlot() == 9) {
+        if (e.getSlot() == 0 || e.getSlot() == 9 || e.getSlot() == 18) {
             player.sendMessage(ChatColor.GOLD + "Not a kit");
         }
         if (e.getSlot() == 1) { kits.getChemist(player); }
@@ -319,6 +320,7 @@ public class EventHandlerInternal {
     public void handleRespawn(PlayerRespawnEvent event) {
         Player player = (Player) event.getPlayer();
         player.getInventory().addItem(items.compass());
+        scoreboard.createBoard(event.getPlayer());
 
         Collection<Entity> entities = player.getWorld().getEntities();
         for (Entity ent : entities){

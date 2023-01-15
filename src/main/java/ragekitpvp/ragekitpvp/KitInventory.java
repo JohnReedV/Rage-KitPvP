@@ -9,7 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.*;
 import java.util.List;
 
-public class kitInv {
+public class KitInventory {
     public Inventory inv;
 
     public void createInv() {

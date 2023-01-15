@@ -22,17 +22,27 @@ import org.bukkit.event.entity.EntityPotionEffectEvent;
 public class RageKitPvP extends JavaPlugin implements Listener {
     CommandHandler commands = new CommandHandler();
     EventHandlerInternal events = new EventHandlerInternal();
-    kitInv inventory = new kitInv();
+    KitInventory inventory = new KitInventory();
+    BroadCaster broadCaster = new BroadCaster();
 
     @Override
     public void onEnable(){
         this.getServer().getPluginManager().registerEvents(this, this);
         inventory.createInv();
-        System.out.println("GUI in");
+
+        double hours = .5;
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+            @Override
+            public void run() {
+                broadCaster.broadCast();
+            }
+        }, 0, (long) (20*60*60*hours));
+
+        System.out.println("RagePvP in");
     }
     @Override
     public void onDisable(){
-        System.out.println("GUI out");
+        System.out.println("RagePvP out");
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
