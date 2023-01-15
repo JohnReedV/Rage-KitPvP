@@ -20,9 +20,11 @@ public class StatisticsInventory {
         long highestKills = 0;
         long highestDmg = 0;
         long highestDeaths = 0;
+        double highestKD = 0;
         OfflinePlayer killsPlayer = offlinePlayers[0];
         OfflinePlayer dmgPlayer = offlinePlayers[0];
         OfflinePlayer deathsPlayer = offlinePlayers[0];
+        OfflinePlayer kdPlayer = offlinePlayers[0];
 
         for (OfflinePlayer player : offlinePlayers) {
             if (player.getName().equalsIgnoreCase("spiigot") ||
@@ -30,6 +32,8 @@ public class StatisticsInventory {
             long kills = player.getStatistic(Statistic.PLAYER_KILLS);
             long dmg = player.getStatistic(Statistic.DAMAGE_DEALT);
             long deaths = player.getStatistic(Statistic.DEATHS);
+            double kd = ((double) player.getStatistic(Statistic.PLAYER_KILLS)) / ((double) player.getStatistic(Statistic.DEATHS));
+
             if (kills > highestKills) {
                 highestKills = kills;
                 killsPlayer = player;
@@ -42,21 +46,26 @@ public class StatisticsInventory {
                 highestDeaths = deaths;
                 deathsPlayer = player;
             }
+            if (kd > highestKD && kills >= 10) {
+                highestKD = kd;
+                kdPlayer = player;
+            }
         }
 
         inv = Bukkit.createInventory(null, 9, ChatColor.RED + "" + ChatColor.BOLD + "Statistics");
 
-        inv.setItem(2, this.highestHead(killsPlayer, "KILLS"));
-        inv.setItem(4, this.highestHead(dmgPlayer, "DAMAGE"));
-        inv.setItem(6, this.highestHead(deathsPlayer, "DEATHS"));
+        inv.setItem(1, this.highestHead(kdPlayer, "KD"));
+        inv.setItem(3, this.highestHead(killsPlayer, "KILLS"));
+        inv.setItem(5, this.highestHead(dmgPlayer, "DAMAGE"));
+        inv.setItem(7, this.highestHead(deathsPlayer, "DEATHS"));
     }
 
-    public ItemStack highestHead(OfflinePlayer player, String most) {
+    public ItemStack highestHead(OfflinePlayer player, String best) {
         ItemStack head = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta meta = (SkullMeta)head.getItemMeta();
         meta.setOwner(player.getName());
         meta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + player.getName() +
-                ChatColor.RESET + ChatColor.GOLD + " has the most " + most );
+                ChatColor.RESET + ChatColor.GOLD + " has the best " + best );
         meta.addEnchant(Enchantment.LURE, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -69,7 +78,7 @@ public class StatisticsInventory {
         lore.add(ChatColor.GRAY + "Kills : " + ChatColor.RESET + "" + ChatColor.ITALIC + player.getStatistic(Statistic.PLAYER_KILLS));
         lore.add(ChatColor.GRAY + "Deaths : " + ChatColor.RESET + "" + ChatColor.ITALIC + player.getStatistic(Statistic.DEATHS));
         lore.add(ChatColor.GRAY + "Damage : " + ChatColor.RESET + "" + ChatColor.ITALIC + player.getStatistic(Statistic.DAMAGE_DEALT));
-        lore.add(ChatColor.GRAY + "Damage Taken : " + ChatColor.RESET + "" + ChatColor.ITALIC + player.getStatistic(Statistic.DAMAGE_ABSORBED));
+        lore.add(ChatColor.GRAY + "Damage Taken : " + ChatColor.RESET + "" + ChatColor.ITALIC + player.getStatistic(Statistic.DAMAGE_TAKEN));
         lore.add(ChatColor.GRAY + "Total Server Time : " + ChatColor.RESET + "" + ChatColor.ITALIC + player.getStatistic(Statistic.TOTAL_WORLD_TIME));
         lore.add(ChatColor.GRAY + "Jumps : " + ChatColor.RESET + "" + ChatColor.ITALIC + player.getStatistic(Statistic.JUMP));
         lore.add(ChatColor.GRAY + "Sneak Time : " + ChatColor.RESET + "" + ChatColor.ITALIC + player.getStatistic(Statistic.SNEAK_TIME));
