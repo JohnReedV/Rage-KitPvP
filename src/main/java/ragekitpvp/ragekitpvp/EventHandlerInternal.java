@@ -201,7 +201,8 @@ public class EventHandlerInternal {
             }
         }
 
-        if (player.getInventory().getChestplate().getItemMeta().getDisplayName().contains("cumsock")){
+        if (player.getInventory().getChestplate() != null
+                && player.getInventory().getChestplate().getItemMeta().getDisplayName().contains("cumsock")){
             Location loc = player.getLocation().clone();
             for (Entity ent : player.getWorld().getEntities()) {
                 if (!(ent instanceof Player) || ent.getName().equalsIgnoreCase(player.getName())) { continue; }
@@ -282,7 +283,6 @@ public class EventHandlerInternal {
         if (!e.getInventory().equals(inv)) return;
         if (e.getCurrentItem() == null) return;
         if (e.getCurrentItem().getItemMeta() == null) return;
-        if (e.getCurrentItem().getItemMeta().getDisplayName() == null) return;
         e.setCancelled(true);
         if (e.getSlot() == 0 || e.getSlot() == 9 || e.getSlot() == 18) {
             player.sendMessage(ChatColor.GOLD + "Not a kit");
