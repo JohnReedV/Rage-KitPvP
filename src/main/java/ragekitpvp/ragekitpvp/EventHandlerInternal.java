@@ -392,6 +392,7 @@ public class EventHandlerInternal {
     public void handleEntitydmgbyEntity(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
             Player player = (Player) event.getDamager();
+            scoreboard.createBoard(player);
             Collection<Entity> entities = player.getWorld().getEntities();
             if (player.getInventory().getItemInMainHand().getType().equals(Material.FLINT) &&
                     player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Guide O' Charles")) {

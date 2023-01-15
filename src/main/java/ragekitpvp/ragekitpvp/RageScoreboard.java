@@ -12,6 +12,10 @@ public class RageScoreboard {
         Objective obj = board.registerNewObjective("Rage", "dummy",
                 ChatColor.RED + "" + ChatColor.BOLD + "RAGE PVP");
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
+
+        Score kd = obj.getScore(ChatColor.AQUA + "KD: " + ChatColor.GREEN +
+                ((double) player.getStatistic(Statistic.PLAYER_KILLS)) / ((double) player.getStatistic(Statistic.DEATHS)));
+        kd.setScore(0);
         Score kills = obj.getScore(ChatColor.AQUA + "Kills: " + ChatColor.GREEN +
                 player.getStatistic(Statistic.PLAYER_KILLS));
         kills.setScore(0);
