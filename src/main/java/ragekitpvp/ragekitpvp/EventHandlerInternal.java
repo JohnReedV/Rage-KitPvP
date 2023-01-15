@@ -28,7 +28,7 @@ public class EventHandlerInternal {
     Map<String, Long> doomCooldowns = new HashMap<String, Long>();
     Map<String, Long> aquaCooldowns = new HashMap<String, Long>();
 
-    public void handleInteract(PlayerInteractEvent event, Inventory inv) {
+    public void handleInteract(PlayerInteractEvent event, Inventory kitInv, Inventory statsInv) {
         Player player = event.getPlayer();
         ItemStack mainItem = player.getInventory().getItemInMainHand();
 
@@ -117,7 +117,15 @@ public class EventHandlerInternal {
             if (player.getInventory().getItemInMainHand().getItemMeta()
                     .getDisplayName().contains("Kit Selector")) {
                 if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR){
-                    player.openInventory(inv);
+                    player.openInventory(kitInv);
+                }
+            }
+        }
+        if (mainItem.getType().equals(Material.RECOVERY_COMPASS)) {
+            if (player.getInventory().getItemInMainHand().getItemMeta()
+                    .getDisplayName().contains("Top Players")) {
+                if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR){
+                    player.openInventory(statsInv);
                 }
             }
         }
@@ -252,6 +260,7 @@ public class EventHandlerInternal {
         scoreboard.createBoard(event.getPlayer());
         player.getInventory().clear();
         player.getInventory().addItem(items.compass());
+        player.getInventory().setItem(8, items.recoveryCompass());
         player.getActivePotionEffects().stream().map(PotionEffect::getType).forEach(player::removePotionEffect);
         event.setJoinMessage(ChatColor.GOLD + player.getName() + ChatColor.AQUA + " in");
         player.teleport(player.getWorld().getSpawnLocation());
@@ -267,8 +276,13 @@ public class EventHandlerInternal {
                 "    soon updating our ip to " + ChatColor.BOLD + ChatColor.GOLD + "ragepvp.co");
     }
 
-    public void handleInvClick(InventoryClickEvent e, Inventory inv) {
+    public void handleInvClick(InventoryClickEvent e, Inventory kitInv, Inventory statsInv) {
         Player player = (Player) e.getWhoClicked();
+
+        if (e.getInventory().equals(statsInv)) {
+            e.setCancelled(true);
+            player.sendMessage("MINE, NOT YOURS   grrrrrrr");
+        }
 
         if (e.getSlotType().equals(InventoryType.SlotType.ARMOR) && player.getInventory().getLeggings() != null) {
             if (player.getInventory().getLeggings().getType() == Material.LEATHER_LEGGINGS)
@@ -280,7 +294,7 @@ public class EventHandlerInternal {
                     }
         }
 
-        if (!e.getInventory().equals(inv)) return;
+        if (!e.getInventory().equals(kitInv)) return;
         if (e.getCurrentItem() == null) return;
         if (e.getCurrentItem().getItemMeta() == null) return;
         e.setCancelled(true);
@@ -320,6 +334,7 @@ public class EventHandlerInternal {
     public void handleRespawn(PlayerRespawnEvent event) {
         Player player = (Player) event.getPlayer();
         player.getInventory().addItem(items.compass());
+        player.getInventory().setItem(8, items.recoveryCompass());
         scoreboard.createBoard(event.getPlayer());
 
         Collection<Entity> entities = player.getWorld().getEntities();

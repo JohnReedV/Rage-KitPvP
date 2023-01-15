@@ -22,13 +22,15 @@ import org.bukkit.event.entity.EntityPotionEffectEvent;
 public class RageKitPvP extends JavaPlugin implements Listener {
     CommandHandler commands = new CommandHandler();
     EventHandlerInternal events = new EventHandlerInternal();
-    KitInventory inventory = new KitInventory();
+    KitInventory kitInv = new KitInventory();
     BroadCaster broadCaster = new BroadCaster();
+    StatisticsInventory statsInv = new StatisticsInventory();
 
     @Override
     public void onEnable(){
         this.getServer().getPluginManager().registerEvents(this, this);
-        inventory.createInv();
+        kitInv.createInv();
+        statsInv.getInv();
 
         double hours = .5;
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
@@ -47,7 +49,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (label.equalsIgnoreCase("head")) { commands.handleHead(sender, args); }
-        if (label.equalsIgnoreCase("kits")) { commands.handleKits(sender, inventory.inv); }
+        if (label.equalsIgnoreCase("kits")) { commands.handleKits(sender, kitInv.inv); }
         if (label.equalsIgnoreCase("setspawn")) { commands.handleSetspawn(sender); }
         if (label.equalsIgnoreCase("flex")) { commands.handleFlex(sender); }
         if (label.equalsIgnoreCase("ping")){ commands.handlePing(sender); }
@@ -58,7 +60,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onClick(PlayerInteractEvent event) { events.handleInteract(event, inventory.inv); }
+    public void onClick(PlayerInteractEvent event) { events.handleInteract(event, kitInv.inv, statsInv.inv); }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) { events.handlePlayerQuit(event); }
@@ -70,7 +72,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     public void motd(ServerListPingEvent event) { events.handleMOTD(event); }
 
     @EventHandler
-    public void onClick(InventoryClickEvent e) { events.handleInvClick(e, inventory.inv); }
+    public void onClick(InventoryClickEvent e) { events.handleInvClick(e, kitInv.inv, statsInv.inv); }
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) { events.handlePlayerDeath(event); }

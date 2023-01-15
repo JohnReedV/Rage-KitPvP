@@ -491,6 +491,20 @@ public class Items {
         return compass;
     }
 
+    public ItemStack recoveryCompass() {
+        ItemStack compass = new ItemStack(Material.RECOVERY_COMPASS);
+        ItemMeta meta = compass.getItemMeta();
+        meta.setDisplayName(ChatColor.RED + "Top Players");
+        meta.addEnchant(Enchantment.LURE, 1, true);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        meta.setUnbreakable(true);
+        compass.setItemMeta(meta);
+
+        return compass;
+    }
+
     public ItemStack pissPants() {
         ItemStack pant = new ItemStack(Material.LEATHER_LEGGINGS);
         ItemMeta meta = pant.getItemMeta();
