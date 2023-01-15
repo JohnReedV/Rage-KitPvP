@@ -42,7 +42,7 @@ public class CommandHandler {
             } else {
                 player.sendMessage(ChatColor.GOLD + "Player not online");
             }
-        }
+        } else {sender.sendMessage("Can't use that"); }
         return true;
     }
 
@@ -53,7 +53,7 @@ public class CommandHandler {
         if (sender.hasPermission("kits.open")) {
             Player player = (Player) sender;
             player.openInventory(inv);
-        }
+        } else {sender.sendMessage("Can't use that"); }
         return true;
     }
 
@@ -66,7 +66,7 @@ public class CommandHandler {
             World world = player.getWorld();
             Location loc = player.getLocation();
             world.setSpawnLocation(loc.getBlockX(), loc.getBlockY() + 1, loc.getBlockZ());
-        }
+        } else {sender.sendMessage("Can't use that"); }
         return true;
     }
 
