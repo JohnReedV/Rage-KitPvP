@@ -54,18 +54,18 @@ public class StatisticsInventory {
 
         inv = Bukkit.createInventory(null, 9, ChatColor.RED + "" + ChatColor.BOLD + "Statistics");
 
-        inv.setItem(1, this.highestHead(kdPlayer, "KD"));
-        inv.setItem(3, this.highestHead(killsPlayer, "KILLS"));
-        inv.setItem(5, this.highestHead(dmgPlayer, "DAMAGE"));
-        inv.setItem(7, this.highestHead(deathsPlayer, "DEATHS"));
+        inv.setItem(1, this.highestHead(kdPlayer, "best " + ChatColor.RED + "" + ChatColor.BOLD + "KD"));
+        inv.setItem(3, this.highestHead(killsPlayer, "most "+ ChatColor.RED + "" + ChatColor.BOLD + "KILLS"));
+        inv.setItem(5, this.highestHead(dmgPlayer, "most " + ChatColor.RED + "" + ChatColor.BOLD + "DAMAGE"));
+        inv.setItem(7, this.highestHead(deathsPlayer, "most " + ChatColor.RED + "" + ChatColor.BOLD + "DEATHS"));
     }
 
-    public ItemStack highestHead(OfflinePlayer player, String best) {
+    public ItemStack highestHead(OfflinePlayer player, String type) {
         ItemStack head = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta meta = (SkullMeta)head.getItemMeta();
         meta.setOwner(player.getName());
-        meta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + player.getName() +
-                ChatColor.RESET + ChatColor.GOLD + " has the best " + best );
+        meta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + player.getName() + ChatColor.RESET + ChatColor.GOLD +
+                " wins " + type);
         meta.addEnchant(Enchantment.LURE, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
