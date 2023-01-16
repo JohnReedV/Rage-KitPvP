@@ -266,7 +266,7 @@ public class EventHandlerInternal {
         player.teleport(player.getWorld().getSpawnLocation());
         player.setHealth(20);
         player.setFoodLevel(20);
-        if (player.getGameMode() != GameMode.ADVENTURE && player.getName() != "Spiigot"){
+        if (player.getGameMode() != GameMode.ADVENTURE){
             player.setGameMode(GameMode.ADVENTURE);
         }
     }
@@ -294,31 +294,30 @@ public class EventHandlerInternal {
                     }
         }
 
-        if (!e.getInventory().equals(kitInv)) return;
-        if (e.getCurrentItem() == null) return;
-        if (e.getCurrentItem().getItemMeta() == null) return;
-        e.setCancelled(true);
-        if (e.getSlot() == 0 || e.getSlot() == 9 || e.getSlot() == 18) {
-            player.sendMessage(ChatColor.GOLD + "Not a kit");
+        if (e.getInventory().equals(kitInv)) {
+            e.setCancelled(true);
+            if (e.getSlot() == 0 || e.getSlot() == 9 || e.getSlot() == 18) {
+                player.sendMessage(ChatColor.GOLD + "Not a kit");
+            }
+            if (e.getSlot() == 1) { kits.getChemist(player); }
+            if (e.getSlot() == 2) { kits.getDoom(player); }
+            if (e.getSlot() == 3) { kits.getKnight(player); }
+            if (e.getSlot() == 4) { kits.getArcher(player); }
+            if (e.getSlot() == 5) { kits.getPyro(player); }
+            if (e.getSlot() == 6) { kits.getNinja(player); }
+            if (e.getSlot() == 7) { kits.getTank(player); }
+            if (e.getSlot() == 8) { kits.getOutcast(player); }
+            if (e.getSlot() == 10) { kits.getJockey(player); }
+            if (e.getSlot() == 11) { kits.getEnderman(player); }
+            if (e.getSlot() == 12) { kits.getCactus(player); }
+            if (e.getSlot() == 13) { kits.getButcher(player); }
+            if (e.getSlot() == 19) { kits.getTerrorist(player); }
+            if (e.getSlot() == 20) { kits.getWarton(player); }
+            if (e.getSlot() == 21) { kits.getAquaman(player); }
+            if (e.getSlot() == 22) { kits.getSniper(player); }
+            if (e.getSlot() == 23) { kits.getRavager(player); }
+            if (e.getSlot() == 24) { kits.getBird(player); }
         }
-        if (e.getSlot() == 1) { kits.getChemist(player); }
-        if (e.getSlot() == 2) { kits.getDoom(player); }
-        if (e.getSlot() == 3) { kits.getKnight(player); }
-        if (e.getSlot() == 4) { kits.getArcher(player); }
-        if (e.getSlot() == 5) { kits.getPyro(player); }
-        if (e.getSlot() == 6) { kits.getNinja(player); }
-        if (e.getSlot() == 7) { kits.getTank(player); }
-        if (e.getSlot() == 8) { kits.getOutcast(player); }
-        if (e.getSlot() == 10) { kits.getJockey(player); }
-        if (e.getSlot() == 11) { kits.getEnderman(player); }
-        if (e.getSlot() == 12) { kits.getCactus(player); }
-        if (e.getSlot() == 13) { kits.getButcher(player); }
-        if (e.getSlot() == 19) { kits.getTerrorist(player); }
-        if (e.getSlot() == 20) { kits.getWarton(player); }
-        if (e.getSlot() == 21) { kits.getAquaman(player); }
-        if (e.getSlot() == 22) { kits.getSniper(player); }
-        if (e.getSlot() == 23) { kits.getRavager(player); }
-        if (e.getSlot() == 24) { kits.getBird(player); }
     }
 
     public void handlePlayerDeath(PlayerDeathEvent event) {

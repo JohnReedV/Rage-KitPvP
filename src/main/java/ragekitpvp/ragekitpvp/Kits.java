@@ -257,7 +257,7 @@ public class Kits {
         String[] Possibilites = {"Chemist", "Doom", "Knight", "Archer", "Pyro", "Ninja", "Tank", "Outcast",
                  "Jockey", "Enderman", "Cactus", "Terrorist", "Warton", "Aquaman", "Sniper", "Ravager", "Bird",
                 "Butcher", "PissPants"};
-        String selection = Possibilites[(int) Math.round(((Math.random() * (Possibilites.length)) + 0))];
+        String selection = Possibilites[(int) Math.round(((Math.random() * (Possibilites.length - 1)) + 0))];
 
         if (selection.equalsIgnoreCase("chemist")) { this.getChemist(player); }
         if (selection.equalsIgnoreCase("doom")) { this.getDoom(player); }

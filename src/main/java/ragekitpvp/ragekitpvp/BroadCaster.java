@@ -7,7 +7,7 @@ public class BroadCaster {
 
     public void broadCast() {
         String[] possibilities = {"Discord", "ip", "vip"};
-        String selection = possibilities[(int) Math.round(((Math.random() * (possibilities.length)) + 0))];
+        String selection = possibilities[(int) Math.round(((Math.random() * (possibilities.length - 1)) + 0))];
 
         if (selection.equalsIgnoreCase("ip")) {
             Bukkit.broadcastMessage(ChatColor.GOLD + "" + ChatColor.BOLD +

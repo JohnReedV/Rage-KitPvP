@@ -13,10 +13,12 @@ public class RageScoreboard {
                 ChatColor.RED + "" + ChatColor.BOLD + "RAGE PVP");
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-        String kdStrng = String.valueOf(((double) player.getStatistic(Statistic.PLAYER_KILLS)) /
-                ((double) player.getStatistic(Statistic.DEATHS))).substring(0,9);
+        String kdString = String.valueOf(((double) player.getStatistic(Statistic.PLAYER_KILLS)) /
+                ((double) player.getStatistic(Statistic.DEATHS)));
 
-        Score kd = obj.getScore(ChatColor.AQUA + "KD: " + ChatColor.GREEN + kdStrng);
+        if (kdString.length() > 9) { kdString = kdString.substring(0,9); }
+
+        Score kd = obj.getScore(ChatColor.AQUA + "KD: " + ChatColor.GREEN + kdString);
         kd.setScore(0);
         Score kills = obj.getScore(ChatColor.AQUA + "Kills: " + ChatColor.GREEN +
                 player.getStatistic(Statistic.PLAYER_KILLS));
