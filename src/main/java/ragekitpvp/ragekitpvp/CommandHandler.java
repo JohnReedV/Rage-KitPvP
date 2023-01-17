@@ -104,7 +104,7 @@ public class CommandHandler {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Location loc = player.getLocation().clone();
-            if (loc.getY() >= 119) { player.sendMessage("Can't use that up here"); return true;}
+            if (loc.getY() >= 175) { player.sendMessage("Can't use that up here"); return true;}
             player.setHealth(0.0);
             player.sendMessage("ya done now");
         } else sender.sendMessage("players only BOSS");

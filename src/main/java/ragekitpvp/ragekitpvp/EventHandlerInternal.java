@@ -184,7 +184,7 @@ public class EventHandlerInternal {
     public void handleMoveEvent(PlayerMoveEvent event) {
         Player player = event.getPlayer();
 
-        if (player.getInventory().contains(items.compass()) && player.getLocation().clone().getY() < 119) {
+        if (player.getInventory().contains(items.compass()) && player.getLocation().clone().getY() < 175) {
             player.sendMessage(ChatColor.GOLD + "you get " + kits.getRandomKit(player));
         }
 
@@ -422,7 +422,7 @@ public class EventHandlerInternal {
             }
 
             Location loc = player.getLocation().clone();
-            if (loc.getY() >= 119){
+            if (loc.getY() >= 175){
                 event.setCancelled(true);
             }
         }
@@ -465,7 +465,7 @@ public class EventHandlerInternal {
             player.setFoodLevel(20);
 
             Location loc = event.getEntity().getLocation().clone();
-            if (loc.getY() >= 119){
+            if (loc.getY() >= 175){
                 event.setCancelled(true);
             }
         }
