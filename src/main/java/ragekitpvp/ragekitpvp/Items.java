@@ -691,7 +691,6 @@ public class Items {
         LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
         meta.setColor(Color.fromRGB(255, 255, 255));
         meta.setDisplayName(ChatColor.DARK_GREEN + "Sniper Head");
-        meta.addEnchant(Enchantment.PROTECTION_PROJECTILE, 2, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setUnbreakable(true);
         head.setItemMeta(meta);
@@ -704,7 +703,6 @@ public class Items {
         LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
         meta.setColor(Color.fromRGB(255, 255, 255));
         meta.setDisplayName(ChatColor.DARK_GREEN + "Sniper Chest");
-        meta.addEnchant(Enchantment.PROTECTION_PROJECTILE, 2, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setUnbreakable(true);
         head.setItemMeta(meta);
@@ -717,7 +715,6 @@ public class Items {
         LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
         meta.setColor(Color.fromRGB(255, 255, 255));
         meta.setDisplayName(ChatColor.DARK_GREEN + "Sniper Legs");
-        meta.addEnchant(Enchantment.PROTECTION_PROJECTILE, 2, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setUnbreakable(true);
         head.setItemMeta(meta);
@@ -730,7 +727,6 @@ public class Items {
         LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
         meta.setColor(Color.fromRGB(255, 255, 255));
         meta.setDisplayName(ChatColor.DARK_GREEN + "Sniper Foots");
-        meta.addEnchant(Enchantment.PROTECTION_PROJECTILE, 2, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setUnbreakable(true);
         head.setItemMeta(meta);
