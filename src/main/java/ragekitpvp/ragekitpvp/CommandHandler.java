@@ -9,7 +9,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import static org.bukkit.Bukkit.getServer;
 
-public class CommandHandler {
+public class  CommandHandler {
     Kits kits = new Kits();
 
     public boolean handleHead(CommandSender sender, String[] args) {
