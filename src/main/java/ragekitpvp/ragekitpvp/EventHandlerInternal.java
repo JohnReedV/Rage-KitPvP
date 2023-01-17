@@ -156,6 +156,8 @@ public class EventHandlerInternal {
                     h.setTamed(true);
                     h.setCustomName("Steed O' " + player.getName());
                     h.setCustomNameVisible(true);
+                    h.setInvulnerable(true);
+                    h.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000, 2));
                     h.setOwner(event.getPlayer());
                     h.getInventory().setSaddle(new ItemStack(Material.SADDLE, 1));
                     h.getInventory().setArmor(new ItemStack(Material.DIAMOND_HORSE_ARMOR));

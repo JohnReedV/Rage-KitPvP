@@ -19,3 +19,7 @@ commands:
     description: you die
   randomkit:
     description: get a random kit
+  resetstats:
+    description: resets a players statistics
+  reloadstats:
+    description: reloads the stats page

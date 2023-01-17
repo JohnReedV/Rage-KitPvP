@@ -115,6 +115,7 @@ public class CommandHandler {
         if (sender instanceof  Player && sender.hasPermission("kits.ip")) {
             if (args[0] == null) {
                 sender.sendMessage("Provide the players name");
+                return true;
             }
             try {
                 Player player = Bukkit.getServer().getPlayer(args[0]);
@@ -131,6 +132,40 @@ public class CommandHandler {
         if (sender instanceof Player && sender.hasPermission("kits.random")) {
             kits.getRandomKit(((Player) sender).getPlayer());
         }
+        return true;
+    }
+
+    public Boolean resetStats(CommandSender sender, String[] args) {
+        if (sender instanceof Player && sender.hasPermission("kits.resetstats")) {
+            if (args[0] == null) {
+                sender.sendMessage("Provide the players name");
+                return true;
+            }
+            try {
+                Player player = Bukkit.getServer().getPlayer(args[0]);
+                if (player != null) {
+                    player.setStatistic(Statistic.PLAYER_KILLS, 0);
+                    player.setStatistic(Statistic.DAMAGE_DEALT, 0);
+                    player.setStatistic(Statistic.DAMAGE_TAKEN, 0);
+                    player.setStatistic(Statistic.DEATHS, 0);
+                    sender.sendMessage("Stats reset for " + player.getName());
+                }
+            }
+            catch(Exception e) {
+                sender.sendMessage("not a player. I got : "  + args[0]);
+            }
+
+        } else { sender.sendMessage("can't use that"); }
+        return true;
+    }
+
+    public Boolean reloadStats(CommandSender sender) {
+        if (sender.hasPermission("kits.reloadstats")) {
+            StatisticsInventory statsInv = new StatisticsInventory();
+            statsInv.getInv();
+            sender.sendMessage("reloaded");
+        } else {sender.sendMessage("Can't do that");}
+
         return true;
     }
 }
