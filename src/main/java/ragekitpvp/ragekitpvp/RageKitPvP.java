@@ -50,7 +50,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (label.equalsIgnoreCase("head")) { commands.handleHead(sender, args); }
         if (label.equalsIgnoreCase("kits")) { commands.handleKits(sender, kitInv.inv); }
-        if (label.equalsIgnoreCase("setspawn")) { commands.handleSetspawn(sender); }
+        if (label.equalsIgnoreCase("spawnset")) { commands.handleSetspawn(sender); }
         if (label.equalsIgnoreCase("flex")) { commands.handleFlex(sender); }
         if (label.equalsIgnoreCase("ping")){ commands.handlePing(sender); }
         if (label.equalsIgnoreCase("die")) { commands.handleDie(sender); }
@@ -58,6 +58,7 @@ public class RageKitPvP extends JavaPlugin implements Listener {
         if (label.equalsIgnoreCase("randomkit")) { commands.handleRandomKit(sender); }
         if (label.equalsIgnoreCase("resetstats")) { commands.resetStats(sender, args); }
         if (label.equalsIgnoreCase("reloadstats")) { commands.reloadStats(sender); }
+        if (label.equalsIgnoreCase("spawn")) { commands.spawn(sender, args); }
         return true;
     }
 

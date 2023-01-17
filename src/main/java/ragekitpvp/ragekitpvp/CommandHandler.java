@@ -137,7 +137,7 @@ public class CommandHandler {
 
     public Boolean resetStats(CommandSender sender, String[] args) {
         if (sender instanceof Player && sender.hasPermission("kits.resetstats")) {
-            if (args[0] == null) {
+            if (args.length == 0) {
                 sender.sendMessage("Provide the players name");
                 return true;
             }
@@ -166,6 +166,28 @@ public class CommandHandler {
             sender.sendMessage("reloaded");
         } else {sender.sendMessage("Can't do that");}
 
+        return true;
+    }
+
+    public Boolean spawn(CommandSender sender, String[] args) {
+        if (sender.hasPermission("kits.spawn") && sender instanceof Player) {
+            if (args.length == 0) {
+                Player player = ((Player) sender).getPlayer();
+                if (player != null) { player.teleport(player.getWorld().getSpawnLocation()); }
+                return true;
+            }
+            try {
+                Player player = Bukkit.getServer().getPlayer(args[0]);
+                if (player != null) {
+                    player.teleport(player.getWorld().getSpawnLocation());
+                    sender.sendMessage("sent  " + player.getName() + "to spawn");
+                }
+            }
+            catch(Exception e) {
+                sender.sendMessage("not a player. I got : "  + args[0]);
+            }
+
+        } else {sender.sendMessage("Can't do that");}
         return true;
     }
 }
