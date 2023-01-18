@@ -142,6 +142,15 @@ public class Kits {
         player.closeInventory();
     }
 
+    public void getCrystal(Player player) {
+        player.getInventory().clear();
+        player.getInventory().setHelmet(items.crystalHead());
+        player.getInventory().setChestplate(items.crystalChest());
+        player.getInventory().addItem(new ItemStack(Material.END_CRYSTAL, 64));
+        player.getInventory().addItem(new ItemStack(Material.CHORUS_FRUIT, 6));
+        player.closeInventory();
+    }
+
     public void getTerrorist(Player player) {
         if (2 > 1) {
             player.getInventory().clear();
@@ -256,7 +265,7 @@ public class Kits {
     public String getRandomKit(Player player) {
         String[] Possibilites = {"Chemist", "Doom", "Knight", "Archer", "Pyro", "Ninja", "Tank", "Outcast",
                  "Jockey", "Enderman", "Cactus", "Terrorist", "Warton", "Aquaman", "Sniper", "Ravager", "Bird",
-                "Butcher", "PissPants"};
+                "Butcher", "PissPants", "Crystal"};
         String selection = Possibilites[(int) Math.round(((Math.random() * (Possibilites.length - 1)) + 0))];
 
         if (selection.equalsIgnoreCase("chemist")) { this.getChemist(player); }
@@ -277,6 +286,7 @@ public class Kits {
         if (selection.equalsIgnoreCase("ravager")) { this.getRavager(player); }
         if (selection.equalsIgnoreCase("bird")) { this.getBird(player); }
         if (selection.equalsIgnoreCase("butcher")) { this.getButcher(player); }
+        if (selection.equalsIgnoreCase("crystal")) {this.getCrystal(player); }
 
         if (selection.equalsIgnoreCase("pisspants")) {
             player.getInventory().clear();

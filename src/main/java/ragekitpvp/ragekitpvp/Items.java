@@ -819,4 +819,30 @@ public class Items {
 
         return pigAxe;
     }
+
+    public ItemStack crystalHead() {
+        ItemStack head =  new ItemStack((Material.LEATHER_HELMET));
+        LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
+        meta.setColor(Color.fromRGB(128, 0, 128));
+        meta.setDisplayName(ChatColor.DARK_PURPLE + "Crystal Hat");
+        meta.addEnchant(Enchantment.PROTECTION_EXPLOSIONS, 5, true);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.setUnbreakable(true);
+        head.setItemMeta(meta);
+
+        return head;
+    }
+
+    public ItemStack crystalChest() {
+        ItemStack head =  new ItemStack((Material.LEATHER_CHESTPLATE));
+        LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
+        meta.setColor(Color.fromRGB(128, 0, 128));
+        meta.setDisplayName(ChatColor.DARK_PURPLE + "Crystal Chest");
+        meta.addEnchant(Enchantment.PROTECTION_EXPLOSIONS, 5, true);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.setUnbreakable(true);
+        head.setItemMeta(meta);
+
+        return head;
+    }
 }

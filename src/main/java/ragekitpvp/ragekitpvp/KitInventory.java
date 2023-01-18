@@ -172,6 +172,20 @@ public class KitInventory {
         pigMeat.setItemMeta(butcherMeta);
         inv.setItem(13, pigMeat);
 
+        ItemStack crystal = new ItemStack(Material.END_CRYSTAL);
+        ItemMeta crystalMeta = crystal.getItemMeta();
+        List<String> crystalLore = new ArrayList<String>();
+        crystalLore.add("");
+        crystalLore.add(ChatColor.ITALIC + "Anarchy?");
+        crystalLore.add(ChatColor.RED + "" + ChatColor.ITALIC + "ANARCHY!!!!");
+        crystalMeta.setLore(crystalLore);
+        crystalMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Crystal");
+        crystalMeta.addEnchant(Enchantment.LURE,1,true);
+        crystalMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        crystalMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        crystal.setItemMeta(crystalMeta);
+        inv.setItem(14, crystal);
+
         ItemStack book2 = new ItemStack(Material.BOOK);
         ItemMeta meta8 = book2.getItemMeta();
         meta8.setDisplayName(ChatColor.GOLD + "VIP Kits");

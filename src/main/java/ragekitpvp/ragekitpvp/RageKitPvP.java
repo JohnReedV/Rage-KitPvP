@@ -2,6 +2,7 @@ package ragekitpvp.ragekitpvp;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.entity.*;
@@ -18,6 +19,8 @@ import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 
+import java.util.Collection;
+import java.util.Objects;
 
 public class RageKitPvP extends JavaPlugin implements Listener {
     CommandHandler commands = new CommandHandler();
@@ -63,9 +66,6 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onClick(PlayerInteractEvent event) { events.handleInteract(event, kitInv.inv, statsInv.inv); }
-
-    @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) { events.handlePlayerQuit(event); }
 
     @EventHandler
@@ -108,10 +108,38 @@ public class RageKitPvP extends JavaPlugin implements Listener {
     @EventHandler
     public void onSpell(EntityPotionEffectEvent event) { events.handleSpellCast(event); }
     @EventHandler
+    public void onExplode(EntityExplodeEvent event) { events.handleExplode(event); }
+    @EventHandler
     public void noHunger(FoodLevelChangeEvent event) { event.setCancelled(true); }
     @EventHandler
     public void dropItem(PlayerDropItemEvent event) {
         if (!event.getPlayer().hasPermission("kits.drop")) { event.setCancelled(true); }
+    }
+    @EventHandler
+    public void onClick(PlayerInteractEvent event) {
+        events.handleInteract(event, kitInv.inv, statsInv.inv);
+
+        if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.END_CRYSTAL) && event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            Location loc =  event.getPlayer().getTargetBlock(null, 5).getLocation();
+            loc.setY(loc.getY() + 2);
+            if (loc.getBlock().getType() == Material.AIR) {
+                Collection<Entity> entities = event.getPlayer().getWorld().getEntities();
+                for (Entity ent : entities) {if (ent.getType() == EntityType.ENDER_CRYSTAL && ent.getLocation().distance(loc) < 2.5) {return;}}
+                Objects.requireNonNull(loc.getWorld()).spawnEntity(loc, EntityType.ENDER_CRYSTAL);
+                event.getPlayer().getInventory().getItemInMainHand().setAmount(event.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
+                getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+                    @Override
+                    public void run() {
+                        Collection<Entity> entities = event.getPlayer().getWorld().getEntities();
+                        for (Entity ent : entities) {if (ent.getType() == EntityType.ENDER_CRYSTAL) {
+                            if (loc.distance(ent.getLocation()) < 2.5) {
+                                ent.remove();;
+                            }
+                        }}
+                    }
+                }, 100);
+            }
+        }
     }
     @EventHandler
     public void onMove(PlayerMoveEvent event) {

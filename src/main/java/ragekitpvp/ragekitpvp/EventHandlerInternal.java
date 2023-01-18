@@ -19,6 +19,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 
 public class EventHandlerInternal {
@@ -43,23 +44,6 @@ public class EventHandlerInternal {
                 ravager.setCustomName(player.getName());
                 ravager.setCustomNameVisible(true);
                 player.getInventory().remove(items.spawnRavager());
-            }
-        }
-
-        if (player.getInventory().getItemInMainHand().getType().equals(Material.CROSSBOW) &&
-                player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Ravager Crossbow")){
-            if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-
-
-                Collection<Entity> entities = player.getWorld().getEntities();
-                for (Entity ent : entities){
-                    if (ent.getName().equalsIgnoreCase(player.getName()) && ent.getType() == EntityType.RAVAGER &&
-                    !ent.getPassengers().isEmpty()){
-                        Ravager ravager = (Ravager) ent;
-                        ravager.setVelocity(player.getLocation().getDirection().multiply(3));
-                        return;
-                    }
-                }
             }
         }
 
@@ -312,6 +296,7 @@ public class EventHandlerInternal {
             if (e.getSlot() == 11) { kits.getEnderman(player); }
             if (e.getSlot() == 12) { kits.getCactus(player); }
             if (e.getSlot() == 13) { kits.getButcher(player); }
+            if (e.getSlot() == 14) { kits.getCrystal(player); }
             if (e.getSlot() == 19) { kits.getTerrorist(player); }
             if (e.getSlot() == 20) { kits.getWarton(player); }
             if (e.getSlot() == 21) { kits.getAquaman(player); }
@@ -456,17 +441,22 @@ public class EventHandlerInternal {
                 }
             }
         }
+
+        if (event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION && target instanceof Player) {
+            Player player = (Player) target;
+            if (Objects.requireNonNull(Objects.requireNonNull(player.getInventory().getChestplate()).getItemMeta()).getDisplayName().contains("Crystal Chest")) {
+                event.setDamage(1);
+            }
+        }
     }
 
     public void handleEntityDMG(EntityDamageEvent event) {
-
         if (event.getEntity() instanceof Player) {
 
             Player player = (Player) event.getEntity();
             player.setFoodLevel(20);
 
-            Location loc = event.getEntity().getLocation().clone();
-            if (loc.getY() >= 175){
+            if (player.getLocation().clone().getY() >= 175){
                 event.setCancelled(true);
             }
         }
@@ -573,6 +563,14 @@ public class EventHandlerInternal {
         if (event.getCause().equals(EntityPotionEffectEvent.Cause.WARDEN) &&
                 event.getModifiedType().equals(PotionEffectType.DARKNESS)) {
             event.setCancelled(true);
+        }
+    }
+
+    public void handleExplode(EntityExplodeEvent event) {
+        event.setCancelled(true);
+        if (event.getEntity().getType() == EntityType.ENDER_CRYSTAL) {
+            Location loc = event.getEntity().getLocation();
+            Objects.requireNonNull(loc.getWorld()).createExplosion(loc, 6, false, false);
         }
     }
 }
