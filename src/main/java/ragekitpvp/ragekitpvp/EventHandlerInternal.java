@@ -274,8 +274,7 @@ public class EventHandlerInternal {
     }
 
     public void handleMOTD(ServerListPingEvent event) {
-        event.setMotd(ChatColor.DARK_RED + "" + ChatColor.BOLD + "RAGE " + ChatColor.BLUE + "Kit PvP " + ChatColor.GRAY +
-                "    soon updating our ip to " + ChatColor.BOLD + ChatColor.GOLD + "ragepvp.co");
+        event.setMotd(ChatColor.DARK_RED + "" + ChatColor.BOLD + "RAGE " + ChatColor.BLUE + "Kit PvP");
     }
 
     public void handleInvClick(InventoryClickEvent e, Inventory kitInv, Inventory statsInv) {
