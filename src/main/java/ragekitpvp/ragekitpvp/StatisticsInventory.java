@@ -136,17 +136,30 @@ public class StatisticsInventory {
     }
 
     public OfflinePlayer[] removeLeast(List<OfflinePlayer> players, Statistic type) {
-        players.sort((p1, p2) -> Integer.compare(Bukkit.getOfflinePlayer(p1.getUniqueId()).getStatistic(type),
-                Bukkit.getOfflinePlayer(p2.getUniqueId()).getStatistic(type)));
+        players.sort(Comparator.comparingInt(p -> Bukkit.getOfflinePlayer(p.getUniqueId()).getStatistic(type)));
         Collections.reverse(players);
-        OfflinePlayer[] ar = {players.get(0), players.get(1), players.get(2)};
+
+        int size = players.size();
+        OfflinePlayer[] ar = new OfflinePlayer[Math.min(size, 3)];
+
+        for (int i = 0; i < ar.length; i++) {
+            ar[i] = players.get(i);
+        }
+
         return ar;
     }
 
     public OfflinePlayer[] removeLeastKD(List<OfflinePlayer> players, HashMap<String, Double> kdMap) {
-        players.sort((p1, p2) -> kdMap.get(p1.getName()).compareTo(kdMap.get(p2.getName())));
+        players.sort(Comparator.comparingDouble(p -> kdMap.get(p.getName())));
         Collections.reverse(players);
-        OfflinePlayer[] ar = {players.get(0), players.get(1), players.get(2)};
+
+        int size = players.size();
+        OfflinePlayer[] ar = new OfflinePlayer[Math.min(size, 3)];
+
+        for (int i = 0; i < ar.length; i++) {
+            ar[i] = players.get(i);
+        }
+
         return ar;
     }
 }

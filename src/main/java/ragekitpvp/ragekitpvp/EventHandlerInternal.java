@@ -177,7 +177,7 @@ public class EventHandlerInternal {
         if (player.getInventory().getBoots() != null) {
             if (player.getInventory().getBoots().getItemMeta().getDisplayName().contains("Boots O' Doom")) {
                 if (player.getInventory().getBoots().getItemMeta().hasLore()) {
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 200, 13));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 200, 13));
                 }
             }
         }
@@ -456,15 +456,15 @@ public class EventHandlerInternal {
             Player player = (Player) event.getEntity();
             player.setFoodLevel(20);
 
-            if (player.getLocation().clone().getY() >= 175){
+            if (player.getLocation().clone().getY() >= 175) {
                 event.setCancelled(true);
             }
-        }
-        Player player = (Player) event.getEntity();
-        if (event.getCause() == EntityDamageEvent.DamageCause.LIGHTNING &&
-                player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("are eye pee") &&
-                player.getInventory().getItemInMainHand().getType() == Material.TRIDENT){
-            event.setCancelled(true);
+
+            if (event.getCause() == EntityDamageEvent.DamageCause.LIGHTNING &&
+                    player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("are eye pee") &&
+                    player.getInventory().getItemInMainHand().getType() == Material.TRIDENT) {
+                event.setCancelled(true);
+            }
         }
 
         if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
@@ -568,7 +568,7 @@ public class EventHandlerInternal {
 
     public void handleExplode(EntityExplodeEvent event) {
         event.setCancelled(true);
-        if (event.getEntity().getType() == EntityType.ENDER_CRYSTAL) {
+        if (event.getEntity().getType() == EntityType.END_CRYSTAL) {
             Location loc = event.getEntity().getLocation();
             Objects.requireNonNull(loc.getWorld()).createExplosion(loc, 6, false, false);
         }

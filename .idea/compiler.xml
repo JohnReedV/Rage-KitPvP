@@ -9,8 +9,5 @@
         <module name="RageKitPvP" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="RageKitPvP" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

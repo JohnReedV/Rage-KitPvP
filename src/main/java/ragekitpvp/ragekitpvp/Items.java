@@ -79,7 +79,7 @@ public class Items {
         ItemStack boots = new ItemStack(Material.IRON_BOOTS);
         ItemMeta meta = boots.getItemMeta();
         meta.setDisplayName(ChatColor.BLUE + "Feet of the Knight");
-        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+        meta.addEnchant(Enchantment.PROTECTION, 1, true);
         meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -91,7 +91,7 @@ public class Items {
         ItemStack boots = new ItemStack(Material.IRON_LEGGINGS);
         ItemMeta meta = boots.getItemMeta();
         meta.setDisplayName(ChatColor.BLUE + "Legs of the Knight");
-        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+        meta.addEnchant(Enchantment.PROTECTION, 1, true);
         meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -103,7 +103,7 @@ public class Items {
         ItemStack boots = new ItemStack(Material.IRON_CHESTPLATE);
         ItemMeta meta = boots.getItemMeta();
         meta.setDisplayName(ChatColor.BLUE + "Chest of the Knight");
-        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+        meta.addEnchant(Enchantment.PROTECTION, 1, true);
         meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -115,7 +115,7 @@ public class Items {
         ItemStack boots = new ItemStack(Material.IRON_HELMET);
         ItemMeta meta = boots.getItemMeta();
         meta.setDisplayName(ChatColor.BLUE + "Head of the Knight");
-        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+        meta.addEnchant(Enchantment.PROTECTION, 1, true);
         meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -127,7 +127,7 @@ public class Items {
         ItemStack sword = new ItemStack(Material.DIAMOND_SWORD);
         ItemMeta meta = sword.getItemMeta();
         meta.setDisplayName(ChatColor.BLUE + "Sword of the Knight");
-        meta.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
+        meta.addEnchant(Enchantment.SHARPNESS, 1, true);
         meta.addEnchant(Enchantment.KNOCKBACK, 2, true);
         meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
@@ -150,8 +150,8 @@ public class Items {
         ItemStack bow = new ItemStack(Material.BOW);
         ItemMeta meta = bow.getItemMeta();
         meta.setDisplayName(ChatColor.DARK_GREEN + "Bow of Robin");
-        meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
-        meta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
+        meta.addEnchant(Enchantment.POWER, 6, true);
+        meta.addEnchant(Enchantment.INFINITY, 1, true);
         meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -167,7 +167,7 @@ public class Items {
         ItemStack boots = new ItemStack(Material.LEATHER_HELMET);
         ItemMeta meta = boots.getItemMeta();
         meta.setDisplayName(ChatColor.DARK_GREEN + "frog helm");
-        meta.addEnchant(Enchantment.PROTECTION_PROJECTILE, 3, true);
+        meta.addEnchant(Enchantment.PROJECTILE_PROTECTION, 3, true);
         meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -179,7 +179,7 @@ public class Items {
         ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
         ItemMeta meta = boots.getItemMeta();
         meta.setDisplayName(ChatColor.DARK_GREEN + "frog feet");
-        meta.addEnchant(Enchantment.PROTECTION_PROJECTILE, 3, true);
+        meta.addEnchant(Enchantment.PROJECTILE_PROTECTION, 3, true);
         meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -203,8 +203,8 @@ public class Items {
         ItemStack boots = new ItemStack(Material.GOLDEN_BOOTS);
         ItemMeta meta = boots.getItemMeta();
         meta.setDisplayName(ChatColor.RED + "Boots of FLAMES");
-        meta.addEnchant(Enchantment.PROTECTION_FIRE, 10, true);
-        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+        meta.addEnchant(Enchantment.FIRE_PROTECTION, 10, true);
+        meta.addEnchant(Enchantment.PROTECTION, 1, true);
         meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -216,8 +216,8 @@ public class Items {
         ItemStack boots = new ItemStack(Material.GOLDEN_LEGGINGS);
         ItemMeta meta = boots.getItemMeta();
         meta.setDisplayName(ChatColor.RED + "Legs of FLAMES");
-        meta.addEnchant(Enchantment.PROTECTION_FIRE, 10, true);
-        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+        meta.addEnchant(Enchantment.FIRE_PROTECTION, 10, true);
+        meta.addEnchant(Enchantment.PROTECTION, 1, true);
         meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -229,8 +229,8 @@ public class Items {
         ItemStack boots = new ItemStack(Material.GOLDEN_CHESTPLATE);
         ItemMeta meta = boots.getItemMeta();
         meta.setDisplayName(ChatColor.RED + "Chest of FLAMES");
-        meta.addEnchant(Enchantment.PROTECTION_FIRE, 10, true);
-        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+        meta.addEnchant(Enchantment.FIRE_PROTECTION, 10, true);
+        meta.addEnchant(Enchantment.PROTECTION, 1, true);
         meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -242,8 +242,8 @@ public class Items {
         ItemStack boots = new ItemStack(Material.GOLDEN_HELMET);
         ItemMeta meta = boots.getItemMeta();
         meta.setDisplayName(ChatColor.RED + "Helm of FLAMES");
-        meta.addEnchant(Enchantment.PROTECTION_FIRE, 10, true);
-        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+        meta.addEnchant(Enchantment.FIRE_PROTECTION, 10, true);
+        meta.addEnchant(Enchantment.PROTECTION, 1, true);
         meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -261,7 +261,7 @@ public class Items {
         lore.add("");
         lore.add(ChatColor.ITALIC + "" + ChatColor.WHITE + "sharpness 21 >:)");
         meta.setLore(lore);
-        meta.addEnchant(Enchantment.DAMAGE_ALL, 21, true);
+        meta.addEnchant(Enchantment.SHARPNESS, 21, true);
         meta.setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
@@ -288,8 +288,8 @@ public class Items {
         ItemStack pot1 = new ItemStack(Material.POTION, 32);
 
         PotionMeta potionmeta = (PotionMeta) pot1.getItemMeta();
-        potionmeta.setMainEffect(PotionEffectType.SLOW);
-        PotionEffect speed = new PotionEffect(PotionEffectType.SLOW, 150, 1);
+        potionmeta.setMainEffect(PotionEffectType.SLOWNESS);
+        PotionEffect speed = new PotionEffect(PotionEffectType.SLOWNESS, 150, 1);
         PotionEffect reg = new PotionEffect(PotionEffectType.WEAKNESS, 200, 1);
         potionmeta.addCustomEffect(speed, true);
         potionmeta.addCustomEffect(reg, true);
@@ -304,8 +304,8 @@ public class Items {
         ItemStack pot1 = new ItemStack(Material.POTION, 8);
 
         PotionMeta potionmeta = (PotionMeta) pot1.getItemMeta();
-        potionmeta.setMainEffect(PotionEffectType.HARM);
-        PotionEffect speed = new PotionEffect(PotionEffectType.HARM, 1000, 1);
+        potionmeta.setMainEffect(PotionEffectType.INSTANT_DAMAGE);
+        PotionEffect speed = new PotionEffect(PotionEffectType.INSTANT_DAMAGE, 1000, 1);
         PotionEffect reg = new PotionEffect(PotionEffectType.WITHER, 90, 1);
         potionmeta.addCustomEffect(speed, true);
         potionmeta.addCustomEffect(reg, true);
@@ -320,9 +320,9 @@ public class Items {
         ItemStack pot1 = new ItemStack(Material.POTION, 64);
 
         PotionMeta potionmeta = (PotionMeta) pot1.getItemMeta();
-        potionmeta.setMainEffect(PotionEffectType.HEAL);
-        PotionEffect speed = new PotionEffect(PotionEffectType.HEAL, 1000, 1);
-        PotionEffect reg = new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 1);
+        potionmeta.setMainEffect(PotionEffectType.INSTANT_HEALTH);
+        PotionEffect speed = new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1000, 1);
+        PotionEffect reg = new PotionEffect(PotionEffectType.RESISTANCE, 100, 1);
         potionmeta.addCustomEffect(speed, true);
         potionmeta.addCustomEffect(reg, true);
         potionmeta.setDisplayName("§6Potion Of Healing");
@@ -614,7 +614,7 @@ public class Items {
         meta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + "are eye pee");
         meta.addEnchant(Enchantment.RIPTIDE, 4, true);
         meta.addEnchant(Enchantment.CHANNELING, 1, true);
-        meta.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
+        meta.addEnchant(Enchantment.SHARPNESS, 2, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.setUnbreakable(true);
@@ -648,8 +648,8 @@ public class Items {
         LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
         meta.setColor(Color.fromRGB(0, 0, 255));
         meta.setDisplayName(ChatColor.AQUA + "Head O' Pissbiden");
-        meta.addEnchant(Enchantment.OXYGEN, 10, true);
-        meta.addEnchant(Enchantment.WATER_WORKER, 10, true);
+        meta.addEnchant(Enchantment.RESPIRATION, 10, true);
+        meta.addEnchant(Enchantment.AQUA_AFFINITY, 10, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         meta.setUnbreakable(true);
@@ -738,7 +738,7 @@ public class Items {
         ItemStack egg =  new ItemStack((Material.TOTEM_OF_UNDYING));
         ItemMeta meta = egg.getItemMeta();
         meta.setDisplayName(ChatColor.DARK_GRAY + "Ravager Spawn");
-        meta.addEnchant(Enchantment.PROTECTION_PROJECTILE, 0, true);
+        meta.addEnchant(Enchantment.PROJECTILE_PROTECTION, 0, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.setUnbreakable(true);
@@ -825,7 +825,7 @@ public class Items {
         LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
         meta.setColor(Color.fromRGB(128, 0, 128));
         meta.setDisplayName(ChatColor.DARK_PURPLE + "Crystal Hat");
-        meta.addEnchant(Enchantment.PROTECTION_EXPLOSIONS, 5, true);
+        meta.addEnchant(Enchantment.BLAST_PROTECTION, 5, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setUnbreakable(true);
         head.setItemMeta(meta);
@@ -838,7 +838,7 @@ public class Items {
         LeatherArmorMeta meta = (LeatherArmorMeta) head.getItemMeta();
         meta.setColor(Color.fromRGB(128, 0, 128));
         meta.setDisplayName(ChatColor.DARK_PURPLE + "Crystal Chest");
-        meta.addEnchant(Enchantment.PROTECTION_EXPLOSIONS, 5, true);
+        meta.addEnchant(Enchantment.BLAST_PROTECTION, 5, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setUnbreakable(true);
         head.setItemMeta(meta);

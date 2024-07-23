@@ -76,13 +76,13 @@ public class Kits {
     public void getTank(Player player) {
         player.getInventory().clear();
         ItemStack LDHelmet = new ItemStack(Material.NETHERITE_SWORD);
-        LDHelmet.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 20);
+        LDHelmet.addUnsafeEnchantment(Enchantment.SHARPNESS, 20);
         player.getInventory().addItem(new ItemStack[]{new ItemStack(LDHelmet)});
         player.getInventory().setHelmet(new ItemStack(Material.NETHERITE_HELMET));
         player.getInventory().setChestplate(new ItemStack(Material.NETHERITE_CHESTPLATE));
         player.getInventory().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
         player.getInventory().setBoots(new ItemStack(Material.NETHERITE_BOOTS));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 2147483647, 3));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 2147483647, 3));
         player.closeInventory();
     }
 
@@ -155,20 +155,20 @@ public class Kits {
         if (2 > 1) {
             player.getInventory().clear();
             ItemStack helmet111 = new ItemStack(Material.LEATHER_HELMET);
-            helmet111.addUnsafeEnchantment(Enchantment.DURABILITY, 150);
-            helmet111.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+            helmet111.addUnsafeEnchantment(Enchantment.UNBREAKING, 150);
+            helmet111.addUnsafeEnchantment(Enchantment.PROTECTION, 3);
             player.getEquipment().setHelmet(helmet111);
             ItemStack capacete0 = new ItemStack(Material.LEATHER_CHESTPLATE);
-            capacete0.addUnsafeEnchantment(Enchantment.DURABILITY, 150);
-            capacete0.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+            capacete0.addUnsafeEnchantment(Enchantment.UNBREAKING, 150);
+            capacete0.addUnsafeEnchantment(Enchantment.PROTECTION, 3);
             player.getEquipment().setChestplate(capacete0);
             ItemStack peitoral0 = new ItemStack(Material.LEATHER_LEGGINGS);
-            peitoral0.addUnsafeEnchantment(Enchantment.DURABILITY, 150);
-            peitoral0.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+            peitoral0.addUnsafeEnchantment(Enchantment.UNBREAKING, 150);
+            peitoral0.addUnsafeEnchantment(Enchantment.PROTECTION, 3);
             player.getEquipment().setLeggings(peitoral0);
             ItemStack calca0 = new ItemStack(Material.LEATHER_BOOTS);
-            calca0.addUnsafeEnchantment(Enchantment.DURABILITY, 150);
-            calca0.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+            calca0.addUnsafeEnchantment(Enchantment.UNBREAKING, 150);
+            calca0.addUnsafeEnchantment(Enchantment.PROTECTION, 3);
             player.getEquipment().setBoots(calca0);
             getServer().dispatchCommand(getServer().getConsoleSender(), "shot give "
                     + player.getName() + " AK-47");
@@ -188,7 +188,7 @@ public class Kits {
             player.getInventory().clear();
             player.getInventory().addItem(items.wardenFlint());
             player.getInventory().setChestplate(items.wardenElytra());
-            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 12000, 3));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 12000, 3));
             player.closeInventory();
 
         } else {

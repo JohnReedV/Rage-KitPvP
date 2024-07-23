@@ -124,14 +124,14 @@ public class RageKitPvP extends JavaPlugin implements Listener {
             loc.setY(loc.getY() + 2);
             if (loc.getBlock().getType() == Material.AIR) {
                 Collection<Entity> entities = event.getPlayer().getWorld().getEntities();
-                for (Entity ent : entities) {if (ent.getType() == EntityType.ENDER_CRYSTAL && ent.getLocation().distance(loc) < 2.5) {return;}}
-                Objects.requireNonNull(loc.getWorld()).spawnEntity(loc, EntityType.ENDER_CRYSTAL);
+                for (Entity ent : entities) {if (ent.getType() == EntityType.END_CRYSTAL && ent.getLocation().distance(loc) < 2.5) {return;}}
+                Objects.requireNonNull(loc.getWorld()).spawnEntity(loc, EntityType.END_CRYSTAL);
                 event.getPlayer().getInventory().getItemInMainHand().setAmount(event.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
                 getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
                     @Override
                     public void run() {
                         Collection<Entity> entities = event.getPlayer().getWorld().getEntities();
-                        for (Entity ent : entities) {if (ent.getType() == EntityType.ENDER_CRYSTAL) {
+                        for (Entity ent : entities) {if (ent.getType() == EntityType.END_CRYSTAL) {
                             if (loc.distance(ent.getLocation()) < 2.5) {
                                 ent.remove();;
                             }
